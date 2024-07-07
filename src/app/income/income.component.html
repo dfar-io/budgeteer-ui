@@ -1,0 +1,7 @@
+<h2>Incomes</h2>
+@for (income of incomes; track income.name; let index = $index) {
+    <div id="income">
+        <div class="income-name">{{ income.name }}</div>
+        <div class="income-amount">{{ income.amount | currency }}</div>
+    </div>
+}

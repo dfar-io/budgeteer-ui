@@ -1,74 +1,8 @@
 <main class="main">
   <div class="content">
     <h1>{{ title }}</h1>
-    <table>
-      @for (income of incomes; track income.name; let index = $index) {
-        <tr>
-          <td>
-            @if (index === 0) {
-              Incomes
-            }
-          </td>
-          <td>{{ income.name }}</td>
-          <td>{{ income.amount }}</td>
-        </tr>
-      }
-      @for (category of categories; track category.name; let index = $index) {
-        <tr>
-          <td>
-            @if (index === 0) {
-              Categories
-            }
-          </td>
-          <td style="background-color: #{{ category.color }}">{{ category.name }}</td>
-          <td style="background-color: #{{ category.color }}">{{ sumCategory(category) }}</td>
-        </tr>
-      }
-      <tr>
-        <td></td>
-        <td>Difference</td>
-        <td>{{ calcDifference() }}</td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      @for (categoryEntry of fundCategoryEntries; track categoryEntry.name; let index = $index) {
-        <tr>
-          <td>
-            @if (index === 0) {
-              Funds
-            }
-          </td>
-          <td style="background-color: #{{ categoryEntry.color }}">{{ categoryEntry.name }}</td>
-          <td style="background-color: #{{ categoryEntry.color }}">{{ categoryEntry.amount }}</td>
-          <td><fa-icon [icon]="faEdit" (click)="edit(categoryEntry)"></fa-icon></td>
-        </tr>
-      }
-      <tr><td>&nbsp;</td></tr>
-      @for (categoryEntry of monthlyCategoryEntries; track categoryEntry.name; let index = $index) {
-        <tr>
-          <td>
-            @if (index === 0) {
-              Monthly
-            }
-          </td>
-          <td style="background-color: #{{ categoryEntry.color }}">{{ categoryEntry.name }}</td>
-          <td style="background-color: #{{ categoryEntry.color }}">{{ categoryEntry.amount }}</td>
-        </tr>
-      }
-      <tr><td>&nbsp;</td></tr>
-      @for (categoryEntry of nonMonthlyCategoryEntries; track categoryEntry.name; let index = $index) {
-        <tr>
-          <td>
-            @if (index === 0) {
-              Non-Monthly
-            }
-          </td>
-          <td style="background-color: #{{ categoryEntry.color }}">{{ categoryEntry.name }}</td>
-          <td style="background-color: #{{ categoryEntry.color }}">{{ categoryEntry.amount }}</td>
-        </tr>
-      }
-
-    </table>
-
+    <app-income></app-income>
+    <app-categories></app-categories>
   </div>
 </main>
 

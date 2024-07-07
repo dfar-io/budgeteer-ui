@@ -1,0 +1,12 @@
+#income {
+    display: flex;
+    width: 100%;
+}
+
+.income-name {
+    width: 75%;
+}
+
+.income-amount {
+    width: 25%;
+}

@@ -1,0 +1,16 @@
+#categories {
+    display: flex;
+    width: 100%;
+}
+
+.category-name {
+    width: 25%;
+}
+
+.category-percentage {
+    width: 50%;
+}
+
+.category-amount {
+    width: 25%;
+}
