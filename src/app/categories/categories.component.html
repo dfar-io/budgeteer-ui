@@ -1,4 +1,4 @@
-<h2>Categories</h2>
+<h2>Categories<fa-icon [icon]="faEdit" (click)="edit()"></fa-icon></h2>
 @for (category of categories; track category.name; let index = $index) {
     <div id="categories">
         <div class="category-name">{{ category.name }}</div>

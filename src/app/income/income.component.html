@@ -1,4 +1,4 @@
-<h2>Incomes</h2>
+<h2>Incomes<fa-icon [icon]="faEdit" (click)="edit()"></fa-icon></h2>
 @for (income of incomes; track income.name; let index = $index) {
     <div id="income">
         <div class="income-name">{{ income.name }}</div>
