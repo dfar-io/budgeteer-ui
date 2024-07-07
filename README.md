@@ -1,3 +1,6 @@
+![CICD](https://github.com/dfar-io/budget/actions/workflows/cicd.yml/badge.svg)
+![Latest Packages](https://github.com/dfar-io/budget/actions/workflows/check-updates.yml/badge.svg)
+
 # Budget
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
