@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { categories } from './category';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Category } from './category';
 import { CurrencyPipe, PercentPipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -12,11 +12,13 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent {
+  @Input() categories : Category[] = [];
+  @Output() saveCategoriesEvent = new EventEmitter<Category[]>();
+
   faEdit = faEdit;
 
-  categories = [...categories];
-
   edit() {
-    alert('editing categories');
+    this.categories.forEach(i => i.percentage += 0.01);
+    this.saveCategoriesEvent.emit(this.categories);
   }
 }
