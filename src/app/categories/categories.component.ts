@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category } from './category';
 import { CurrencyPipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEdit, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-categories',
@@ -13,7 +13,7 @@ import { faEdit, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 })
 export class CategoriesComponent {
   @Input() categories : Category[] = [];
-  @Input() incomeSum: number = 0;
+  @Input() incomeSum = 0;
   @Output() saveCategoriesEvent = new EventEmitter<Category[]>();
 
   faChevronRight = faChevronRight;
