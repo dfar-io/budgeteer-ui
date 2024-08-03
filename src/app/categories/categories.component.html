@@ -1,8 +1,18 @@
-<h2>Categories<fa-icon [icon]="faEdit" (click)="edit()"></fa-icon></h2>
 @for (category of categories; track category.name; let index = $index) {
-    <div id="categories">
-        <div class="category-name">{{ category.name }}</div>
-        <div class="category-percentage">{{ category.percentage | percent }}</div>
-        <div class="category-amount">{{ 14000 * category.percentage | currency }}</div>
+    <div class="category" style="background-color: {{ category.backgroundColor }}; color: {{ category.color }}">
+        <div class="category-name"><fa-icon [icon]="faChevronRight"></fa-icon>{{ category.name }}</div>
+        <div class="category-percentage">{{ category.percentage | percent: '1.1' }}</div>
+        <div class="category-amount">{{ (incomeSum * category.percentage - categoryTransactionsSum(category)) | currency }}</div>
+        <div class="transactions">
+        @if (category.transactions !== undefined && category.transactions.length > 0) {
+            @for (transaction of category.transactions; track transaction.name; let index = $index) {
+                <div class="transaction-name">{{ transaction.name }}</div>
+                <div class="transaction-amount">{{ transaction.amount | number: '1.2' }}</div>
+            }
+        }
+        @else {
+            <div>No transactions.</div>
+        }
+        </div>  
     </div>
 }

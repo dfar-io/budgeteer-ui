@@ -1,16 +1,45 @@
-#categories {
+.category {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .category-name {
-    width: 25%;
+    width: 40%;
+    font-weight: bold;
+    font-size: 1.25rem;
 }
 
 .category-percentage {
-    width: 50%;
+    width: 25%;
+    font-size: 1.25rem;
 }
 
 .category-amount {
+    width: 35%;
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.transactions {
+    /* use display flex when turning on */
+    display: none;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.transaction-name {
+    width: 75%;
+}
+
+.transaction-amount {
     width: 25%;
+    text-align: right;
+}
+
+fa-icon {
+    padding-right: 0.5rem;
 }

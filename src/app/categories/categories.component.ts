@@ -1,24 +1,31 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category } from './category';
-import { CurrencyPipe, PercentPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [PercentPipe, CurrencyPipe, FontAwesomeModule],
+  imports: [PercentPipe, DecimalPipe, CurrencyPipe, FontAwesomeModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent {
   @Input() categories : Category[] = [];
+  @Input() incomeSum: number = 0;
   @Output() saveCategoriesEvent = new EventEmitter<Category[]>();
 
-  faEdit = faEdit;
+  faChevronRight = faChevronRight;
 
   edit() {
     this.categories.forEach(i => i.percentage += 0.01);
     this.saveCategoriesEvent.emit(this.categories);
+  }
+
+  categoryTransactionsSum(category : Category) {
+    return category.transactions === undefined ?
+      0 :
+      category.transactions.reduce((n, {amount}) => n + amount, 0);
   }
 }

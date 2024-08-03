@@ -2,11 +2,11 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { CurrencyPipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    CurrencyPipe,
+    DecimalPipe,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes)]
 };
