@@ -1,5 +1,4 @@
 ![CICD](https://github.com/dfar-io/budgeteer/actions/workflows/cicd.yml/badge.svg)
-![Latest Packages](https://github.com/dfar-io/budgeteer/actions/workflows/check-updates.yml/badge.svg)
 
 # Budgeteer
 

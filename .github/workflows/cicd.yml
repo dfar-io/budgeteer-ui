@@ -1,3 +1,5 @@
+# https://github.com/google-github-actions/upload-cloud-storage
+# https://github.com/google-github-actions/auth?tab=readme-ov-file#preferred-direct-workload-identity-federation
 name: CICD
 
 on:
@@ -7,15 +9,31 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  cicd:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js
+    - name: "Checkout"
+      uses: actions/checkout@v4
+    - name: Configure Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 20.14.0
         cache: 'npm'
-    - run: npm ci
-    - run: npm run lint
-    - run: npm run build
+    - name: "Install dependencies"
+      run: npm ci
+    - name: "Lint"
+      run: npm run lint
+    - name: "Build"
+      run: npm run build
+    - name: "Authenticate to GCP"
+      uses: 'google-github-actions/auth@v2'
+      if: github.ref == 'refs/heads/main'
+      with:
+        project_id: 'dfar55'
+        workload_identity_provider: 'projects/484405657577/locations/global/workloadIdentityPools/github/providers/my-repo'
+    - name: "Deploy to Cloud Storage"
+      uses: 'google-github-actions/upload-cloud-storage@v2'
+      if: github.ref == 'refs/heads/main'
+      with:
+        path: '/dist/budgeteer/browser'
+        destination: 'b.dfar.io'
