@@ -22,10 +22,12 @@ jobs:
     - run: npm run lint
     - run: npm run build
     - uses: 'google-github-actions/auth@v2'
+      if: github.ref == 'refs/heads/main'
       with:
         project_id: 'dfar55'
         workload_identity_provider: 'projects/484405657577/locations/global/workloadIdentityPools/github/providers/my-repo'
     - uses: 'google-github-actions/upload-cloud-storage@v2'
+      if: github.ref == 'refs/heads/main'
       with:
         path: '/dist/budgeteer/browser'
         destination: 'b.dfar.io'
