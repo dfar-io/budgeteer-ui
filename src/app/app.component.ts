@@ -11,7 +11,7 @@ import { CategoriesComponent } from './categories/categories.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = "Budget";
+  title = "Budgeteer";
   incomes = [
     {
       name: 'KeyBank',

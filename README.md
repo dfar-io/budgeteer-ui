@@ -1,14 +1,21 @@
-![CICD](https://github.com/dfar-io/budget/actions/workflows/cicd.yml/badge.svg)
-![Latest Packages](https://github.com/dfar-io/budget/actions/workflows/check-updates.yml/badge.svg)
+![CICD](https://github.com/dfar-io/budgeteer/actions/workflows/cicd.yml/badge.svg)
+![Latest Packages](https://github.com/dfar-io/budgeteer/actions/workflows/check-updates.yml/badge.svg)
 
-# Budget
+# Budgeteer
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
 
 ## Update Packages
 
-1. Run `ng update`, determine outdated packages
+1. Run `ng update`, determine outdated packages.
 2. Run `ng update` with the commands to update specific packages.
+
+## Deploy to Cloud Storage
+
+1. Run `ng build`.
+2. Zip build output `zip -r build-output.zip dist/budgeteer/browser`
+3. Download and extract `build-output.zip`
+2. Upload contents of `dist/budgeteer/browser` to Cloud Storage, overwriting any existing files.
 
 ## Development server
 
