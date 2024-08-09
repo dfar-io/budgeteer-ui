@@ -41,3 +41,4 @@ jobs:
       with:
         path: 'dist/budgeteer/browser'
         destination: 'b.dfar.io'
+        parent: false
