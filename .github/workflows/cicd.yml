@@ -10,6 +10,10 @@ on:
 
 jobs:
   cicd:
+    # required for google-github-actions/auth
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     runs-on: ubuntu-latest
     steps:
     - name: "Checkout"
@@ -35,5 +39,7 @@ jobs:
       uses: 'google-github-actions/upload-cloud-storage@v2'
       if: github.ref == 'refs/heads/main'
       with:
-        path: '/dist/budgeteer/browser'
+        path: 'dist/budgeteer/browser'
         destination: 'b.dfar.io'
+        parent: false
+        process_gcloudignore: false
