@@ -42,3 +42,4 @@ jobs:
         path: 'dist/budgeteer/browser'
         destination: 'b.dfar.io'
         parent: false
+        process_gcloudignore: false
