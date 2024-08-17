@@ -37,6 +37,6 @@ resource "google_project_iam_member" "storage_access" {
 
 resource "github_actions_secret" "workload_identity_pool_provider_name" {
   repository       = "budgeteer"
-  secret_name      = "WORKLOAD_IDENTITY_POOL_PROVIDER_NAME"
+  secret_name      = "WORKLOAD_IDENTITY_PROVIDER"
   plaintext_value  = google_iam_workload_identity_pool_provider.github_actions.name
 }
