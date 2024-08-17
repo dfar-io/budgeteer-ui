@@ -6,10 +6,15 @@ resource "google_storage_bucket" "static-site" {
   location      = "us-east4"
   force_destroy = true
 
-  uniform_bucket_level_access = true
-
   website {
     main_page_suffix = "index.html"
     not_found_page   = "index.html"
   }
+}
+
+# public access to internet
+resource "google_storage_bucket_access_control" "public_rule" {
+  bucket = google_storage_bucket.static-site.name
+  role   = "READER"
+  entity = "allUsers"
 }

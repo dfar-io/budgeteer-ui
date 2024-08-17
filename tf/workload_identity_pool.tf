@@ -35,8 +35,8 @@ resource "google_project_iam_member" "storage_access" {
   member  = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_actions.name}/attribute.repository/dfar-io/budgeteer"
 }
 
-# Add this output to the Github Actions CICD file
-output "workload_identity_pool_provider_name" {
-    value       = google_iam_workload_identity_pool_provider.github_actions.name
-    description = "CICD.yml - workload_identity_provider value"
+resource "github_actions_secret" "workload_identity_pool_provider_name" {
+  repository       = "budgeteer"
+  secret_name      = "WORKLOAD_IDENTITY_POOL_PROVIDER_NAME"
+  plaintext_value  = google_iam_workload_identity_pool_provider.github_actions.name
 }

@@ -9,6 +9,18 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 1. Run `ng update`, determine outdated packages.
 2. Run `ng update` with the commands to update specific packages.
 
+## Infratstructure Deployment
+
+Terraform is set up within the Codespace and can be run manually within the Codepsace as needed.
+
+```
+cd tf
+gh auth login
+gcloud auth application-default login
+terraform init
+terraform apply
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
