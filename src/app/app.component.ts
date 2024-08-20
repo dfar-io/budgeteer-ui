@@ -31,7 +31,7 @@ export class AppComponent {
       percentage: 0.125,
       backgroundColor: "darkblue",
       color: "white",
-      transactions: [
+      subcategories: [
         { name: "Gitpod", amount: 9.00 },
         { name: "Haircut", amount: 50 },
         { name: "Kagi", amount: 10 },
@@ -49,7 +49,7 @@ export class AppComponent {
       percentage: 0.17,
       backgroundColor: "hotpink",
       color: "black",
-      transactions: [
+      subcategories: [
         { name: "O Positive", amount: 34.99 },
         { name: "Peloton", amount: 44 },
         { name: "Planet Fitness", amount: 10 },
@@ -61,7 +61,7 @@ export class AppComponent {
       percentage: 0.29,
       backgroundColor: "purple",
       color: "white",
-      transactions: [
+      subcategories: [
         { name: "Comcast", amount: 121 },
         { name: "Consumers", amount: 228 },
         { name: "Electric", amount: 279 },
@@ -92,7 +92,7 @@ export class AppComponent {
       percentage: 0.10,
       backgroundColor: "orange",
       color: "black",
-      transactions: [
+      subcategories: [
         { name: "Greenies", amount: 70.68 },
         { name: "Daycare", amount: 560 },
         { name: "Nala Groom", amount: 140 },
@@ -122,7 +122,7 @@ export class AppComponent {
       percentage: 0.18,
       backgroundColor: "green",
       color: "white",
-      transactions: [
+      subcategories: [
         { name: "IRA", amount: 583.33 },
       ]
     },

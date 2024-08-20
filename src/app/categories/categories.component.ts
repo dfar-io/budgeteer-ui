@@ -18,14 +18,9 @@ export class CategoriesComponent {
 
   faChevronRight = faChevronRight;
 
-  edit() {
-    this.categories.forEach(i => i.percentage += 0.01);
-    this.saveCategoriesEvent.emit(this.categories);
-  }
-
-  categoryTransactionsSum(category : Category) {
-    return category.transactions === undefined ?
+  categorySubcategoriesSum(category : Category) {
+    return category.subcategories === undefined ?
       0 :
-      category.transactions.reduce((n, {amount}) => n + amount, 0);
+      category.subcategories.reduce((n, {amount}) => n + amount, 0);
   }
 }

@@ -2,16 +2,16 @@
     <div class="category" style="background-color: {{ category.backgroundColor }}; color: {{ category.color }}">
         <div class="category-name"><fa-icon [icon]="faChevronRight"></fa-icon>{{ category.name }}</div>
         <div class="category-percentage">{{ category.percentage | percent: '1.1' }}</div>
-        <div class="category-amount">{{ (incomeSum * category.percentage - categoryTransactionsSum(category)) | currency }}</div>
-        <div class="transactions">
-        @if (category.transactions !== undefined && category.transactions.length > 0) {
-            @for (transaction of category.transactions; track transaction.name; let index = $index) {
+        <div class="category-amount">{{ (incomeSum * category.percentage - categorySubcategoriesSum(category)) | currency }}</div>
+        <div class="subcategories">
+        @if (category.subcategories !== undefined && category.subcategories.length > 0) {
+            @for (transaction of category.subcategories; track transaction.name; let index = $index) {
                 <div class="transaction-name">{{ transaction.name }}</div>
                 <div class="transaction-amount">{{ transaction.amount | number: '1.2' }}</div>
             }
         }
         @else {
-            <div>No transactions.</div>
+            <div>No subcategories.</div>
         }
         </div>  
     </div>

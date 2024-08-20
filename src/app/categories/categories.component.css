@@ -24,9 +24,8 @@
     font-size: 1.25rem;
 }
 
-.transactions {
-    /* use display flex when turning on */
-    display: none;
+.subcategories {
+    display: flex;
     flex-wrap: wrap;
     margin-top: 1rem;
 }

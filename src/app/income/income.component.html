@@ -2,5 +2,7 @@
     <div class="income">
         <div class="income-name">{{ income.name }}</div>
         <div class="income-amount">{{ income.amount | number: '1.2' }}</div>
+        <fa-icon [icon]="faEdit" (click)="onEdit(index)"></fa-icon>
+        <fa-icon [icon]="faTrash" (click)="onDelete(index)"></fa-icon>
     </div>
 }

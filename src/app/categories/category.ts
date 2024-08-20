@@ -3,10 +3,10 @@ export interface Category {
     backgroundColor: string;
     color: string;
     percentage: number;
-    transactions?: Transaction[];
+    subcategories?: Subcategory[];
 }
 
-export interface Transaction {
+export interface Subcategory {
     name: string;
     amount: number;
 }
