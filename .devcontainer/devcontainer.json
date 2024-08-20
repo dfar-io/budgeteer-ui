@@ -10,7 +10,9 @@
 		"ghcr.io/dhoeric/features/google-cloud-cli:1": {},
 		"ghcr.io/devcontainers/features/terraform:1": {},
 		"ghcr.io/devcontainers/features/github-cli:1": {}
-	}
+	},
+
+	"postCreateCommand" : "npm i"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
