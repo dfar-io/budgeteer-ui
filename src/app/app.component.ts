@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IncomeComponent } from './income/income.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IncomeService } from './income/income.service';
+import { Income } from './income/income';
 
 @Component({
   selector: 'app-root',
@@ -10,20 +13,37 @@ import { CategoriesComponent } from './categories/categories.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  incomes: Income[] = [];
   title = "Budgeteer";
-  incomes = [
-    {
-      name: 'KeyBank',
-      amount: 7557.13
-    },
-    {
-      name: 'Plante Moran',
-      amount: 7803.36
-    }
-  ];
+  faPlus = faPlus;
+
+  constructor(private incomeService: IncomeService) {}
+
+  ngOnInit() {
+    this.incomes = this.incomeService.getIncomes() ?? [];
+  }
 
   incomeSum = this.incomes.reduce((n, {amount}) => n + amount, 0);
+
+  addIncome() {
+    const randomDecimal = Math.random() * (10000 - 1) + 1;
+    const newIncome = {
+      id: Math.floor(Math.random() * (1000000 - 1 + 1)) + 1,
+      name: 'New Income',
+      amount: parseFloat(randomDecimal.toFixed(2))
+    }
+
+    this.incomes.push(newIncome);
+
+    this.incomeService.saveIncomes(this.incomes);
+  }
+  deleteIncome(id : number) {
+    const incomeToDeleteId = this.incomes.findIndex(i => i.id === id);
+    this.incomes.splice(incomeToDeleteId, 1);
+
+    this.incomeService.saveIncomes(this.incomes);
+  }
 
   categories = [
     {
