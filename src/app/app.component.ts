@@ -38,6 +38,10 @@ export class AppComponent implements OnInit {
 
     this.incomeService.saveIncomes(this.incomes);
   }
+  saveIncome(income : Income) {
+    console.log(income);
+    this.incomeService.saveIncomes(this.incomes);
+  }
   deleteIncome(id : number) {
     const incomeToDeleteId = this.incomes.findIndex(i => i.id === id);
     this.incomes.splice(incomeToDeleteId, 1);

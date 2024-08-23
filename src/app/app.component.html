@@ -4,7 +4,7 @@
     <h2>Income</h2><fa-icon [icon]="faPlus" (click)="addIncome()"></fa-icon>
     @if (incomes !== null && incomes.length > 0) {
       @for (income of incomes; track income.id) {
-        <app-income [income]="income" (delete)="deleteIncome(income.id)"></app-income>
+        <app-income [income]="income" (save)="saveIncome(income)" (delete)="deleteIncome(income.id)"></app-income>
       }
     }
     @else {
@@ -12,7 +12,8 @@
     }
     
     <h2>Flex</h2>
-    <app-categories [categories]="categories" [incomeSum]="incomeSum"></app-categories>
+    <div>No flex categories.</div>
+    <!-- <app-categories [categories]="categories" [incomeSum]="incomeSum"></app-categories> -->
 
     <h2>Monthly</h2>
     <div>No monthly categories.</div>
