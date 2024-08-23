@@ -1,7 +1,7 @@
 <main class="main">
   <div class="content">
     <h1>{{ title }}</h1>
-    <h2>Incomes</h2><fa-icon [icon]="faPlus" (click)="addIncome()"></fa-icon>
+    <h2>Income</h2><fa-icon [icon]="faPlus" (click)="addIncome()"></fa-icon>
     @if (incomes !== null && incomes.length > 0) {
       @for (income of incomes; track income.id) {
         <app-income [income]="income" (delete)="deleteIncome(income.id)"></app-income>
@@ -11,7 +11,12 @@
         <div>No incomes.</div>
     }
     
-    <h2>Categories</h2>
+    <h2>Flex</h2>
     <app-categories [categories]="categories" [incomeSum]="incomeSum"></app-categories>
+
+    <h2>Monthly</h2>
+    <div>No monthly categories.</div>
+    <h2>Planned</h2>
+    <div>No planned categories.</div>
   </div>
 </main>
