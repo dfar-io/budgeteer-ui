@@ -1,6 +1,6 @@
 <div class="income">
     <div class="income-name">{{ income.name }}</div>
     <div class="income-amount">{{ income.amount | number: '1.2' }}</div>
-    <fa-icon [icon]="faEdit" (click)="onEdit()"></fa-icon>
+    <fa-icon [icon]="faEdit" (click)="openDialog()"></fa-icon>
     <fa-icon [icon]="faTrash" (click)="onDelete()"></fa-icon>
 </div>
