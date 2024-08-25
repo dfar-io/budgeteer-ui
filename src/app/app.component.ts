@@ -1,4 +1,4 @@
-import { Component, numberAttribute, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LineItemComponent } from './line-item/line-item.component';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
