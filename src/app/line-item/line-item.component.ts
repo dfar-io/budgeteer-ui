@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { Income } from './income';
+import { LineItem } from './line-item';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -9,17 +9,17 @@ import {
 import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
 
 @Component({
-  selector: 'app-income',
+  selector: 'app-line-item',
   standalone: true,
   imports: [DecimalPipe, FontAwesomeModule],
-  templateUrl: './income.component.html',
-  styleUrl: './income.component.css',
+  templateUrl: './line-item.component.html',
+  styleUrl: './line-item.component.css',
   //for dialog
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IncomeComponent implements OnInit {
-  @Input() income! : Income;
-  @Output() save = new EventEmitter<Income>();
+export class LineItemComponent implements OnInit {
+  @Input() lineItem! : LineItem;
+  @Output() save = new EventEmitter<LineItem>();
   @Output() delete = new EventEmitter<number>();
 
   readonly dialog = inject(MatDialog);
@@ -27,21 +27,21 @@ export class IncomeComponent implements OnInit {
   faTrash = faTrash;
 
   public ngOnInit(): void {
-    if (!this.income) {
-      throw (new Error("The required input [income] was not provided"));
+    if (!this.lineItem) {
+      throw (new Error("The required input [lineItem] was not provided"));
     }
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(AddEditDialogComponent, {
-      data: {name: this.income.name, amount: this.income.amount},
+      data: {name: this.lineItem.name, amount: this.lineItem.amount},
     });
     
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.income.name = result.name;
-        this.income.amount = result.amount;
-        this.save.emit(this.income);
+        this.lineItem.name = result.name;
+        this.lineItem.amount = result.amount;
+        this.save.emit(this.lineItem);
       }
     });
   }

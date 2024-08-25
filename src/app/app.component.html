@@ -1,23 +1,45 @@
 <main class="main">
   <div class="content">
-    <h1>{{ title }}</h1>
-    <h2>Income</h2><fa-icon [icon]="faPlus" (click)="addIncome()"></fa-icon>
+    <h1>Budgeteer</h1>
+    <!-- category component would be this section -->
+    <h2>Incomes</h2><fa-icon [icon]="faPlus" (click)="addIncome()"></fa-icon>
     @if (incomes !== null && incomes.length > 0) {
       @for (income of incomes; track income.id) {
-        <app-income [income]="income" (save)="saveIncome(income)" (delete)="deleteIncome(income.id)"></app-income>
+        <app-line-item [lineItem]="income" (save)="saveIncomes()" (delete)="deleteIncome(income.id)"></app-line-item>
       }
     }
     @else {
         <div>No incomes.</div>
     }
-    
-    <h2>Funds</h2>
-    <div>No funds.</div>
-    <!-- <app-categories [categories]="categories" [incomeSum]="incomeSum"></app-categories> -->
 
-    <h2>Monthly</h2>
-    <div>No monthly expenses.</div>
-    <h2>Planned</h2>
-    <div>No planned expenses.</div>
+    <h2>Funds</h2><fa-icon [icon]="faPlus" (click)="addFund()"></fa-icon>
+    @if (funds !== null && funds.length > 0) {
+      @for (fund of funds; track fund.id) {
+        <app-line-item [lineItem]="fund" (save)="saveFunds()" (delete)="deleteFund(fund.id)"></app-line-item>
+      }
+    }
+    @else {
+        <div>No funds.</div>
+    }
+
+    <h2>Monthlies</h2><fa-icon [icon]="faPlus" (click)="addMonthly()"></fa-icon>
+    @if (monthlies !== null && monthlies.length > 0) {
+      @for (monthly of monthlies; track monthly.id) {
+        <app-line-item [lineItem]="monthly" (save)="saveMonthlies()" (delete)="deleteMonthly(monthly.id)"></app-line-item>
+      }
+    }
+    @else {
+        <div>No monthlies.</div>
+    }
+
+    <h2>Non-Monthlies</h2><fa-icon [icon]="faPlus" (click)="addPlanned()"></fa-icon>
+    @if (nonMonthlies !== null && nonMonthlies.length > 0) {
+      @for (nonMonthly of nonMonthlies; track nonMonthly.id) {
+        <app-line-item [lineItem]="nonMonthly" (save)="savePlanned()" (delete)="deletePlanned(nonMonthly.id)"></app-line-item>
+      }
+    }
+    @else {
+        <div>No non-monthlies.</div>
+    }
   </div>
 </main>

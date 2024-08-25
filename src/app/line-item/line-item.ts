@@ -1,4 +1,4 @@
-export interface Income {
+export interface LineItem {
     id: number;
     name: string;
     amount: number;

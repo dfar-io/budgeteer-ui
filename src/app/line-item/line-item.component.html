@@ -1,0 +1,6 @@
+<div class="line-item">
+    <div class="line-item-name">{{ lineItem.name }}</div>
+    <div class="line-item-amount">{{ lineItem.amount | number: '1.2' }}</div>
+    <fa-icon [icon]="faEdit" (click)="openDialog()"></fa-icon>
+    <fa-icon [icon]="faTrash" (click)="onDelete()"></fa-icon>
+</div>

@@ -1,14 +1,14 @@
-.income {
+.line-item {
     display: flex;
     width: 100%;
     box-sizing: border-box;
 }
 
-.income-name {
+.line-item-name {
     width: 75%;
 }
 
-.income-amount {
+.line-item-amount {
     width: 25%;
     text-align: right;
 }
