@@ -7,6 +7,7 @@ import {
   MatDialog
 } from '@angular/material/dialog';
 import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-line-item',
@@ -47,6 +48,15 @@ export class LineItemComponent implements OnInit {
   }
 
   onDelete() {
-    this.delete.emit();
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: {name: this.lineItem.name},
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result !== undefined) {
+        this.delete.emit();
+      }
+    });
   }
 }
