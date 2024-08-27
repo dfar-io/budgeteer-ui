@@ -41,7 +41,7 @@ export class LineItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         this.lineItem.name = result.name;
-        this.lineItem.amount = result.amount;
+        this.lineItem.amount = parseFloat(result.amount);
         this.save.emit(this.lineItem);
       }
     });
@@ -53,7 +53,6 @@ export class LineItemComponent implements OnInit {
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result !== undefined) {
         this.delete.emit();
       }
