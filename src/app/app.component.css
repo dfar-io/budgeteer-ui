@@ -34,3 +34,12 @@ main {
 fa-icon {
   padding-left: 0.5rem;
 }
+
+div.difference {
+  padding: 0.5rem;
+  text-align: right;
+  font-weight: bold;
+  font-size: 2rem;
+  position: sticky;
+  top: 0px;
+}

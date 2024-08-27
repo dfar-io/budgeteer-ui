@@ -1,6 +1,9 @@
 <main class="main">
   <div class="content">
     <h1>Budgeteer</h1>
+    <div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
+      {{ difference | number: '1.2' }}
+    </div><br />
     <!-- category component would be this section -->
     <h2>Incomes</h2><fa-icon [icon]="faPlus" (click)="addIncome()"></fa-icon>
     @if (incomes !== null && incomes.length > 0) {

@@ -4,19 +4,29 @@ import { LineItemComponent } from './line-item/line-item.component';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { LineItemService } from './line-item/line-item.service';
 import { LineItem } from './line-item/line-item';
+import { CommonModule, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FontAwesomeModule, LineItemComponent],
+  imports: [FontAwesomeModule, LineItemComponent, DecimalPipe, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   incomes: LineItem[] = [];
   funds: LineItem[] = [];
   monthlies: LineItem[] = [];
   nonMonthlies: LineItem[] = [];
+
+  incomeSum = 0;
+  fundsSum = 0;
+  monthliesSum = 0;
+  nonMonthliesSum = 0;
+  difference = 0;
+
+  differenceBackgroundColor = '';
+  differenceFontColor = '';
 
   faPlus = faPlus;
 
@@ -32,22 +42,42 @@ export class AppComponent implements OnInit {
     this.funds = this.lineItemService.getLineItems(this.fundsKey) ?? [];
     this.monthlies = this.lineItemService.getLineItems(this.monthliesKey) ?? [];
     this.nonMonthlies = this.lineItemService.getLineItems(this.nonMonthliesKey) ?? [];
+    this.updateDifference();
+  }
+
+  updateDifference() {
+    this.incomeSum = this.incomes.reduce((n, {amount}) => n + amount, 0);
+    this.fundsSum = this.funds.reduce((n, {amount}) => n + amount, 0);
+    this.monthliesSum = this.monthlies.reduce((n, {amount}) => n + amount, 0);
+    this.nonMonthliesSum = this.nonMonthlies.reduce((n, {amount}) => n + amount, 0);
+    this.difference = this.incomeSum - this.fundsSum - this.monthliesSum - this.nonMonthliesSum;
+
+    if (this.difference == 0) {
+      this.differenceBackgroundColor = 'green';
+      this.differenceFontColor = 'white';
+    } else if (this.difference < 0) {
+      this.differenceBackgroundColor = 'red';
+      this.differenceFontColor = 'white';
+    } else {
+      this.differenceBackgroundColor = 'yellow';
+      this.differenceFontColor = 'black';
+    }
   }
 
   addIncome() {
-    this.addLineItem(this.incomesKey, this.incomes)
+    this.addLineItem(this.incomesKey, this.incomes);
   }
 
   addFund() {
-    this.addLineItem(this.fundsKey, this.funds)
+    this.addLineItem(this.fundsKey, this.funds);
   }
 
   addMonthly() {
-    this.addLineItem(this.monthliesKey, this.monthlies)
+    this.addLineItem(this.monthliesKey, this.monthlies);
   }
 
   addPlanned() {
-    this.addLineItem(this.nonMonthliesKey, this.nonMonthlies)
+    this.addLineItem(this.nonMonthliesKey, this.nonMonthlies);
   }
 
   saveIncomes() {
@@ -92,10 +122,12 @@ export class AppComponent implements OnInit {
 
     array.push(newIncome);
     this.lineItemService.saveLineItems(key, array);
+    this.updateDifference();
   }
 
   private saveLineItems(key : string, array : LineItem[]) {
     this.lineItemService.saveLineItems(key, array);
+    this.updateDifference();
   }
 
   private deleteLineItem(id : number, key : string, array : LineItem[]) {
@@ -103,8 +135,6 @@ export class AppComponent implements OnInit {
     array.splice(toDelete, 1);
 
     this.lineItemService.saveLineItems(key, array);
+    this.updateDifference();
   }
-
-  // I'll need this later
-  incomeSum = this.incomes.reduce((n, {amount}) => n + amount, 0);
 }
