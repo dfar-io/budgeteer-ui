@@ -6,3 +6,7 @@
 .line-item-amount {
     margin-left: auto;
 }
+
+mat-icon {
+    color: #efefef;
+}

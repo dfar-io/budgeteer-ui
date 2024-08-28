@@ -4,7 +4,8 @@
             <mat-icon>{{ toggleIcon }}</mat-icon>
         </button>
         <h2>{{ title }}</h2>
-        <button mat-mini-fab (click)="onAdd()" class="add">
+        <div class="sum">{{ sum | currency }}</div>
+        <button mat-mini-fab (click)="onAdd()" class="add" [ngClass]="{ 'visible' : isVisible }">
             <mat-icon>add</mat-icon>
         </button>
     </div>
