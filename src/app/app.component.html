@@ -4,45 +4,36 @@
     <div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
       {{ difference | number: '1.2' }}
     </div><br />
-    <!-- category component would be this section -->
-    <h2>Incomes</h2><fa-icon [icon]="faPlus" (click)="addIncome()"></fa-icon>
-    @if (incomes !== null && incomes.length > 0) {
-      @for (income of incomes; track income.id) {
-        <app-line-item [lineItem]="income" (save)="saveIncomes()" (delete)="deleteIncome(income.id)"></app-line-item>
-      }
-    }
-    @else {
-        <div>No incomes.</div>
-    }
-
-    <h2>Funds</h2><fa-icon [icon]="faPlus" (click)="addFund()"></fa-icon>
-    @if (funds !== null && funds.length > 0) {
-      @for (fund of funds; track fund.id) {
-        <app-line-item [lineItem]="fund" (save)="saveFunds()" (delete)="deleteFund(fund.id)"></app-line-item>
-      }
-    }
-    @else {
-        <div>No funds.</div>
-    }
-
-    <h2>Monthlies</h2><fa-icon [icon]="faPlus" (click)="addMonthly()"></fa-icon>
-    @if (monthlies !== null && monthlies.length > 0) {
-      @for (monthly of monthlies; track monthly.id) {
-        <app-line-item [lineItem]="monthly" (save)="saveMonthlies()" (delete)="deleteMonthly(monthly.id)"></app-line-item>
-      }
-    }
-    @else {
-        <div>No monthlies.</div>
-    }
-
-    <h2>Non-Monthlies</h2><fa-icon [icon]="faPlus" (click)="addPlanned()"></fa-icon>
-    @if (nonMonthlies !== null && nonMonthlies.length > 0) {
-      @for (nonMonthly of nonMonthlies; track nonMonthly.id) {
-        <app-line-item [lineItem]="nonMonthly" (save)="savePlanned()" (delete)="deletePlanned(nonMonthly.id)"></app-line-item>
-      }
-    }
-    @else {
-        <div>No non-monthlies.</div>
-    }
+    <app-category
+      title="Incomes"
+      [lineItems]="this.incomes"
+      emptyMessage="No incomes."
+      (add)="addIncome()"
+      (save)="saveIncomes()"
+      (delete)="deleteIncome($event)"></app-category>
+    <app-category
+      title="Funds"
+      [lineItems]="this.funds"
+      emptyMessage="No funds."
+      [difference]="difference"
+      (add)="addFund()"
+      (save)="saveFunds()"
+      (delete)="deleteFund($event)"></app-category>
+    <app-category
+      title="Monthlies"
+      [lineItems]="this.monthlies"
+      emptyMessage="No monthly expenses."
+      [difference]="difference"
+      (add)="addMonthly()"
+      (save)="saveMonthlies()"
+      (delete)="deleteMonthly($event)"></app-category>
+    <app-category
+      title="Planned"
+      [lineItems]="this.nonMonthlies"
+      emptyMessage="No planned expenses."
+      [difference]="difference"
+      (add)="addPlanned()"
+      (save)="savePlanned()"
+      (delete)="deletePlanned($event)"></app-category>
   </div>
 </main>

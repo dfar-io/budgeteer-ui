@@ -1,6 +1,25 @@
 <div class="line-item">
     <div class="line-item-name">{{ lineItem.name }}</div>
     <div class="line-item-amount">{{ lineItem.amount | number: '1.2' }}</div>
-    <fa-icon [icon]="faEdit" (click)="openDialog()"></fa-icon>
-    <fa-icon [icon]="faTrash" (click)="onDelete()"></fa-icon>
+    <div class="line-item-actions">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            @if (difference !== undefined) {
+                <button mat-menu-item (click)="applyClick()">
+                    <mat-icon>sync</mat-icon>
+                    <span>Apply</span>
+                </button>
+            }
+            <button mat-menu-item (click)="editClick()">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="deleteClick()">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+            </button>
+        </mat-menu>
+    </div>
 </div>
