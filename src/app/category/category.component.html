@@ -1,16 +1,21 @@
 <div class="category">
     <div class="category-header">
+        <button mat-mini-fab (click)="toggle()">
+            <mat-icon>{{ toggleIcon }}</mat-icon>
+        </button>
         <h2>{{ title }}</h2>
-        <button mat-mini-fab (click)="onAdd()">
+        <button mat-mini-fab (click)="onAdd()" class="add">
             <mat-icon>add</mat-icon>
         </button>
     </div>
-    @if (lineItems !== null && lineItems.length > 0) {
-        @for (lineItem of lineItems; track lineItem.id) {
-            <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="onSave()" (delete)="onDelete(lineItem.id)"></app-line-item>
+    <div class="category-content" [ngClass]="{ 'visible' : isVisible }">
+        @if (lineItems !== null && lineItems.length > 0) {
+            @for (lineItem of lineItems; track lineItem.id) {
+                <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="onSave()" (delete)="onDelete(lineItem.id)"></app-line-item>
+            }
         }
-    }
-    @else {
-        <p>{{ emptyMessage }}</p>
-    }
+        @else {
+            <p>{{ emptyMessage }}</p>
+        }
+    </div>
 </div>
