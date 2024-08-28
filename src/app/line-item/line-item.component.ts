@@ -1,18 +1,19 @@
 import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { LineItem } from './line-item';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   MatDialog
 } from '@angular/material/dialog';
 import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-line-item',
   standalone: true,
-  imports: [DecimalPipe, FontAwesomeModule],
+  imports: [DecimalPipe, MatButtonModule, MatIconModule, MatMenuModule],
   templateUrl: './line-item.component.html',
   styleUrl: './line-item.component.css',
   //for dialog
@@ -20,12 +21,11 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
 })
 export class LineItemComponent implements OnInit {
   @Input() lineItem! : LineItem;
+  @Input() difference!: number;
   @Output() save = new EventEmitter<LineItem>();
   @Output() delete = new EventEmitter<number>();
 
   readonly dialog = inject(MatDialog);
-  faEdit = faEdit;
-  faTrash = faTrash;
 
   public ngOnInit(): void {
     if (!this.lineItem) {
@@ -33,7 +33,7 @@ export class LineItemComponent implements OnInit {
     }
   }
 
-  openDialog() {
+  editClick() {
     const dialogRef = this.dialog.open(AddEditDialogComponent, {
       data: {name: this.lineItem.name, amount: this.lineItem.amount},
     });
@@ -47,15 +47,20 @@ export class LineItemComponent implements OnInit {
     });
   }
 
-  onDelete() {
+  deleteClick() {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {name: this.lineItem.name},
     });
     
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.delete.emit();
+        this.delete.emit(this.lineItem.id);
       }
     });
+  }
+
+  applyClick() {
+    this.lineItem.amount += this.difference;
+    this.save.emit(this.lineItem);
   }
 }

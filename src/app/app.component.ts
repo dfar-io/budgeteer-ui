@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LineItemComponent } from './line-item/line-item.component';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { LineItemService } from './line-item/line-item.service';
 import { LineItem } from './line-item/line-item';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { CategoryComponent } from './category/category.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FontAwesomeModule, LineItemComponent, DecimalPipe, CommonModule],
+  imports: [FontAwesomeModule, CategoryComponent, DecimalPipe, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

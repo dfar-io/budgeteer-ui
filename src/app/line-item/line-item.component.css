@@ -1,18 +1,8 @@
 .line-item {
     display: flex;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.line-item-name {
-    width: 75%;
+    align-items: center;
 }
 
 .line-item-amount {
-    width: 25%;
-    text-align: right;
-}
-
-fa-icon {
-    margin-left: 0.5rem;
+    margin-left: auto;
 }
