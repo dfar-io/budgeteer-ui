@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { LineItem } from './line-item';
 import {
   MatDialog
@@ -13,7 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-line-item',
   standalone: true,
-  imports: [DecimalPipe, MatButtonModule, MatIconModule, MatMenuModule],
+  imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule],
   templateUrl: './line-item.component.html',
   styleUrl: './line-item.component.css',
   //for dialog

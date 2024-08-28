@@ -23,9 +23,9 @@ export class CategoryComponent implements OnInit {
 
   isVisible! : boolean
   toggleIcon = 'keyboard_arrow_right';
+  sum = 0;
 
   public ngOnInit(): void {
-    console.log(this.difference);
     if (!this.title) {
       throw (new Error("The required input [title] was not provided"));
     }
@@ -35,23 +35,31 @@ export class CategoryComponent implements OnInit {
     if (!this.emptyMessage) {
       throw (new Error("The required input [emptyMessage] was not provided"));
     }
+
+    this.updateSum();
+  }
+  
+  updateSum() {
+    this.sum = this.lineItems.reduce((n, {amount}) => n + amount, 0);
   }
 
   toggle() {
     this.isVisible = !this.isVisible;
     this.toggleIcon = this.isVisible ? 'keyboard_arrow_down' : 'keyboard_arrow_right';
-    console.log(this.toggleIcon);
   }
 
   onAdd() {
     this.add.emit();
+    this.updateSum();
   }
 
   onSave() {
     this.save.emit();
+    this.updateSum();
   }
 
   onDelete(lineItemId : number) {
     this.delete.emit(lineItemId);
+    this.updateSum();
   }
 }
