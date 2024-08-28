@@ -4,6 +4,21 @@
 
 .category-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+}
+
+.category-content {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+.add {
+    margin-left: auto;
+}
+
+h2 {
+    margin-left: 0.25rem;
 }

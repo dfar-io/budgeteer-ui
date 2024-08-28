@@ -3,11 +3,12 @@ import { LineItem } from '../line-item/line-item';
 import { LineItemComponent } from '../line-item/line-item.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [LineItemComponent, MatButtonModule, MatIconModule],
+  imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css'
 })
@@ -20,6 +21,9 @@ export class CategoryComponent implements OnInit {
   @Output() save = new EventEmitter();
   @Output() delete = new EventEmitter<number>();
 
+  isVisible! : boolean
+  toggleIcon = 'keyboard_arrow_right';
+
   public ngOnInit(): void {
     console.log(this.difference);
     if (!this.title) {
@@ -31,6 +35,12 @@ export class CategoryComponent implements OnInit {
     if (!this.emptyMessage) {
       throw (new Error("The required input [emptyMessage] was not provided"));
     }
+  }
+
+  toggle() {
+    this.isVisible = !this.isVisible;
+    this.toggleIcon = this.isVisible ? 'keyboard_arrow_down' : 'keyboard_arrow_right';
+    console.log(this.toggleIcon);
   }
 
   onAdd() {
