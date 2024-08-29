@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { LineItemService } from './line-item/line-item.service';
 import { LineItem } from './line-item/line-item';
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CategoryComponent } from './category/category.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CategoryComponent, DecimalPipe, CommonModule],
+  imports: [CategoryComponent, CurrencyPipe, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
