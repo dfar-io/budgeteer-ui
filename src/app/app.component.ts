@@ -3,6 +3,7 @@ import { LineItemService } from './line-item/line-item.service';
 import { LineItem } from './line-item/line-item';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CategoryComponent } from './category/category.component';
+import { Money } from 'ts-money';
 
 @Component({
   selector: 'app-root',
@@ -42,11 +43,16 @@ export class AppComponent implements OnInit {
   }
 
   updateDifference() {
-    this.incomeSum = this.incomes.reduce((n, {amount}) => n + amount, 0);
-    this.fundsSum = this.funds.reduce((n, {amount}) => n + amount, 0);
-    this.monthliesSum = this.monthlies.reduce((n, {amount}) => n + amount, 0);
-    this.nonMonthliesSum = this.nonMonthlies.reduce((n, {amount}) => n + amount, 0);
-    this.difference = this.incomeSum - this.fundsSum - this.monthliesSum - this.nonMonthliesSum;
+    this.incomeSum = this.generateSum(this.incomes);
+    this.fundsSum = this.generateSum(this.funds);
+    this.monthliesSum = this.generateSum(this.monthlies);
+    this.nonMonthliesSum = this.generateSum(this.nonMonthlies);
+    let moneyCalc = new Money(0, 'USD');
+    moneyCalc = moneyCalc.add(Money.fromDecimal(this.incomeSum, 'USD'));
+    moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.fundsSum, 'USD'));
+    moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.monthliesSum, 'USD'));
+    moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.nonMonthliesSum, 'USD'));
+    this.difference = moneyCalc.amount / 100;
 
     if (this.difference == 0) {
       this.differenceBackgroundColor = 'green';
@@ -132,5 +138,13 @@ export class AppComponent implements OnInit {
 
     this.lineItemService.saveLineItems(key, array);
     this.updateDifference();
+  }
+
+  private generateSum(lineItems: LineItem[]): number {
+    let moneyCalc = new Money(0, 'USD');
+    lineItems.forEach(li => {
+      moneyCalc = moneyCalc.add(Money.fromDecimal(li.amount, 'USD'));
+    });
+    return moneyCalc.amount / 100;
   }
 }

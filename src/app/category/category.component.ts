@@ -4,6 +4,7 @@ import { LineItemComponent } from '../line-item/line-item.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { Money } from 'ts-money'
 
 @Component({
   selector: 'app-category',
@@ -40,7 +41,11 @@ export class CategoryComponent implements OnInit {
   }
   
   updateSum() {
-    this.sum = this.lineItems.reduce((n, {amount}) => n + amount, 0);
+    let moneyCalc = new Money(0, 'USD');
+    this.lineItems.forEach(li => {
+      moneyCalc = moneyCalc.add(Money.fromDecimal(li.amount, 'USD'));
+    });
+    this.sum = moneyCalc.amount / 100;
   }
 
   toggle() {

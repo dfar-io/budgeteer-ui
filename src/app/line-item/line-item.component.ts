@@ -9,6 +9,7 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { Money } from 'ts-money';
 
 @Component({
   selector: 'app-line-item',
@@ -60,7 +61,9 @@ export class LineItemComponent implements OnInit {
   }
 
   applyClick() {
-    this.lineItem.amount += this.difference;
+    let moneyCalc = Money.fromDecimal(this.lineItem.amount, 'USD');
+    moneyCalc = moneyCalc.add(Money.fromDecimal(this.difference, 'USD'));
+    this.lineItem.amount = moneyCalc.amount / 100;
     this.save.emit(this.lineItem);
   }
 }
