@@ -23,7 +23,6 @@
       title="Monthly"
       [lineItems]="this.monthlies"
       emptyMessage="No monthly expenses."
-      [difference]="difference"
       (add)="addMonthly()"
       (save)="saveMonthlies()"
       (delete)="deleteMonthly($event)"></app-category>
@@ -31,7 +30,6 @@
       title="Planned"
       [lineItems]="this.nonMonthlies"
       emptyMessage="No planned expenses."
-      [difference]="difference"
       (add)="addPlanned()"
       (save)="savePlanned()"
       (delete)="deletePlanned($event)"></app-category>
