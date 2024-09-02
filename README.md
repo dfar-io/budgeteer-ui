@@ -15,10 +15,7 @@ Terraform is set up within the Codespace and can be run manually within the Code
 
 ```
 cd tf
-export GITHUB_TOKEN=
-gh auth login
-gcloud auth application-default login
-terraform init
+. ./init.sh
 terraform apply
 ```
 
