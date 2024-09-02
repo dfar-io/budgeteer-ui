@@ -4,12 +4,19 @@ import { LineItemComponent } from '../line-item/line-item.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Money } from 'ts-money'
+import { Money } from 'ts-money';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  CdkDragPlaceholder,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule],
+  imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragPlaceholder],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css'
 })
@@ -38,6 +45,11 @@ export class CategoryComponent implements OnInit {
     }
 
     this.updateSum();
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.lineItems, event.previousIndex, event.currentIndex);
+    this.save.emit();
   }
   
   updateSum() {
