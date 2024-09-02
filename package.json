@@ -23,8 +23,8 @@
     "@angular/router": "^18.2.2",
     "rxjs": "~7.8.0",
     "ts-money": "^0.4.8",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.14.10"
+    "tslib": "^2.7.0",
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.2",
@@ -32,7 +32,7 @@
     "@angular/compiler-cli": "^18.2.2",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "18.3.0",
-    "eslint": "^9.9.0",
+    "eslint": "^9.9.1",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
@@ -40,6 +40,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.5.4",
-    "typescript-eslint": "8.1.0"
+    "typescript-eslint": "8.3.0"
   }
 }
