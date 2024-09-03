@@ -29,6 +29,17 @@ h2 {
     display: block;
 }
 
+.category-item {
+    display: flex;
+    align-items: center;
+
+}
+
+app-line-item {
+    margin-left: 0.5rem;
+    width: 100%;
+}
+
 /* drag and drop */ 
 .cdk-drag-preview {
     border: none;
