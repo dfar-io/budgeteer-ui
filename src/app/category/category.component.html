@@ -13,6 +13,9 @@
         @if (lineItems !== null && lineItems.length > 0) {
             @for (lineItem of lineItems; track lineItem.id) {
                 <div class="category-item" cdkDrag>
+                    <span cdkDragHandle>
+                        <mat-icon>drag_handle</mat-icon>
+                    </span>
                     <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="onSave()" (delete)="onDelete(lineItem.id)"></app-line-item>
                 </div>
             }
