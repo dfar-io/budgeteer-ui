@@ -27,7 +27,7 @@
       (delete)="deleteMonthly($event)"></app-category>
     <app-category
       title="Planned"
-      [lineItems]="this.nonMonthlies"
+      [lineItems]="this.planned"
       emptyMessage="No planned expenses."
       [usePaymentMonth]="true"
       (add)="addPlanned()"
