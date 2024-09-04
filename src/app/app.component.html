@@ -1,13 +1,11 @@
 <main class="main">
   <div class="content">
-    <h1>Budgeteer</h1>
-    <div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
-      {{ difference | currency }}
-    </div><br />
+    <app-header></app-header>
+    
     <app-category
-      title="Incomes"
+      title="Income"
       [lineItems]="this.incomes"
-      emptyMessage="No incomes."
+      emptyMessage="No income."
       (add)="addIncome()"
       (save)="saveIncomes()"
       (delete)="deleteIncome($event)"></app-category>
@@ -23,6 +21,7 @@
       title="Monthly"
       [lineItems]="this.monthlies"
       emptyMessage="No monthly expenses."
+      [usePaymentDay]="true"
       (add)="addMonthly()"
       (save)="saveMonthlies()"
       (delete)="deleteMonthly($event)"></app-category>
@@ -30,8 +29,12 @@
       title="Planned"
       [lineItems]="this.nonMonthlies"
       emptyMessage="No planned expenses."
+      [usePaymentMonth]="true"
       (add)="addPlanned()"
       (save)="savePlanned()"
       (delete)="deletePlanned($event)"></app-category>
+    <div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
+      {{ difference | currency }}
+    </div>
   </div>
 </main>

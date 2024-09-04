@@ -41,7 +41,5 @@ div.difference {
   font-weight: bold;
   font-size: 2rem;
   position: sticky;
-  top: 0px;
-  /* keep below 1000 for material dialog */
-  z-index: 500;
+  bottom: 0px;
 }

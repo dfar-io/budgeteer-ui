@@ -1,5 +1,5 @@
 <div class="line-item">
-    <div class="line-item-name">{{ lineItem.name }}</div>
+    <div class="line-item-name">{{ usePaymentDay ? lineItem.paymentDay + ' ' + lineItem.name : lineItem.name }}</div>
     <div class="line-item-amount">{{ lineItem.amount | currency }}</div>
     <div class="line-item-actions">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -7,7 +7,7 @@
         </button>
         <mat-menu #menu="matMenu">
             @if (difference !== undefined) {
-                <button mat-menu-item (click)="applyClick()">
+                <button mat-menu-item (click)="applyClick()" disabled="{{ difference === 0 }}">
                     <mat-icon>sync</mat-icon>
                     <span>Apply</span>
                 </button>

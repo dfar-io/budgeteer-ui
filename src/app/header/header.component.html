@@ -1,0 +1,18 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+      <span class="title">Budgeteer</span>
+      <span class="spacer"></span>
+      <button mat-icon-button class="menu" [matMenuTriggerFor]="menu" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+            <span>Budget</span>
+        </button>
+        <button mat-menu-item>
+            <span>Accounts</span>
+        </button>
+    </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
+  
