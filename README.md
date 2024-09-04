@@ -1,8 +1,25 @@
 ![CICD](https://github.com/dfar-io/budgeteer/actions/workflows/cicd.yml/badge.svg)
+![TFLint](https://github.com/dfar-io/budgeteer/actions/workflows/tflint.yml/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/66f6382b0c80a71ea41f/maintainability)](https://codeclimate.com/github/dfar-io/budgeteer/maintainability)
 
 # Budgeteer
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+
+## Run CodeClimate
+
+First, install:
+
+```
+curl -L https://github.com/codeclimate/codeclimate/archive/master.tar.gz | tar xvz
+cd codeclimate-* && sudo make install && cd ..
+```
+
+Then to run:
+
+```
+codeclimate analyze
+```
 
 ## Update Packages
 

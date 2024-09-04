@@ -17,12 +17,12 @@ export class AppComponent implements OnInit {
   incomes: LineItem[] = [];
   funds: LineItem[] = [];
   monthlies: LineItem[] = [];
-  nonMonthlies: LineItem[] = [];
+  planned: LineItem[] = [];
 
   incomeSum = 0;
   fundsSum = 0;
   monthliesSum = 0;
-  nonMonthliesSum = 0;
+  plannedSum = 0;
   difference = 0;
 
   differenceBackgroundColor = '';
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   private readonly incomesKey = 'incomes';
   private readonly fundsKey = 'funds';
   private readonly monthliesKey = 'monthlies';
-  private readonly nonMonthliesKey = 'nonMonthlies';
+  private readonly plannedKey = 'plannedKey';
 
   constructor(private lineItemService: LineItemService) {}
 
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     this.incomes = this.lineItemService.getLineItems(this.incomesKey) ?? [];
     this.funds = this.lineItemService.getLineItems(this.fundsKey) ?? [];
     this.monthlies = this.lineItemService.getLineItems(this.monthliesKey) ?? [];
-    this.nonMonthlies = this.lineItemService.getLineItems(this.nonMonthliesKey) ?? [];
+    this.planned = this.lineItemService.getLineItems(this.plannedKey) ?? [];
     this.updateDifference();
   }
 
@@ -47,12 +47,12 @@ export class AppComponent implements OnInit {
     this.incomeSum = this.generateSum(this.incomes);
     this.fundsSum = this.generateSum(this.funds);
     this.monthliesSum = this.generateSum(this.monthlies);
-    this.nonMonthliesSum = this.generateSum(this.nonMonthlies);
+    this.plannedSum = this.generateSum(this.planned);
     let moneyCalc = new Money(0, 'USD');
     moneyCalc = moneyCalc.add(Money.fromDecimal(this.incomeSum, 'USD'));
     moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.fundsSum, 'USD'));
     moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.monthliesSum, 'USD'));
-    moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.nonMonthliesSum, 'USD'));
+    moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.plannedSum, 'USD'));
     this.difference = moneyCalc.amount / 100;
 
     if (this.difference == 0) {
@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
   }
 
   addPlanned() {
-    this.addLineItem(this.nonMonthliesKey, this.nonMonthlies, 'usePaymentMonth');
+    this.addLineItem(this.plannedKey, this.planned, 'usePaymentMonth');
     this.sortPlanned();
   }
 
@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
   }
 
   savePlanned() {
-    this.saveLineItems(this.nonMonthliesKey, this.nonMonthlies);
+    this.saveLineItems(this.plannedKey, this.planned);
     this.sortPlanned();
   }
 
@@ -116,37 +116,41 @@ export class AppComponent implements OnInit {
   }
 
   deletePlanned(id : number) {
-    this.deleteLineItem(id, this.nonMonthliesKey, this.nonMonthlies);
+    this.deleteLineItem(id, this.plannedKey, this.planned);
   }
 
   private addLineItem(key : string, array : LineItem[], options? : string) {
+    const newLineItem = this.createNewLineItem(options)
+    array.push(newLineItem);
+    this.lineItemService.saveLineItems(key, array);
+    this.updateDifference();
+  }
+
+  private createNewLineItem(options: string | undefined) {
     const randomDecimal = Math.random() * (10000 - 1) + 1;
     const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
     const name = "New Line Item";
     const amount = parseFloat(randomDecimal.toFixed(2));
-    const newIncome = options == 'usePaymentDay' ?
-    {
-      id: randomId,
-      name: name,
-      amount: amount,
-      paymentDay: Math.floor(Math.random() * (28 - 1 + 1)) + 1
-    } : 
-    options == 'usePaymentMonth' ? 
-    {
-      id: randomId,
-      name: name,
-      amount: amount,
-      paymentMonth: Math.floor(Math.random() * (12 - 1 + 1)) + 1
-    } :
-    {
-      id: randomId,
-      name: name,
-      amount: amount,
-    }
 
-    array.push(newIncome);
-    this.lineItemService.saveLineItems(key, array);
-    this.updateDifference();
+    return options == 'usePaymentDay' ?
+      {
+        id: randomId,
+        name: name,
+        amount: amount,
+        paymentDay: Math.floor(Math.random() * (28 - 1 + 1)) + 1
+      } :
+      options == 'usePaymentMonth' ?
+        {
+          id: randomId,
+          name: name,
+          amount: amount,
+          paymentMonth: Math.floor(Math.random() * (12 - 1 + 1)) + 1
+        } :
+        {
+          id: randomId,
+          name: name,
+          amount: amount,
+        };
   }
 
   private saveLineItems(key : string, array : LineItem[]) {
@@ -179,7 +183,7 @@ export class AppComponent implements OnInit {
   }
 
   private sortPlanned() {
-    this.nonMonthlies.sort((a, b) => {
+    this.planned.sort((a, b) => {
       if (a.paymentMonth === undefined) return 1;
       if (b.paymentMonth === undefined) return -1;
       return a.paymentMonth - b.paymentMonth;
