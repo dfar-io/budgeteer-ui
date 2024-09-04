@@ -1,5 +1,6 @@
 ## other configuration excluded from example...
 exclude_patterns:
+- ".angular/"
 - "codeclimate-master/"
 - "config/"
 - "db/"

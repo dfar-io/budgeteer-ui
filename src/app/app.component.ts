@@ -28,10 +28,10 @@ export class AppComponent implements OnInit {
   differenceBackgroundColor = '';
   differenceFontColor = '';
 
-  private readonly incomesKey = 'incomes';
-  private readonly fundsKey = 'funds';
-  private readonly monthliesKey = 'monthlies';
-  private readonly plannedKey = 'plannedKey';
+  readonly incomesKey = 'incomes';
+  readonly fundsKey = 'funds';
+  readonly monthliesKey = 'monthlies';
+  readonly plannedKey = 'plannedKey';
 
   constructor(private lineItemService: LineItemService) {}
 
@@ -67,22 +67,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  addIncome() {
-    this.addLineItem(this.incomesKey, this.incomes);
-  }
-
-  addFund() {
-    this.addLineItem(this.fundsKey, this.funds);
-  }
-
   addMonthly() {
     this.addLineItem(this.monthliesKey, this.monthlies, 'usePaymentDay');
-    this.sortMonthlies();
+    this.monthlies = this.sortLineItems(this.monthlies, 'paymentDay');
   }
 
   addPlanned() {
     this.addLineItem(this.plannedKey, this.planned, 'usePaymentMonth');
-    this.sortPlanned();
+    this.planned = this.sortLineItems(this.planned, 'paymentMonth');
   }
 
   saveIncomes() {
@@ -95,12 +87,12 @@ export class AppComponent implements OnInit {
 
   saveMonthlies() {
     this.saveLineItems(this.monthliesKey, this.monthlies);
-    this.sortMonthlies();
+    this.monthlies = this.sortLineItems(this.monthlies, 'paymentDay');
   }
 
   savePlanned() {
     this.saveLineItems(this.plannedKey, this.planned);
-    this.sortPlanned();
+    this.planned = this.sortLineItems(this.planned, 'paymentMonth');
   }
 
   deleteIncome(id : number) {
@@ -119,7 +111,7 @@ export class AppComponent implements OnInit {
     this.deleteLineItem(id, this.plannedKey, this.planned);
   }
 
-  private addLineItem(key : string, array : LineItem[], options? : string) {
+  addLineItem(key : string, array : LineItem[], options? : string) {
     const newLineItem = this.createNewLineItem(options)
     array.push(newLineItem);
     this.lineItemService.saveLineItems(key, array);
@@ -174,19 +166,22 @@ export class AppComponent implements OnInit {
     return moneyCalc.amount / 100;
   }
 
-  private sortMonthlies() {
-    this.monthlies.sort((a, b) => {
-      if (a.paymentDay === undefined) return 1;
-      if (b.paymentDay === undefined) return -1;
-      return a.paymentDay - b.paymentDay;
-    });
-  }
-
-  private sortPlanned() {
-    this.planned.sort((a, b) => {
-      if (a.paymentMonth === undefined) return 1;
-      if (b.paymentMonth === undefined) return -1;
-      return a.paymentMonth - b.paymentMonth;
+  private sortLineItems<LineItem>(array: LineItem[], property: keyof LineItem): LineItem[] {
+    // Check if the property exists on the objects in the array
+    if (array.length === 0 || !property) {
+      return array;
+    }
+  
+    // Sort the array based on the property
+    return array.slice().sort((a, b) => {
+      // Handle sorting for properties that may be numbers or strings
+      if (a[property] < b[property]) {
+        return -1;
+      }
+      if (a[property] > b[property]) {
+        return 1;
+      }
+      return 0;
     });
   }
 }
