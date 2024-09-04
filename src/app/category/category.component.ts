@@ -22,10 +22,12 @@ import {
   styleUrl: './category.component.css'
 })
 export class CategoryComponent implements OnInit {
-  @Input() title!: string
-  @Input() lineItems!: LineItem[]
-  @Input() emptyMessage!: string
-  @Input() difference!: number
+  @Input() title!: string;
+  @Input() lineItems!: LineItem[];
+  @Input() emptyMessage!: string;
+  @Input() difference!: number;
+  @Input() usePaymentDay = false;
+  @Input() usePaymentMonth = false;
   @Output() add = new EventEmitter();
   @Output() save = new EventEmitter();
   @Output() delete = new EventEmitter<number>();
@@ -67,7 +69,10 @@ export class CategoryComponent implements OnInit {
   }
 
   onAdd() {
-    this.add.emit();
+    this.add.emit({
+      usePaymentDay: this.usePaymentDay,
+      usePaymentMonth: this.usePaymentMonth
+    });
     this.updateSum();
   }
 

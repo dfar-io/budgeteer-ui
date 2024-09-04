@@ -23,6 +23,8 @@ import { Money } from 'ts-money';
 export class LineItemComponent implements OnInit {
   @Input() lineItem! : LineItem;
   @Input() difference!: number;
+  @Input() usePaymentDay = false;
+  @Input() usePaymentMonth = false;
   @Output() save = new EventEmitter<LineItem>();
   @Output() delete = new EventEmitter<number>();
 
@@ -36,13 +38,24 @@ export class LineItemComponent implements OnInit {
 
   editClick() {
     const dialogRef = this.dialog.open(AddEditDialogComponent, {
-      data: {name: this.lineItem.name, amount: this.lineItem.amount},
+      data: {
+        name: this.lineItem.name,
+        amount: this.lineItem.amount,
+        paymentDay: this.lineItem.paymentDay,
+        paymentMonth: this.lineItem.paymentMonth
+      }
     });
     
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         this.lineItem.name = result.name;
         this.lineItem.amount = parseFloat(result.amount);
+        if (this.lineItem.paymentDay) {
+          this.lineItem.paymentDay = result.paymentDay;
+        }
+        if (this.lineItem.paymentMonth) {
+          this.lineItem.paymentMonth = result.paymentMonth;
+        }
         this.save.emit(this.lineItem);
       }
     });

@@ -4,11 +4,12 @@ import { LineItem } from './line-item/line-item';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CategoryComponent } from './category/category.component';
 import { Money } from 'ts-money';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CategoryComponent, CurrencyPipe, CommonModule],
+  imports: [CategoryComponent, CurrencyPipe, CommonModule, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -75,11 +76,13 @@ export class AppComponent implements OnInit {
   }
 
   addMonthly() {
-    this.addLineItem(this.monthliesKey, this.monthlies);
+    this.addLineItem(this.monthliesKey, this.monthlies, 'usePaymentDay');
+    this.sortMonthlies();
   }
 
   addPlanned() {
-    this.addLineItem(this.nonMonthliesKey, this.nonMonthlies);
+    this.addLineItem(this.nonMonthliesKey, this.nonMonthlies, 'usePaymentMonth');
+    this.sortPlanned();
   }
 
   saveIncomes() {
@@ -92,10 +95,12 @@ export class AppComponent implements OnInit {
 
   saveMonthlies() {
     this.saveLineItems(this.monthliesKey, this.monthlies);
+    this.sortMonthlies();
   }
 
   savePlanned() {
     this.saveLineItems(this.nonMonthliesKey, this.nonMonthlies);
+    this.sortPlanned();
   }
 
   deleteIncome(id : number) {
@@ -114,12 +119,29 @@ export class AppComponent implements OnInit {
     this.deleteLineItem(id, this.nonMonthliesKey, this.nonMonthlies);
   }
 
-  private addLineItem(key : string, array : LineItem[]) {
+  private addLineItem(key : string, array : LineItem[], options? : string) {
     const randomDecimal = Math.random() * (10000 - 1) + 1;
-    const newIncome = {
-      id: Math.floor(Math.random() * (1000000 - 1 + 1)) + 1,
-      name: 'New Line Item',
-      amount: parseFloat(randomDecimal.toFixed(2))
+    const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
+    const name = "New Line Item";
+    const amount = parseFloat(randomDecimal.toFixed(2));
+    const newIncome = options == 'usePaymentDay' ?
+    {
+      id: randomId,
+      name: name,
+      amount: amount,
+      paymentDay: Math.floor(Math.random() * (28 - 1 + 1)) + 1
+    } : 
+    options == 'usePaymentMonth' ? 
+    {
+      id: randomId,
+      name: name,
+      amount: amount,
+      paymentMonth: Math.floor(Math.random() * (12 - 1 + 1)) + 1
+    } :
+    {
+      id: randomId,
+      name: name,
+      amount: amount,
     }
 
     array.push(newIncome);
@@ -146,5 +168,21 @@ export class AppComponent implements OnInit {
       moneyCalc = moneyCalc.add(Money.fromDecimal(li.amount, 'USD'));
     });
     return moneyCalc.amount / 100;
+  }
+
+  private sortMonthlies() {
+    this.monthlies.sort((a, b) => {
+      if (a.paymentDay === undefined) return 1;
+      if (b.paymentDay === undefined) return -1;
+      return a.paymentDay - b.paymentDay;
+    });
+  }
+
+  private sortPlanned() {
+    this.nonMonthlies.sort((a, b) => {
+      if (a.paymentMonth === undefined) return 1;
+      if (b.paymentMonth === undefined) return -1;
+      return a.paymentMonth - b.paymentMonth;
+    });
   }
 }
