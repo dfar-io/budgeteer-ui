@@ -6,7 +6,7 @@
       title="Income"
       [lineItems]="this.incomes"
       emptyMessage="No income."
-      (add)="addIncome()"
+      (add)="addLineItem(incomesKey, incomes)"
       (save)="saveIncomes()"
       (delete)="deleteIncome($event)"></app-category>
     <app-category
@@ -14,7 +14,7 @@
       [lineItems]="this.funds"
       emptyMessage="No funds."
       [difference]="difference"
-      (add)="addFund()"
+      (add)="addLineItem(fundsKey, funds)"
       (save)="saveFunds()"
       (delete)="deleteFund($event)"></app-category>
     <app-category
@@ -22,15 +22,15 @@
       [lineItems]="this.monthlies"
       emptyMessage="No monthly expenses."
       [usePaymentDay]="true"
-      (add)="addMonthly()"
+      (add)="addLineItem(monthliesKey, monthlies, 'paymentDay')"
       (save)="saveMonthlies()"
       (delete)="deleteMonthly($event)"></app-category>
     <app-category
       title="Planned"
-      [lineItems]="this.nonMonthlies"
+      [lineItems]="this.planned"
       emptyMessage="No planned expenses."
       [usePaymentMonth]="true"
-      (add)="addPlanned()"
+      (add)="addLineItem(plannedKey, planned, 'paymentMonth')"
       (save)="savePlanned()"
       (delete)="deletePlanned($event)"></app-category>
     <div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
