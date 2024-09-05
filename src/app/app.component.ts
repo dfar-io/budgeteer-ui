@@ -67,16 +67,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  addMonthly() {
-    this.addLineItem(this.monthliesKey, this.monthlies, 'usePaymentDay');
-    this.monthlies = this.sortLineItems(this.monthlies, 'paymentDay');
-  }
-
-  addPlanned() {
-    this.addLineItem(this.plannedKey, this.planned, 'usePaymentMonth');
-    this.planned = this.sortLineItems(this.planned, 'paymentMonth');
-  }
-
   saveIncomes() {
     this.saveLineItems(this.incomesKey, this.incomes);
   }
@@ -86,13 +76,11 @@ export class AppComponent implements OnInit {
   }
 
   saveMonthlies() {
-    this.saveLineItems(this.monthliesKey, this.monthlies);
-    this.monthlies = this.sortLineItems(this.monthlies, 'paymentDay');
+    this.saveLineItems(this.monthliesKey, this.monthlies, 'paymentDay');
   }
 
   savePlanned() {
-    this.saveLineItems(this.plannedKey, this.planned);
-    this.planned = this.sortLineItems(this.planned, 'paymentMonth');
+    this.saveLineItems(this.plannedKey, this.planned, 'paymentMonth');
   }
 
   deleteIncome(id : number) {
@@ -111,41 +99,42 @@ export class AppComponent implements OnInit {
     this.deleteLineItem(id, this.plannedKey, this.planned);
   }
 
-  addLineItem(key : string, array : LineItem[], options? : string) {
+  addLineItem(key : string, array : LineItem[], options? : keyof LineItem) {
     const newLineItem = this.createNewLineItem(options)
     array.push(newLineItem);
+    if (options !== undefined) {
+      this.sortLineItems(array, options as keyof LineItem);
+    }
     this.lineItemService.saveLineItems(key, array);
     this.updateDifference();
   }
 
-  private createNewLineItem(options: string | undefined) {
+  private createNewLineItem(options?: keyof LineItem) {
     const randomDecimal = Math.random() * (10000 - 1) + 1;
     const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
     const name = "New Line Item";
     const amount = parseFloat(randomDecimal.toFixed(2));
 
-    return options == 'usePaymentDay' ?
-      {
-        id: randomId,
-        name: name,
-        amount: amount,
-        paymentDay: Math.floor(Math.random() * (28 - 1 + 1)) + 1
-      } :
-      options == 'usePaymentMonth' ?
-        {
-          id: randomId,
-          name: name,
-          amount: amount,
-          paymentMonth: Math.floor(Math.random() * (12 - 1 + 1)) + 1
-        } :
-        {
-          id: randomId,
-          name: name,
-          amount: amount,
-        };
+    const result = {} as LineItem;
+    result.id = randomId;
+    result.name = name;
+    result.amount = amount;
+    result.paymentDay = options == 'paymentDay' ?
+      this.randomInt(28) : undefined;
+    result.paymentMonth = options == 'paymentMonth' ?
+      this.randomInt(12) : undefined;
+    
+    return result;
   }
 
-  private saveLineItems(key : string, array : LineItem[]) {
+  private randomInt(max: number): number {
+    return Math.floor(Math.random() * (max - 1 + 1)) + 1;
+  }
+
+  private saveLineItems(key : string, array : LineItem[], sortProperty?: keyof LineItem) {
+    if (sortProperty !== undefined) {
+      array = this.sortLineItems(array, sortProperty);
+    }
     this.lineItemService.saveLineItems(key, array);
     this.updateDifference();
   }

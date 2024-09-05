@@ -22,7 +22,7 @@
       [lineItems]="this.monthlies"
       emptyMessage="No monthly expenses."
       [usePaymentDay]="true"
-      (add)="addMonthly()"
+      (add)="addLineItem(monthliesKey, monthlies, 'paymentDay')"
       (save)="saveMonthlies()"
       (delete)="deleteMonthly($event)"></app-category>
     <app-category
@@ -30,7 +30,7 @@
       [lineItems]="this.planned"
       emptyMessage="No planned expenses."
       [usePaymentMonth]="true"
-      (add)="addPlanned()"
+      (add)="addLineItem(plannedKey, planned, 'paymentMonth')"
       (save)="savePlanned()"
       (delete)="deletePlanned($event)"></app-category>
     <div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
