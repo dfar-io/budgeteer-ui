@@ -5,6 +5,8 @@
         </button>
         <h2>{{ title }}</h2>
         <div class="sum">{{ sum | currency }}</div>
+    </div>
+    <div class="category-actions">
         <button mat-mini-fab (click)="onAdd()" class="add" [ngClass]="{ 'visible' : isVisible }">
             <mat-icon>add</mat-icon>
         </button>

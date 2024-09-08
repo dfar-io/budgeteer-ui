@@ -1,40 +1,23 @@
 <main class="main">
   <div class="content">
-    <app-header></app-header>
-    
-    <app-category
-      title="Income"
-      [lineItems]="this.incomes"
-      emptyMessage="No income."
-      (add)="addLineItem(incomesKey, incomes)"
-      (save)="saveIncomes()"
-      (delete)="deleteIncome($event)"></app-category>
-    <app-category
-      title="Funds"
-      [lineItems]="this.funds"
-      emptyMessage="No funds."
-      [difference]="difference"
-      (add)="addLineItem(fundsKey, funds)"
-      (save)="saveFunds()"
-      (delete)="deleteFund($event)"></app-category>
-    <app-category
-      title="Monthly"
-      [lineItems]="this.monthlies"
-      emptyMessage="No monthly expenses."
-      [usePaymentDay]="true"
-      (add)="addLineItem(monthliesKey, monthlies, 'paymentDay')"
-      (save)="saveMonthlies()"
-      (delete)="deleteMonthly($event)"></app-category>
-    <app-category
-      title="Planned"
-      [lineItems]="this.planned"
-      emptyMessage="No planned expenses."
-      [usePaymentMonth]="true"
-      (add)="addLineItem(plannedKey, planned, 'paymentMonth')"
-      (save)="savePlanned()"
-      (delete)="deletePlanned($event)"></app-category>
-    <div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
-      {{ difference | currency }}
-    </div>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span class="title">Budgeteer</span>
+        <span class="spacer"></span>
+        <button mat-icon-button class="menu" [matMenuTriggerFor]="menu" aria-label="Menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page" mat-menu-item>
+              <span>Budget</span>
+          </button>
+          <button routerLink="/accounts" routerLinkActive="active" ariaCurrentWhenActive="page" mat-menu-item>
+              <span>Accounts</span>
+          </button>
+      </mat-menu>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
   </div>
 </main>
