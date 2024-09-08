@@ -1,0 +1,34 @@
+<div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
+    {{ difference | currency }}
+</div>
+<app-category
+      title="Income"
+      [lineItems]="this.incomes"
+      emptyMessage="No income."
+      (add)="addLineItem(incomesKey, incomes)"
+      (save)="saveIncomes()"
+      (delete)="deleteIncome($event)"></app-category>
+<app-category
+      title="Funds"
+      [lineItems]="this.funds"
+      emptyMessage="No funds."
+      [difference]="difference"
+      (add)="addLineItem(fundsKey, funds)"
+      (save)="saveFunds()"
+      (delete)="deleteFund($event)"></app-category>
+<app-category
+      title="Monthly"
+      [lineItems]="this.monthlies"
+      emptyMessage="No monthly expenses."
+      [usePaymentDay]="true"
+      (add)="addLineItem(monthliesKey, monthlies, 'paymentDay')"
+      (save)="saveMonthlies()"
+      (delete)="deleteMonthly($event)"></app-category>
+<app-category
+      title="Planned"
+      [lineItems]="this.planned"
+      emptyMessage="No planned expenses."
+      [usePaymentMonth]="true"
+      (add)="addLineItem(plannedKey, planned, 'paymentMonth')"
+      (save)="savePlanned()"
+      (delete)="deletePlanned($event)"></app-category>
