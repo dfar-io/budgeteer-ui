@@ -1,4 +1,8 @@
 export GITHUB_TOKEN=
-gh auth login
+echo 'Logging into GitHub...'
+echo
+gh auth login -p https -w
+echo 'Logging into GCP...'
+echo
 gcloud auth application-default login
 terraform init
