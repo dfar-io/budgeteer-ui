@@ -19,6 +19,9 @@ updates:
    directory: "/"
    schedule:
      interval: weekly
+   ignore:
+     - dependency-name: "zone.js"
+       versions: ["0.15.0"]
    groups:
       npm-deps:
         patterns:
