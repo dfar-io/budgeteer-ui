@@ -16,11 +16,11 @@ terraform {
         }
         random = {
             source  = "hashicorp/random"
-            version = "3.6.2"
+            version = "3.6.3"
         }
         github = {
             source  = "hashicorp/github"
-            version = "6.2.3"
+            version = "6.3.0"
         }
     }
     backend "gcs" {
