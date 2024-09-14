@@ -21,7 +21,7 @@
       [lineItems]="this.monthlies"
       emptyMessage="No monthly expenses."
       [usePaymentDay]="true"
-      (add)="addLineItem(monthliesKey, monthlies, 'paymentDay')"
+      (add)="addMonthly()"
       (save)="saveMonthlies()"
       (delete)="deleteMonthly($event)"></app-category>
 <app-category

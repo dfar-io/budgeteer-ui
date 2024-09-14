@@ -7,7 +7,13 @@
   <mat-form-field>
     <mat-label>Amount</mat-label>
     <input matInput [(ngModel)]="data.amount" />
-  </mat-form-field>
+  </mat-form-field><br />
+  @if (data.paymentDay !== undefined) {
+    <mat-form-field>
+      <mat-label>Payment Day</mat-label>
+      <input matInput [(ngModel)]="data.paymentDay" />
+    </mat-form-field>
+  }
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button [mat-dialog-close]="save()" cdkFocusInitial>Save</button>
