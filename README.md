@@ -26,7 +26,7 @@ codeclimate analyze
 1. Run `ng update`, determine outdated packages.
 2. Run `ng update` with the commands to update specific packages.
 
-## Infratstructure Deployment
+## Infrastructure Deployment
 
 Terraform is set up within the Codespace and can be run manually within the Codepsace as needed.
 
