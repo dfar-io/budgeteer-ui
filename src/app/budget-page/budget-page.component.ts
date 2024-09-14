@@ -66,16 +66,23 @@ export class BudgetPageComponent implements OnInit {
     }
   }
 
+  addMonthly() {
+    const newLineItem = this.createNewLineItem('paymentDay');
+    this.monthlies.push(newLineItem);
+    this.saveMonthlies();
+  }
+
+  saveMonthlies() {
+    this.monthlies = this.sortLineItems(this.monthlies, 'paymentDay');
+    this.saveLineItems(this.monthliesKey, this.monthlies, 'paymentDay');
+  }
+
   saveIncomes() {
     this.saveLineItems(this.incomesKey, this.incomes);
   }
 
   saveFunds() {
     this.saveLineItems(this.fundsKey, this.funds);
-  }
-
-  saveMonthlies() {
-    this.saveLineItems(this.monthliesKey, this.monthlies, 'paymentDay');
   }
 
   savePlanned() {
@@ -98,14 +105,12 @@ export class BudgetPageComponent implements OnInit {
     this.deleteLineItem(id, this.plannedKey, this.planned);
   }
 
+  
+
   addLineItem(key : string, array : LineItem[], options? : keyof LineItem) {
     const newLineItem = this.createNewLineItem(options)
     array.push(newLineItem);
-    if (options !== undefined) {
-      this.sortLineItems(array, options as keyof LineItem);
-    }
     this.lineItemService.saveLineItems(key, array);
-    this.updateDifference();
   }
 
   private createNewLineItem(options?: keyof LineItem) {
@@ -154,7 +159,7 @@ export class BudgetPageComponent implements OnInit {
     return moneyCalc.amount / 100;
   }
 
-  private sortLineItems<LineItem>(array: LineItem[], property: keyof LineItem): LineItem[] {
+  private sortLineItems<LineItem>(array: LineItem[], property?: keyof LineItem): LineItem[] {
     // Check if the property exists on the objects in the array
     if (array.length === 0 || !property) {
       return array;
