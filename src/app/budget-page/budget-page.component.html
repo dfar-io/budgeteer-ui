@@ -21,14 +21,14 @@
       [lineItems]="this.monthlies"
       emptyMessage="No monthly expenses."
       [usePaymentDay]="true"
-      (add)="addMonthly()"
-      (save)="saveMonthlies()"
+      (add)="this.monthlies = addSorted(this.monthlies, this.monthliesKey, 'paymentDay')"
+      (save)="this.monthlies = saveSorted(this.monthlies, this.monthliesKey, 'paymentDay')"
       (delete)="deleteMonthly($event)"></app-category>
 <app-category
       title="Planned"
       [lineItems]="this.planned"
       emptyMessage="No planned expenses."
       [usePaymentMonth]="true"
-      (add)="addPlanned()"
-      (save)="savePlanned()"
+      (add)="this.planned = addSorted(this.planned, this.plannedKey, 'paymentMonth')"
+      (save)="this.planned = saveSorted(this.planned, this.plannedKey, 'paymentMonth')"
       (delete)="deletePlanned($event)"></app-category>

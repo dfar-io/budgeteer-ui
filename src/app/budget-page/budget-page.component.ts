@@ -66,26 +66,16 @@ export class BudgetPageComponent implements OnInit {
     }
   }
 
-  addMonthly() {
-    const newLineItem = this.createNewLineItem('paymentDay');
-    this.monthlies.push(newLineItem);
-    this.saveMonthlies();
+  addSorted(array : LineItem[], key: string, property : keyof LineItem): LineItem[] {
+    const newLineItem = this.createNewLineItem(property);
+    array.push(newLineItem);
+    return this.saveSorted(array, key, property);
   }
 
-  saveMonthlies() {
-    this.monthlies = this.sortLineItems(this.monthlies, 'paymentDay');
-    this.saveLineItems(this.monthliesKey, this.monthlies, 'paymentDay');
-  }
-
-  addPlanned() {
-    const newLineItem = this.createNewLineItem('paymentMonth');
-    this.planned.push(newLineItem);
-    this.savePlanned();
-  }
-
-  savePlanned() {
-    this.planned = this.sortLineItems(this.planned, 'paymentMonth');
-    this.saveLineItems(this.plannedKey, this.planned, 'paymentMonth');
+  saveSorted(array : LineItem[], key: string, property : keyof LineItem): LineItem[] {
+    array = this.sortLineItems(array, property);
+    this.saveLineItems(key, array, property);
+    return array;
   }
 
   saveIncomes() {
