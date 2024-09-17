@@ -66,15 +66,16 @@ export class BudgetPageComponent implements OnInit {
     }
   }
 
-  addMonthly() {
-    const newLineItem = this.createNewLineItem('paymentDay');
-    this.monthlies.push(newLineItem);
-    this.saveMonthlies();
+  addSorted(array : LineItem[], key: string, property : keyof LineItem): LineItem[] {
+    const newLineItem = this.createNewLineItem(property);
+    array.push(newLineItem);
+    return this.saveSorted(array, key, property);
   }
 
-  saveMonthlies() {
-    this.monthlies = this.sortLineItems(this.monthlies, 'paymentDay');
-    this.saveLineItems(this.monthliesKey, this.monthlies, 'paymentDay');
+  saveSorted(array : LineItem[], key: string, property : keyof LineItem): LineItem[] {
+    array = this.sortLineItems(array, property);
+    this.saveLineItems(key, array, property);
+    return array;
   }
 
   saveIncomes() {
@@ -83,10 +84,6 @@ export class BudgetPageComponent implements OnInit {
 
   saveFunds() {
     this.saveLineItems(this.fundsKey, this.funds);
-  }
-
-  savePlanned() {
-    this.saveLineItems(this.plannedKey, this.planned, 'paymentMonth');
   }
 
   deleteIncome(id : number) {
@@ -104,8 +101,6 @@ export class BudgetPageComponent implements OnInit {
   deletePlanned(id : number) {
     this.deleteLineItem(id, this.plannedKey, this.planned);
   }
-
-  
 
   addLineItem(key : string, array : LineItem[], options? : keyof LineItem) {
     const newLineItem = this.createNewLineItem(options)
