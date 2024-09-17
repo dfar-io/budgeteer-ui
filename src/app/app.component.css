@@ -47,4 +47,10 @@ fa-icon {
 div.version {
   text-align: right;
   font-style: italic;
+  padding: 1rem;
+  background-color: #4C4E52;
+}
+
+mat-toolbar {
+  background-color: #4C4E52;
 }

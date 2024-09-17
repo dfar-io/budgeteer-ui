@@ -77,16 +77,23 @@ export class BudgetPageComponent implements OnInit {
     this.saveLineItems(this.monthliesKey, this.monthlies, 'paymentDay');
   }
 
+  addPlanned() {
+    const newLineItem = this.createNewLineItem('paymentMonth');
+    this.planned.push(newLineItem);
+    this.savePlanned();
+  }
+
+  savePlanned() {
+    this.planned = this.sortLineItems(this.planned, 'paymentMonth');
+    this.saveLineItems(this.plannedKey, this.planned, 'paymentMonth');
+  }
+
   saveIncomes() {
     this.saveLineItems(this.incomesKey, this.incomes);
   }
 
   saveFunds() {
     this.saveLineItems(this.fundsKey, this.funds);
-  }
-
-  savePlanned() {
-    this.saveLineItems(this.plannedKey, this.planned, 'paymentMonth');
   }
 
   deleteIncome(id : number) {
@@ -104,8 +111,6 @@ export class BudgetPageComponent implements OnInit {
   deletePlanned(id : number) {
     this.deleteLineItem(id, this.plannedKey, this.planned);
   }
-
-  
 
   addLineItem(key : string, array : LineItem[], options? : keyof LineItem) {
     const newLineItem = this.createNewLineItem(options)

@@ -29,6 +29,6 @@
       [lineItems]="this.planned"
       emptyMessage="No planned expenses."
       [usePaymentMonth]="true"
-      (add)="addLineItem(plannedKey, planned, 'paymentMonth')"
+      (add)="addPlanned()"
       (save)="savePlanned()"
       (delete)="deletePlanned($event)"></app-category>

@@ -51,10 +51,10 @@ export class LineItemComponent implements OnInit {
         this.lineItem.name = result.name;
         this.lineItem.amount = parseFloat(result.amount);
         if (this.lineItem.paymentDay) {
-          this.lineItem.paymentDay = parseFloat(result.paymentDay);
+          this.lineItem.paymentDay = parseInt(result.paymentDay);
         }
         if (this.lineItem.paymentMonth) {
-          this.lineItem.paymentMonth = result.paymentMonth;
+          this.lineItem.paymentMonth = parseInt(result.paymentMonth);
         }
         this.save.emit(this.lineItem);
       }
