@@ -25,7 +25,7 @@ fs.copyFile(templateFile, outputFile, err => {
         replace(gitKey, sha.trim());
 
         var datetime = new Date().toISOString()
-                                 .slice(0,16)
+                                 .slice(0,10)
                                  .replace('T','|')
                                  .replaceAll('-', '.');
           replace(dateKey, datetime.trim());

@@ -1,5 +1,5 @@
 // Only edit the template file, do not edit version.ts directly.
 // value defaults to: "SHA NOT SET" to indicate it has not been changes.
 export const buildConstants = {
-  VERSION: "~DATE~|~GIT_SHA~"
+  VERSION: "~DATE~.~GIT_SHA~"
 };

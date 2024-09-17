@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run generate-version && ng serve",
+    "start": "ng serve",
     "build": "npm run generate-version && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "generate-version": "node ./src/environments/inject-version.js"
+    "generate-version": "node inject-version.js"
   },
   "private": true,
   "dependencies": {
