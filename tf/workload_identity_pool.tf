@@ -9,12 +9,12 @@ resource "random_string" "pool_name" {
 }
 
 resource "google_iam_workload_identity_pool" "github_actions" {
-  project = local.project
+  project = google_project.project.project_id
   workload_identity_pool_id = "github-actions-${random_string.pool_name.id}"
 }
 
 resource "google_iam_workload_identity_pool_provider" "github_actions" {
-  project = local.project
+  project = google_project.project.project_id
   workload_identity_pool_id          = google_iam_workload_identity_pool.github_actions.workload_identity_pool_id
   workload_identity_pool_provider_id = "github-actions-provider"
   attribute_mapping                  = {
@@ -30,7 +30,7 @@ resource "google_iam_workload_identity_pool_provider" "github_actions" {
 }
 
 resource "google_project_iam_member" "storage_access" {
-  project = local.project
+  project = google_project.project.project_id
   role    = "roles/storage.objectUser"
   member  = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_actions.name}/attribute.repository/dfar-io/budgeteer"
 }
