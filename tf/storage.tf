@@ -1,7 +1,7 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket
 
 resource "google_storage_bucket" "static-site" {
-  project       = local.project
+  project       = google_project.project.project_id
   name          = "b.dfar.io"
   location      = local.region
   force_destroy = true

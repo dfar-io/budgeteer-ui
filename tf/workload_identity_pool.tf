@@ -8,13 +8,34 @@ resource "random_string" "pool_name" {
   upper   = false
 }
 
+# Need to apply a delay to prevent:
+#   Error creating WorkloadIdentityPool: googleapi: Error 403:
+#   Permission 'iam.workloadIdentityPools.create' denied on resource
+#   '//iam.googleapis.com/projects/budgeteer-wa3rj/locations/global' (or it may not exist).
+resource "null_resource" "before" {
+  depends_on = [google_project.project]
+}
+resource "null_resource" "delay" {
+  provisioner "local-exec" {
+    command = "sleep 90"
+  }
+  triggers = {
+    "before" = "${null_resource.before.id}"
+  }
+}
+resource "null_resource" "after" {
+  depends_on = [null_resource.delay]
+}
+
 resource "google_iam_workload_identity_pool" "github_actions" {
-  project = local.project
+  project = google_project.project.project_id
   workload_identity_pool_id = "github-actions-${random_string.pool_name.id}"
+
+  depends_on = [null_resource.after]
 }
 
 resource "google_iam_workload_identity_pool_provider" "github_actions" {
-  project = local.project
+  project = google_project.project.project_id
   workload_identity_pool_id          = google_iam_workload_identity_pool.github_actions.workload_identity_pool_id
   workload_identity_pool_provider_id = "github-actions-provider"
   attribute_mapping                  = {
@@ -30,7 +51,7 @@ resource "google_iam_workload_identity_pool_provider" "github_actions" {
 }
 
 resource "google_project_iam_member" "storage_access" {
-  project = local.project
+  project = google_project.project.project_id
   role    = "roles/storage.objectUser"
   member  = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_actions.name}/attribute.repository/dfar-io/budgeteer"
 }
