@@ -20,6 +20,10 @@ terraform {
             source  = "integrations/github"
             version = "6.3.0"
         }
+        null = {
+            source  = "hashicorp/null"
+            version = "3.2.3"
+        }
     }
     backend "gcs" {
         bucket = "budgeteer-tf-state"
