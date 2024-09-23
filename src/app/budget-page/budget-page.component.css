@@ -5,4 +5,5 @@ div.difference {
     font-size: 2rem;
     position: sticky;
     top: 0px;
+    z-index: 10000;
 }
