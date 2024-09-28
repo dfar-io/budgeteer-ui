@@ -5,8 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<BudgeteerContext>(opt =>
-    opt.UseInMemoryDatabase("BudgeteerDb"));
+builder.Services.AddDbContext<BudgeteerContext>(
+    opt => opt.UseInMemoryDatabase("BudgeteerDb")
+);
 
 // Configure OpenTelemetry
 // const string openTelemetryServiceName = "budgeteer";
@@ -29,27 +30,48 @@ builder.Services.AddDbContext<BudgeteerContext>(opt =>
 
 var app = builder.Build();
 
-string HandleRollDice([FromServices]ILogger<Program> logger, string? player)
+// https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
+app.MapGet("/", (BudgeteerContext db) =>
+    Results.Ok("works")
+);
+
+app.MapGet("/lineitems", async (BudgeteerContext db) =>
+    await db.LineItems.ToListAsync()
+);
+
+app.MapPost("/lineitems", async (LineItem lineItem, BudgeteerContext db) =>
 {
-    var result = RollDice();
+    db.LineItems.Add(lineItem);
+    await db.SaveChangesAsync();
 
-    if (string.IsNullOrEmpty(player))
-    {
-        logger.LogInformation("Anonymous player is rolling the dice: {result}", result);
-    }
-    else
-    {
-        logger.LogInformation("{player} is rolling the dice: {result}", player, result);
-    }
+    return Results.Created($"/lineitems/{lineItem.Id}", lineItem);
+});
 
-    return result.ToString(CultureInfo.InvariantCulture);
-}
-
-int RollDice()
+app.MapPut("/lineitems/{id}", async (int id, LineItem inputLineItem, BudgeteerContext db) =>
 {
-    return Random.Shared.Next(1, 7);
-}
+    var lineItem = await db.LineItems.FindAsync(id);
 
-app.MapGet("/rolldice/{player?}", HandleRollDice);
+    if (lineItem is null) return Results.NotFound();
+
+    lineItem.Name = inputLineItem.Name;
+    lineItem.Amount = inputLineItem.Amount;
+
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
+
+app.MapDelete("/lineitems/{id}", async (int id, BudgeteerContext db) =>
+{
+    if (await db.LineItems.FindAsync(id) is LineItem lineItem)
+    {
+        db.LineItems.Remove(lineItem);
+        await db.SaveChangesAsync();
+        return Results.NoContent();
+    }
+
+    return Results.NotFound();
+});
+
 
 app.Run();
