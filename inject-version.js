@@ -1,8 +1,8 @@
 const fs = require("fs");
 const childProcess = require("child_process");
 
-const dateKey = "~DATE~";
-const gitKey = "~GIT_SHA~";
+const urlKey = "~URL~";
+const gitKey = "~SHA~";
 const templateFile = "./src/environments/version.template";
 const outputFile = "./src/environments/version.ts";
 
@@ -23,12 +23,13 @@ fs.copyFile(templateFile, outputFile, err => {
         console.log(childErr);
       } else {
         replace(gitKey, sha.trim());
-
-        var datetime = new Date().toISOString()
-                                 .slice(0,10)
-                                 .replace('T','|')
-                                 .replaceAll('-', '.');
-          replace(dateKey, datetime.trim());
+        childProcess.exec("git config --get remote.origin.url", function(childErr, url) {
+          if (childErr) {
+            console.log(childErr);
+          } else {
+            replace(urlKey, url.trim());
+          }
+        });
       }
     });
   }
