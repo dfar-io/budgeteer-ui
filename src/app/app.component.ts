@@ -15,5 +15,6 @@ import { buildConstants } from '../environments/version';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  version = buildConstants.VERSION
+  sha = buildConstants.SHA;
+  url = buildConstants.URL;
 }

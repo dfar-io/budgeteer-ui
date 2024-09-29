@@ -51,6 +51,10 @@ div.version {
   background-color: #4C4E52;
 }
 
+div.version a {
+  color: white;
+}
+
 mat-toolbar {
   background-color: #4C4E52;
 }

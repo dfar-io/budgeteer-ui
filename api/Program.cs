@@ -31,9 +31,15 @@ builder.Services.AddDbContext<BudgeteerContext>(
 var app = builder.Build();
 
 // https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
-app.MapGet("/", (BudgeteerContext db) =>
-    Results.Ok("works")
-);
+app.MapGet("", () =>
+{
+    var jsonResponse = new
+    {
+        ThisAssembly.Git.RepositoryUrl,
+        Sha = ThisAssembly.Git.Sha[..7]
+    };
+    return Results.Json(jsonResponse);
+});
 
 app.MapGet("/lineitems", async (BudgeteerContext db) =>
     await db.LineItems.ToListAsync()
