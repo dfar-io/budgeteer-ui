@@ -14,7 +14,7 @@
 		"ghcr.io/devcontainers/features/dotnet:2": {}
 	},
 
-	"postCreateCommand" : "git update-index --skip-worktree src/environments/version.ts && npm i",
+	"postCreateCommand" : "git update-index --skip-worktree ui/src/environments/version.ts && npm i --prefix ui",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
