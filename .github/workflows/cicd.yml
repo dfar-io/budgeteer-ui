@@ -24,6 +24,7 @@ jobs:
       with:
         node-version: 20.14.0
         cache: 'npm'
+        cache-dependency-path: 'ui'
     - name: "Install UI dependencies"
       run: npm ci
       working-directory: 'ui'
