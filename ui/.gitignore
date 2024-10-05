@@ -3,12 +3,6 @@
 # CodeClimate CLI
 codeclimate-master
 
-# Terraform
-tf/*.terraform*
-
-# For manual deployments
-build-output.zip
-
 # Compiled output
 /dist
 /tmp

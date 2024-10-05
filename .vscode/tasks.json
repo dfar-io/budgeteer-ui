@@ -18,7 +18,8 @@
             "regexp": "bundle generation complete"
           }
         }
-      }
+      },
+      "path": "ui"
     },
     {
       "type": "npm",
