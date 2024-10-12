@@ -25,6 +25,7 @@
 	// Configure tool-specific properties.
 	"customizations": {
 		"extensions": [
+			"ms-dotnettools.csharp",
 			"ms-dotnettools.csdevkit"
 		]
 	}

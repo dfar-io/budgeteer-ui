@@ -23,8 +23,7 @@ import { Money } from 'ts-money';
 export class LineItemComponent implements OnInit {
   @Input() lineItem! : LineItem;
   @Input() difference!: number;
-  @Input() usePaymentDay = false;
-  @Input() usePaymentMonth = false;
+  @Input() usePaymentDate = false;
   @Output() save = new EventEmitter<LineItem>();
   @Output() delete = new EventEmitter<number>();
 
@@ -41,8 +40,7 @@ export class LineItemComponent implements OnInit {
       data: {
         name: this.lineItem.name,
         amount: this.lineItem.amount,
-        paymentDay: this.lineItem.paymentDay,
-        paymentMonth: this.lineItem.paymentMonth
+        date: this.lineItem.date,
       }
     });
     
@@ -50,11 +48,8 @@ export class LineItemComponent implements OnInit {
       if (result !== undefined) {
         this.lineItem.name = result.name;
         this.lineItem.amount = parseFloat(result.amount);
-        if (this.lineItem.paymentDay) {
-          this.lineItem.paymentDay = parseInt(result.paymentDay);
-        }
-        if (this.lineItem.paymentMonth) {
-          this.lineItem.paymentMonth = parseInt(result.paymentMonth);
+        if (this.lineItem.date) {
+          this.lineItem.date = result.date;
         }
         this.save.emit(this.lineItem);
       }

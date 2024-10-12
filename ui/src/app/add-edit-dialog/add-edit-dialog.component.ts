@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -12,6 +12,8 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import { AddEditDialogData } from './add-edit-dialog-data';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-add-edit-dialog',
@@ -24,11 +26,15 @@ import { AddEditDialogData } from './add-edit-dialog-data';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose
+    MatDialogClose,
+    MatDatepickerModule
   ],
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './add-edit-dialog.component.html',
   styleUrl: './add-edit-dialog.component.css'
 })
+
 export class AddEditDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddEditDialogComponent>);
   readonly data = inject<AddEditDialogData>(MAT_DIALOG_DATA);

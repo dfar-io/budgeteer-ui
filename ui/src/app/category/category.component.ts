@@ -3,7 +3,7 @@ import { LineItem } from '../line-item/line-item';
 import { LineItemComponent } from '../line-item/line-item.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Money } from 'ts-money';
 import {
   CdkDrag,
@@ -17,7 +17,7 @@ import {
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragHandle],
+  imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragHandle, DatePipe],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css'
 })
@@ -26,8 +26,7 @@ export class CategoryComponent implements OnInit {
   @Input() lineItems!: LineItem[];
   @Input() emptyMessage!: string;
   @Input() difference!: number;
-  @Input() usePaymentDay = false;
-  @Input() usePaymentMonth = false;
+  @Input() usePaymentDate = false;
   @Output() add = new EventEmitter();
   @Output() save = new EventEmitter();
   @Output() delete = new EventEmitter<number>();
@@ -70,8 +69,7 @@ export class CategoryComponent implements OnInit {
 
   onAdd() {
     this.add.emit({
-      usePaymentDay: this.usePaymentDay,
-      usePaymentMonth: this.usePaymentMonth
+      usePaymentDate: this.usePaymentDate,
     });
     this.updateSum();
   }

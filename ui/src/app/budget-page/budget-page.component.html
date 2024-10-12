@@ -17,18 +17,10 @@
       (save)="saveFunds()"
       (delete)="deleteFund($event)"></app-category>
 <app-category
-      title="Monthly"
-      [lineItems]="this.monthlies"
-      emptyMessage="No monthly expenses."
-      [usePaymentDay]="true"
-      (add)="this.monthlies = addSorted(this.monthlies, this.monthliesKey, 'paymentDay')"
-      (save)="this.monthlies = saveSorted(this.monthlies, this.monthliesKey, 'paymentDay')"
-      (delete)="deleteMonthly($event)"></app-category>
-<app-category
       title="Planned"
       [lineItems]="this.planned"
       emptyMessage="No planned expenses."
-      [usePaymentMonth]="true"
-      (add)="this.planned = addSorted(this.planned, this.plannedKey, 'paymentMonth')"
-      (save)="this.planned = saveSorted(this.planned, this.plannedKey, 'paymentMonth')"
+      [usePaymentDate]="true"
+      (add)="this.planned = addSorted(this.planned, this.plannedKey, 'date')"
+      (save)="this.planned = saveSorted(this.planned, this.plannedKey, 'date')"
       (delete)="deletePlanned($event)"></app-category>
