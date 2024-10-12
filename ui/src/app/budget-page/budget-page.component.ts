@@ -15,12 +15,10 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 export class BudgetPageComponent implements OnInit {
   incomes: LineItem[] = [];
   funds: LineItem[] = [];
-  monthlies: LineItem[] = [];
   planned: LineItem[] = [];
 
   incomeSum = 0;
   fundsSum = 0;
-  monthliesSum = 0;
   plannedSum = 0;
   difference = 0;
 
@@ -29,7 +27,6 @@ export class BudgetPageComponent implements OnInit {
 
   readonly incomesKey = 'incomes';
   readonly fundsKey = 'funds';
-  readonly monthliesKey = 'monthlies';
   readonly plannedKey = 'plannedKey';
 
   constructor(private lineItemService: LineItemService) {}
@@ -37,7 +34,6 @@ export class BudgetPageComponent implements OnInit {
   ngOnInit() {
     this.incomes = this.lineItemService.getLineItems(this.incomesKey) ?? [];
     this.funds = this.lineItemService.getLineItems(this.fundsKey) ?? [];
-    this.monthlies = this.lineItemService.getLineItems(this.monthliesKey) ?? [];
     this.planned = this.lineItemService.getLineItems(this.plannedKey) ?? [];
     this.updateDifference();
   }
@@ -45,12 +41,10 @@ export class BudgetPageComponent implements OnInit {
   updateDifference() {
     this.incomeSum = this.generateSum(this.incomes);
     this.fundsSum = this.generateSum(this.funds);
-    this.monthliesSum = this.generateSum(this.monthlies);
     this.plannedSum = this.generateSum(this.planned);
     let moneyCalc = new Money(0, 'USD');
     moneyCalc = moneyCalc.add(Money.fromDecimal(this.incomeSum, 'USD'));
     moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.fundsSum, 'USD'));
-    moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.monthliesSum, 'USD'));
     moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.plannedSum, 'USD'));
     this.difference = moneyCalc.amount / 100;
 
@@ -68,8 +62,9 @@ export class BudgetPageComponent implements OnInit {
 
   addSorted(array : LineItem[], key: string, property : keyof LineItem): LineItem[] {
     const newLineItem = this.createNewLineItem(property);
-    array.push(newLineItem);
-    return this.saveSorted(array, key, property);
+    array.unshift(newLineItem);
+    array = this.sortLineItems(array, property);
+    return array;
   }
 
   saveSorted(array : LineItem[], key: string, property : keyof LineItem): LineItem[] {
@@ -94,10 +89,6 @@ export class BudgetPageComponent implements OnInit {
     this.deleteLineItem(id, this.fundsKey, this.funds);
   }
 
-  deleteMonthly(id : number) {
-    this.deleteLineItem(id, this.monthliesKey, this.monthlies);
-  }
-
   deletePlanned(id : number) {
     this.deleteLineItem(id, this.plannedKey, this.planned);
   }
@@ -118,16 +109,10 @@ export class BudgetPageComponent implements OnInit {
     result.id = randomId;
     result.name = name;
     result.amount = amount;
-    result.paymentDay = options == 'paymentDay' ?
-      this.randomInt(28) : undefined;
-    result.paymentMonth = options == 'paymentMonth' ?
-      this.randomInt(12) : undefined;
+    result.date = options == 'date' ?
+      new Date() : undefined;
     
     return result;
-  }
-
-  private randomInt(max: number): number {
-    return Math.floor(Math.random() * (max - 1 + 1)) + 1;
   }
 
   private saveLineItems(key : string, array : LineItem[], sortProperty?: keyof LineItem) {
