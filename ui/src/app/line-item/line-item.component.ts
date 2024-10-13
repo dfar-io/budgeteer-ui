@@ -49,7 +49,7 @@ export class LineItemComponent implements OnInit {
         this.lineItem.name = result.name;
         this.lineItem.amount = parseFloat(result.amount);
         if (this.lineItem.date) {
-          this.lineItem.date = result.date;
+          this.lineItem.date = result.date.toISOString();
         }
         this.save.emit(this.lineItem);
       }
