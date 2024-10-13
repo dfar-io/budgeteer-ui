@@ -60,17 +60,10 @@ export class BudgetPageComponent implements OnInit {
     }
   }
 
-  addIncome() {
-    const newIncome = this.createNewLineItem();
-    this.incomes.unshift(newIncome);
-    this.lineItemService.saveLineItems(this.incomesKey, this.incomes);
-    this.updateDifference();
-  }
-
-  addFund() {
-    const newFund = this.createNewLineItem();
-    this.funds.unshift(newFund);
-    this.lineItemService.saveLineItems(this.fundsKey, this.funds);
+  addLineItem(lineItems: LineItem[], key: string) {
+    const newLineItem = this.createNewLineItem();
+    lineItems.unshift(newLineItem);
+    this.lineItemService.saveLineItems(key, lineItems);
     this.updateDifference();
   }
 
@@ -84,15 +77,18 @@ export class BudgetPageComponent implements OnInit {
 
   saveIncomes() {
     this.lineItemService.saveLineItems(this.incomesKey, this.incomes);
+    this.updateDifference();
   }
 
   saveFunds() {
     this.lineItemService.saveLineItems(this.fundsKey, this.funds);
+    this.updateDifference();
   }
 
   savePlanned() {
     this.planned = this.sortLineItems(this.planned, 'date');
     this.lineItemService.saveLineItems(this.plannedKey, this.planned);
+    this.updateDifference();
   }
 
   deleteIncome(id : number) {
