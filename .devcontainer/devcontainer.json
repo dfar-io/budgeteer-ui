@@ -26,7 +26,8 @@
 	"customizations": {
 		"extensions": [
 			"ms-dotnettools.csharp",
-			"ms-dotnettools.csdevkit"
+			"ms-dotnettools.csdevkit",
+			"angular.ng-template"
 		]
 	}
 

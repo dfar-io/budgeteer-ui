@@ -16,7 +16,7 @@
             @for (lineItem of lineItems; track lineItem.id) {
                 @if (usePaymentDate) {
                     <div class="category-item">
-                        <div>{{ lineItem.date | date:'yyyy.MM.dd' }}</div>
+                        <div>{{ lineItem.date | date:'YYYY.MM.dd' }}</div>
                         <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="onSave()" (delete)="onDelete(lineItem.id)"></app-line-item>
                     </div>
                 }

@@ -27,7 +27,7 @@ export class BudgetPageComponent implements OnInit {
 
   readonly incomesKey = 'incomes';
   readonly fundsKey = 'funds';
-  readonly plannedKey = 'plannedKey';
+  readonly plannedKey = 'planned';
 
   constructor(private lineItemService: LineItemService) {}
 
@@ -60,25 +60,35 @@ export class BudgetPageComponent implements OnInit {
     }
   }
 
-  addSorted(array : LineItem[], key: string, property : keyof LineItem): LineItem[] {
-    const newLineItem = this.createNewLineItem(property);
-    array.unshift(newLineItem);
-    array = this.sortLineItems(array, property);
-    return array;
+  addLineItem(lineItems: LineItem[], key: string) {
+    const newLineItem = this.createNewLineItem();
+    lineItems.unshift(newLineItem);
+    this.lineItemService.saveLineItems(key, lineItems);
+    this.updateDifference();
   }
 
-  saveSorted(array : LineItem[], key: string, property : keyof LineItem): LineItem[] {
-    array = this.sortLineItems(array, property);
-    this.saveLineItems(key, array, property);
-    return array;
+  addPlanned() {
+    const newPlanned = this.createNewLineItem('date');
+    this.planned.unshift(newPlanned);
+    this.planned = this.sortLineItems(this.planned, 'date');
+    this.lineItemService.saveLineItems(this.plannedKey, this.planned);
+    this.updateDifference();
   }
 
   saveIncomes() {
-    this.saveLineItems(this.incomesKey, this.incomes);
+    this.lineItemService.saveLineItems(this.incomesKey, this.incomes);
+    this.updateDifference();
   }
 
   saveFunds() {
-    this.saveLineItems(this.fundsKey, this.funds);
+    this.lineItemService.saveLineItems(this.fundsKey, this.funds);
+    this.updateDifference();
+  }
+
+  savePlanned() {
+    this.planned = this.sortLineItems(this.planned, 'date');
+    this.lineItemService.saveLineItems(this.plannedKey, this.planned);
+    this.updateDifference();
   }
 
   deleteIncome(id : number) {
@@ -93,12 +103,6 @@ export class BudgetPageComponent implements OnInit {
     this.deleteLineItem(id, this.plannedKey, this.planned);
   }
 
-  addLineItem(key : string, array : LineItem[], options? : keyof LineItem) {
-    const newLineItem = this.createNewLineItem(options)
-    array.push(newLineItem);
-    this.lineItemService.saveLineItems(key, array);
-  }
-
   private createNewLineItem(options?: keyof LineItem) {
     const randomDecimal = Math.random() * (10000 - 1) + 1;
     const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
@@ -110,17 +114,9 @@ export class BudgetPageComponent implements OnInit {
     result.name = name;
     result.amount = amount;
     result.date = options == 'date' ?
-      new Date() : undefined;
-    
-    return result;
-  }
+      this.getTodayWithoutTime().toISOString() : undefined;
 
-  private saveLineItems(key : string, array : LineItem[], sortProperty?: keyof LineItem) {
-    if (sortProperty !== undefined) {
-      array = this.sortLineItems(array, sortProperty);
-    }
-    this.lineItemService.saveLineItems(key, array);
-    this.updateDifference();
+    return result;
   }
 
   private deleteLineItem(id : number, key : string, array : LineItem[]) {
@@ -156,5 +152,10 @@ export class BudgetPageComponent implements OnInit {
       }
       return 0;
     });
+  }
+
+  private getTodayWithoutTime(): Date {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate());
   }
 }
