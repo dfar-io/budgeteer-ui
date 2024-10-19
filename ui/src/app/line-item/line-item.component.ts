@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Money } from 'ts-money';
+import { AddEditDialogDataResult } from '../add-edit-dialog/add-edit-dialog-data';
 
 @Component({
   selector: 'app-line-item',
@@ -41,18 +42,23 @@ export class LineItemComponent implements OnInit {
         name: this.lineItem.name,
         amount: this.lineItem.amount,
         date: this.lineItem.date,
+        cycleInDays: this.lineItem.cycleInDays
       }
     });
     
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        this.lineItem.name = result.name;
-        this.lineItem.amount = parseFloat(result.amount);
-        if (this.lineItem.date) {
-          this.lineItem.date = result.date.toISOString();
-        }
-        this.save.emit(this.lineItem);
+    dialogRef.afterClosed().subscribe((result: AddEditDialogDataResult) => {
+      if (result === undefined) { return; }
+
+      this.lineItem.name = result.name;
+      this.lineItem.amount = parseFloat(result.amount);
+      if (result.date) {
+        this.lineItem.date = result.date;
       }
+      if (result.cycleInDays) {
+        this.lineItem.cycleInDays = parseInt(result.cycleInDays);
+      }
+      
+      this.save.emit(this.lineItem);
     });
   }
 
@@ -72,6 +78,23 @@ export class LineItemComponent implements OnInit {
     let moneyCalc = Money.fromDecimal(this.lineItem.amount, 'USD');
     moneyCalc = moneyCalc.add(Money.fromDecimal(this.difference, 'USD'));
     this.lineItem.amount = moneyCalc.amount / 100;
+    this.save.emit(this.lineItem);
+  }
+
+  cycleClick() {
+    if (this.lineItem.date === undefined) {
+      console.error("Cycle attempted with undefined date property in lineItem");
+      return;
+    }
+    if (this.lineItem.cycleInDays === undefined) {
+      console.error("Cycle attempted with undefined cycleInDays property in lineItem");
+      return;
+    }
+
+    const dateObject = new Date(this.lineItem.date);
+    const newDate = dateObject.getDate() + this.lineItem.cycleInDays;
+    dateObject.setDate(newDate);
+    this.lineItem.date = dateObject.toISOString();
     this.save.emit(this.lineItem);
   }
 }

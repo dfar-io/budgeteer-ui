@@ -3,4 +3,5 @@ export interface LineItem {
     name: string;
     amount: number;
     date?: string;
+    cycleInDays?: number;
 }

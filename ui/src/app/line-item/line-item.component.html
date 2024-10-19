@@ -12,6 +12,12 @@
                     <span>Apply</span>
                 </button>
             }
+            @if (lineItem.cycleInDays !== undefined) {
+                <button mat-menu-item (click)="cycleClick()">
+                    <mat-icon>sync</mat-icon>
+                    <span>Cycle</span>
+                </button>
+            }
             <button mat-menu-item (click)="editClick()">
                 <mat-icon>edit</mat-icon>
                 <span>Edit</span>

@@ -14,6 +14,10 @@
       <input matInput [matDatepicker]="picker" [(ngModel)]="data.date">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field><br />
+    <mat-form-field>
+      <mat-label>Cycle In Days</mat-label>
+      <input matInput [(ngModel)]="data.cycleInDays" />
     </mat-form-field>
   }
 </mat-dialog-content>
