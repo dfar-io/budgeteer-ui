@@ -47,13 +47,19 @@ export class LineItemComponent implements OnInit {
     });
     
     dialogRef.afterClosed().subscribe((result: AddEditDialogDataResult) => {
+      // closed without saving
       if (result === undefined) { return; }
 
       this.lineItem.name = result.name;
       this.lineItem.amount = parseFloat(result.amount);
+
       if (result.date) {
-        this.lineItem.date = result.date;
+        console.log(result.date);
+        this.lineItem.date = result.date instanceof Date ?
+          result.date.toISOString() :
+          result.date;
       }
+
       if (result.cycleInDays) {
         this.lineItem.cycleInDays = parseInt(result.cycleInDays);
       }
