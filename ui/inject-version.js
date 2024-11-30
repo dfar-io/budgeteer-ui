@@ -3,6 +3,7 @@ const childProcess = require("child_process");
 
 const urlKey = "~URL~";
 const gitKey = "~SHA~";
+const dateKey = "~DATE~";
 const templateFile = "./src/environments/version.template";
 const outputFile = "./src/environments/version.ts";
 
@@ -28,6 +29,11 @@ fs.copyFile(templateFile, outputFile, err => {
             console.log(childErr);
           } else {
             replace(urlKey, url.trim());
+            var datetime = new Date().toISOString()
+              .slice(0,10)
+              .replace('T','|')
+              .replaceAll('-', '.');
+            replace(dateKey, datetime.trim());
           }
         });
       }
