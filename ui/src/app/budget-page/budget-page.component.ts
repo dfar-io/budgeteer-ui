@@ -21,6 +21,7 @@ export class BudgetPageComponent implements OnInit {
   fundsSum = 0;
   plannedSum = 0;
   difference = 0;
+  todaysDate = new Date();
 
   differenceBackgroundColor = '';
   differenceFontColor = '';

@@ -2,7 +2,6 @@ h2 {
     margin-left: 0.25rem;
 }
 
-
 .category {
     margin: 0 1rem;
 }
@@ -14,6 +13,7 @@ h2 {
 
 .category-actions {
     display: flex;
+    flex-direction: row-reverse;
 }
 
 .category-list {
@@ -24,9 +24,9 @@ h2 {
     margin-left: auto;
 }
 
-.add {
-    margin-left: auto;
+.add, .toggle-future {
     display: none;
+    margin-left: 1rem;
 }
 
 .visible {
@@ -42,6 +42,10 @@ h2 {
 app-line-item {
     margin-left: 0.5rem;
     width: 100%;
+}
+
+.future {
+    display: var(--future-display);
 }
 
 /* drag and drop */ 

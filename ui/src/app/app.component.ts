@@ -17,4 +17,5 @@ import { buildConstants } from '../environments/version';
 export class AppComponent {
   sha = buildConstants.SHA;
   url = buildConstants.URL;
+  todaysDate = new Date();
 }

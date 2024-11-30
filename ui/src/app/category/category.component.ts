@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { LineItem } from '../line-item/line-item';
 import { LineItemComponent } from '../line-item/line-item.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,6 +27,7 @@ export class CategoryComponent implements OnInit {
   @Input() emptyMessage!: string;
   @Input() difference!: number;
   @Input() usePaymentDate = false;
+  @Input() todaysDate!: Date;
   @Output() add = new EventEmitter();
   @Output() save = new EventEmitter();
   @Output() delete = new EventEmitter<number>();
@@ -34,6 +35,10 @@ export class CategoryComponent implements OnInit {
   isVisible! : boolean
   toggleIcon = 'keyboard_arrow_right';
   sum = 0;
+  isFutureVisible = false;
+  toggleFutureIcon = 'visibility_off';
+
+  constructor(private renderer: Renderer2) {}
 
   public ngOnInit(): void {
     if (!this.title) {
@@ -44,6 +49,9 @@ export class CategoryComponent implements OnInit {
     }
     if (!this.emptyMessage) {
       throw (new Error("The required input [emptyMessage] was not provided"));
+    }
+    if (!this.emptyMessage) {
+      throw (new Error("The required input [todaysDate] was not provided"));
     }
 
     this.updateSum();
@@ -82,5 +90,22 @@ export class CategoryComponent implements OnInit {
   onDelete(lineItemId : number) {
     this.delete.emit(lineItemId);
     this.updateSum();
+  }
+
+  isInFuture(date: string | undefined) {
+    if (date === undefined) return false;
+
+    const oneMonthAhead = new Date();
+    oneMonthAhead.setMonth(this.todaysDate.getMonth() + 1);
+    return new Date(date) >= oneMonthAhead;
+  }
+
+  toggleFuture() {
+    const isHidden = this.toggleFutureIcon == 'visibility_off';
+    const items = document.querySelectorAll('.future');
+    items.forEach((item: Element) => {
+      this.renderer.setStyle(item, 'display', isHidden ? 'flex' : 'none');
+    });
+    this.toggleFutureIcon = isHidden ? 'visibility' : 'visibility_off';
   }
 }
