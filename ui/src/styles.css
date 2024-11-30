@@ -16,3 +16,7 @@ body {
     background-color: #101010;
     color: #efefef;
 }
+
+:root {
+    --future-display: none;
+}

@@ -5,6 +5,7 @@
       title="Income"
       [lineItems]="this.incomes"
       emptyMessage="No income."
+      [todaysDate]="this.todaysDate"
       (add)="addLineItem(this.incomes, this.incomesKey)"
       (save)="saveIncomes()"
       (delete)="deleteIncome($event)"></app-category>
@@ -13,6 +14,7 @@
       [lineItems]="this.funds"
       emptyMessage="No funds."
       [difference]="difference"
+      [todaysDate]="this.todaysDate"
       (add)="addLineItem(this.funds, this.fundsKey)"
       (save)="saveFunds()"
       (delete)="deleteFund($event)"></app-category>
@@ -21,6 +23,7 @@
       [lineItems]="this.planned"
       emptyMessage="No planned expenses."
       [usePaymentDate]="true"
+      [todaysDate]="this.todaysDate"
       (add)="addPlanned()"
       (save)="savePlanned()"
       (delete)="deletePlanned($event)"></app-category>
