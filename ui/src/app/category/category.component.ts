@@ -95,9 +95,9 @@ export class CategoryComponent implements OnInit {
   isInFuture(date: string | undefined) {
     if (date === undefined) return false;
 
-    const oneMonthAhead = new Date();
-    oneMonthAhead.setMonth(this.todaysDate.getMonth() + 1);
-    return new Date(date) >= oneMonthAhead;
+    const fifteenDaysAhead = new Date();
+    fifteenDaysAhead.setDate(this.todaysDate.getDate() + 15);
+    return new Date(date) >= fifteenDaysAhead;
   }
 
   toggleFuture() {
