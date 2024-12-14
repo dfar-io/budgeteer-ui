@@ -96,7 +96,7 @@ export class CategoryComponent implements OnInit {
     if (date === undefined) return false;
 
     const fifteenDaysAhead = new Date();
-    fifteenDaysAhead.setDate(this.todaysDate.getDate() + 15);
+    fifteenDaysAhead.setDate(this.todaysDate.getDate() + 7);
     return new Date(date) >= fifteenDaysAhead;
   }
 
