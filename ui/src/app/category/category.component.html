@@ -20,7 +20,7 @@
         @if (lineItems !== null && lineItems.length > 0) {
             @for (lineItem of lineItems; track lineItem.id) {
                 @if (usePaymentDate) {
-                    <div class="category-item" [ngClass]="isInFuture(lineItem.date) ? 'category-item future' : 'category-item'">
+                    <div class="category-item {{ determineCssClassByDate(lineItem.date) }}">
                         <div>{{ lineItem.date | date:'YYYY.MM.dd' }}</div>
                         <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="onSave()" (delete)="onDelete(lineItem.id)"></app-line-item>
                     </div>
