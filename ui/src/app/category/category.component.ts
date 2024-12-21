@@ -92,12 +92,19 @@ export class CategoryComponent implements OnInit {
     this.updateSum();
   }
 
-  isInFuture(date: string | undefined) {
-    if (date === undefined) return false;
 
-    const fifteenDaysAhead = new Date();
-    fifteenDaysAhead.setDate(this.todaysDate.getDate() + 7);
-    return new Date(date) >= fifteenDaysAhead;
+  determineCssClassByDate(date: string | undefined) : string
+  {
+    if (date === undefined) return '';
+
+    const sevenDays = new Date();
+    sevenDays.setDate(this.todaysDate.getDate() + 7);
+    const isInFuture = new Date(date) >= sevenDays;
+
+    const currentDate = new Date();
+    const isOverdue = new Date(date) < currentDate;
+
+    return `${isInFuture ? 'future ' : ''} ${isOverdue ? 'overdue ' : ''}`;
   }
 
   toggleFuture() {

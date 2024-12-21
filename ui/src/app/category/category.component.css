@@ -47,6 +47,11 @@ app-line-item {
 .future {
     display: var(--future-display);
 }
+.overdue {
+    color: yellow;
+    font-weight: bold;
+    font-style: underline;
+}
 
 /* drag and drop */ 
 .cdk-drag-preview {
