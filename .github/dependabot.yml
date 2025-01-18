@@ -37,12 +37,3 @@ updates:
       actions-deps:
         patterns:
           - "*"
-
- - package-ecosystem: "terraform"
-   directory: "tf/"
-   schedule:
-     interval: weekly
-   groups:
-      actions-deps:
-        patterns:
-          - "*"
