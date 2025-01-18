@@ -1,5 +1,4 @@
 ![CICD](https://github.com/dfar-io/budgeteer/actions/workflows/cicd.yml/badge.svg)
-![TFLint](https://github.com/dfar-io/budgeteer/actions/workflows/tflint.yml/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/66f6382b0c80a71ea41f/maintainability)](https://codeclimate.com/github/dfar-io/budgeteer/maintainability)
 
 # Budgeteer
