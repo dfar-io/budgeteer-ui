@@ -19,11 +19,12 @@ updates:
    directory: "/"
    schedule:
      interval: weekly
-   ignore:
-     - dependency-name: "zone.js"
-       versions: ["0.15.0"]
-     - dependency-name: "typescript"
-       versions: ["5.6.2"]
+   # don't need this now but leaving as a reference if dependabot changes cause issues
+   #ignore:
+   #  - dependency-name: "zone.js"
+   #    versions: ["0.15.0"]
+   #  - dependency-name: "typescript"
+   #    versions: ["5.6.2"]
    groups:
       npm-deps:
         patterns:
