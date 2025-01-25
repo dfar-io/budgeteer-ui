@@ -13,13 +13,12 @@ import { Money } from 'ts-money';
 import { AddEditDialogDataResult } from '../add-edit-dialog/add-edit-dialog-data';
 
 @Component({
-  selector: 'app-line-item',
-  standalone: true,
-  imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule],
-  templateUrl: './line-item.component.html',
-  styleUrl: './line-item.component.css',
-  //for dialog
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-line-item',
+    imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule],
+    templateUrl: './line-item.component.html',
+    styleUrl: './line-item.component.css',
+    //for dialog
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LineItemComponent implements OnInit {
   @Input() lineItem! : LineItem;

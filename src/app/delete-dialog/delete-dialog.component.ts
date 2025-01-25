@@ -13,20 +13,19 @@ import {MatButtonModule} from '@angular/material/button';
 import { DeleteDialogData } from './delete-dialog-data';
 
 @Component({
-  selector: 'app-delete-dialog',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose
-  ],
-  templateUrl: './delete-dialog.component.html',
-  styleUrl: './delete-dialog.component.css'
+    selector: 'app-delete-dialog',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatDialogClose
+    ],
+    templateUrl: './delete-dialog.component.html',
+    styleUrl: './delete-dialog.component.css'
 })
 export class DeleteDialogComponent {
   readonly data = inject<DeleteDialogData>(MAT_DIALOG_DATA);
