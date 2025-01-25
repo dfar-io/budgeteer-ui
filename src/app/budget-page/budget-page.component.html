@@ -6,7 +6,7 @@
       [lineItems]="this.incomes"
       emptyMessage="No income."
       [todaysDate]="this.todaysDate"
-      (add)="addLineItem(this.incomes, this.incomesKey)"
+      (add)="addLineItem(this.incomes, 'incomes')"
       (save)="saveIncomes()"
       (delete)="deleteIncome($event)"></app-category>
 <app-category
@@ -15,7 +15,7 @@
       emptyMessage="No funds."
       [difference]="difference"
       [todaysDate]="this.todaysDate"
-      (add)="addLineItem(this.funds, this.fundsKey)"
+      (add)="addLineItem(this.funds, 'funds')"
       (save)="saveFunds()"
       (delete)="deleteFund($event)"></app-category>
 <app-category
