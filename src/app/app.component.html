@@ -8,16 +8,15 @@
           <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page" mat-menu-item>
-              <span>Budget</span>
+          <button (click)="importJSON()" mat-menu-item>
+              <span>Import</span>
           </button>
-          <button routerLink="/accounts" routerLinkActive="active" ariaCurrentWhenActive="page" mat-menu-item>
-              <span>Accounts</span>
+          <button (click)="exportJSON()" mat-menu-item>
+              <span>Export</span>
           </button>
       </mat-menu>
       </mat-toolbar-row>
     </mat-toolbar>
-
     <router-outlet></router-outlet>
     <div class="version">
       <a href="{{ url }}">{{ version }}</a>

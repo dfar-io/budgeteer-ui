@@ -25,16 +25,14 @@ export class BudgetPageComponent implements OnInit {
   differenceBackgroundColor = '';
   differenceFontColor = '';
 
-  readonly incomesKey = 'incomes';
-  readonly fundsKey = 'funds';
-  readonly plannedKey = 'planned';
+  
 
   constructor(private lineItemService: LineItemService) {}
 
   ngOnInit() {
-    this.incomes = this.lineItemService.getLineItems(this.incomesKey) ?? [];
-    this.funds = this.lineItemService.getLineItems(this.fundsKey) ?? [];
-    this.planned = this.lineItemService.getLineItems(this.plannedKey) ?? [];
+    this.incomes = this.lineItemService.getIncomes();
+    this.funds = this.lineItemService.getFunds();
+    this.planned = this.lineItemService.getPlanned();
     this.updateDifference();
   }
 
@@ -71,36 +69,36 @@ export class BudgetPageComponent implements OnInit {
     const newPlanned = this.createNewLineItem('date');
     this.planned.unshift(newPlanned);
     this.planned = this.sortLineItems(this.planned, 'date');
-    this.lineItemService.saveLineItems(this.plannedKey, this.planned);
+    this.lineItemService.savePlanned(this.planned);
     this.updateDifference();
   }
 
   saveIncomes() {
-    this.lineItemService.saveLineItems(this.incomesKey, this.incomes);
+    this.lineItemService.saveIncomes(this.incomes);
     this.updateDifference();
   }
 
   saveFunds() {
-    this.lineItemService.saveLineItems(this.fundsKey, this.funds);
+    this.lineItemService.saveFunds(this.funds);
     this.updateDifference();
   }
 
   savePlanned() {
     this.planned = this.sortLineItems(this.planned, 'date');
-    this.lineItemService.saveLineItems(this.plannedKey, this.planned);
+    this.lineItemService.saveLineItems('planned', this.planned);
     this.updateDifference();
   }
 
   deleteIncome(id : number) {
-    this.deleteLineItem(id, this.incomesKey, this.incomes);
+    this.deleteLineItem(id, 'incomes', this.incomes);
   }
 
   deleteFund(id : number) {
-    this.deleteLineItem(id, this.fundsKey, this.funds);
+    this.deleteLineItem(id, 'funds', this.funds);
   }
 
   deletePlanned(id : number) {
-    this.deleteLineItem(id, this.plannedKey, this.planned);
+    this.deleteLineItem(id, 'planned', this.planned);
   }
 
   private createNewLineItem(options?: keyof LineItem) {

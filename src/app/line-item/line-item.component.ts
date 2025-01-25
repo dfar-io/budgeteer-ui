@@ -53,7 +53,6 @@ export class LineItemComponent implements OnInit {
       this.lineItem.amount = parseFloat(result.amount);
 
       if (result.date) {
-        console.log(result.date);
         this.lineItem.date = result.date instanceof Date ?
           result.date.toISOString() :
           result.date;
