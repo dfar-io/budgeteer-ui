@@ -9,14 +9,13 @@ import {
   CdkDrag,
   CdkDragDrop,
   CdkDropList,
-  CdkDragPlaceholder,
   moveItemInArray,
   CdkDragHandle
 } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-category',
-    imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragHandle, DatePipe],
+    imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragHandle, DatePipe],
     templateUrl: './category.component.html',
     styleUrl: './category.component.css'
 })

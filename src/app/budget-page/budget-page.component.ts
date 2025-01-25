@@ -25,9 +25,7 @@ export class BudgetPageComponent implements OnInit {
   differenceBackgroundColor = '';
   differenceFontColor = '';
 
-  readonly incomesKey = 'incomes';
-  readonly fundsKey = 'funds';
-  readonly plannedKey = 'planned';
+  
 
   constructor(private lineItemService: LineItemService) {}
 
