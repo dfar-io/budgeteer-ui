@@ -16,23 +16,22 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
-  selector: 'app-add-edit-dialog',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
-    MatDatepickerModule
-  ],
-  providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './add-edit-dialog.component.html',
-  styleUrl: './add-edit-dialog.component.css'
+    selector: 'app-add-edit-dialog',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatDialogClose,
+        MatDatepickerModule
+    ],
+    providers: [provideNativeDateAdapter()],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './add-edit-dialog.component.html',
+    styleUrl: './add-edit-dialog.component.css'
 })
 
 export class AddEditDialogComponent {

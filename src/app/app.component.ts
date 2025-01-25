@@ -8,11 +8,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { buildConstants } from '../environments/version';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, MatToolbar, MatToolbarRow, MatIcon, MatIconButton, MatMenuModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+    selector: 'app-root',
+    imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, MatToolbar, MatToolbarRow, MatIcon, MatIconButton, MatMenuModule],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent {
   version = buildConstants.VERSION;

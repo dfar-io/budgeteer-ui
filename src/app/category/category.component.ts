@@ -15,11 +15,10 @@ import {
 } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'app-category',
-  standalone: true,
-  imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragHandle, DatePipe],
-  templateUrl: './category.component.html',
-  styleUrl: './category.component.css'
+    selector: 'app-category',
+    imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragHandle, DatePipe],
+    templateUrl: './category.component.html',
+    styleUrl: './category.component.css'
 })
 export class CategoryComponent implements OnInit {
   @Input() title!: string;

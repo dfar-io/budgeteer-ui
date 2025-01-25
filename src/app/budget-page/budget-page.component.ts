@@ -6,11 +6,10 @@ import { CategoryComponent } from '../category/category.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-budget-page',
-  standalone: true,
-  imports: [CommonModule, CategoryComponent, CurrencyPipe],
-  templateUrl: './budget-page.component.html',
-  styleUrl: './budget-page.component.css'
+    selector: 'app-budget-page',
+    imports: [CommonModule, CategoryComponent, CurrencyPipe],
+    templateUrl: './budget-page.component.html',
+    styleUrl: './budget-page.component.css'
 })
 export class BudgetPageComponent implements OnInit {
   incomes: LineItem[] = [];
