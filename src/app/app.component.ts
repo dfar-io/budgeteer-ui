@@ -49,7 +49,7 @@ export class AppComponent {
     link.href = url;
 
     // Set the download attribute with a file name
-    link.download = 'data.json';
+    link.download = 'budgeteer-data.json';
 
     // Trigger the click event to download the file
     link.click();
@@ -63,8 +63,15 @@ export class AppComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('File uploaded:', result);
-        // Handle the file (e.g., send it to an API or display it)
+        // TODO: Error handling for malformed JSON
+        const parsedObject = JSON.parse(result);
+
+        this.lineItemService.saveIncomes(parsedObject.incomes);
+        this.lineItemService.saveFunds(parsedObject.funds);
+        this.lineItemService.savePlanned(parsedObject.planned);
+
+        // reload the current page to refresh budget component
+        window.location.reload();
       }
     });
   }

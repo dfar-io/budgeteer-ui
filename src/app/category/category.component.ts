@@ -91,8 +91,7 @@ export class CategoryComponent implements OnInit {
   }
 
 
-  determineCssClassByDate(date: string | undefined) : string
-  {
+  determineCssClassByDate(date: string | undefined) : string {
     if (date === undefined) return '';
 
     const sevenDays = new Date();

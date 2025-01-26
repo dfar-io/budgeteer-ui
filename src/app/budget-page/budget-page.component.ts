@@ -25,8 +25,6 @@ export class BudgetPageComponent implements OnInit {
   differenceBackgroundColor = '';
   differenceFontColor = '';
 
-  
-
   constructor(private lineItemService: LineItemService) {}
 
   ngOnInit() {
