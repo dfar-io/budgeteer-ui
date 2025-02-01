@@ -26,14 +26,15 @@ export class CategoryComponent implements OnInit {
   @Input() difference!: number;
   @Input() usePaymentDate = false;
   @Input() todaysDate!: Date;
+  @Input() isSortedAlphabetically!: boolean;
   @Output() add = new EventEmitter();
   @Output() save = new EventEmitter();
   @Output() delete = new EventEmitter<number>();
+  @Output() toggleSort = new EventEmitter();
 
   isVisible! : boolean
   toggleIcon = 'keyboard_arrow_right';
   sum = 0;
-  isFutureVisible = false;
   toggleFutureIcon = 'visibility_off';
 
   constructor(private renderer: Renderer2) {}
@@ -47,9 +48,6 @@ export class CategoryComponent implements OnInit {
     }
     if (!this.emptyMessage) {
       throw (new Error("The required input [emptyMessage] was not provided"));
-    }
-    if (!this.emptyMessage) {
-      throw (new Error("The required input [todaysDate] was not provided"));
     }
 
     this.updateSum();
@@ -111,5 +109,9 @@ export class CategoryComponent implements OnInit {
       this.renderer.setStyle(item, 'display', isHidden ? 'flex' : 'none');
     });
     this.toggleFutureIcon = isHidden ? 'visibility' : 'visibility_off';
+  }
+
+  onToggleSortClick() {
+    this.toggleSort.emit();
   }
 }

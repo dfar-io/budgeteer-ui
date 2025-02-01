@@ -24,6 +24,8 @@
       emptyMessage="No planned expenses."
       [usePaymentDate]="true"
       [todaysDate]="this.todaysDate"
+      [isSortedAlphabetically]="this.isSortedAlphabetically"
       (add)="addPlanned()"
       (save)="savePlanned()"
-      (delete)="deletePlanned($event)"></app-category>
+      (delete)="deletePlanned($event)"
+      (toggleSort)="toggleSort()"></app-category>
