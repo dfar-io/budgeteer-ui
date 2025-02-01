@@ -1,5 +1,5 @@
 ![CICD](https://github.com/dfar-io/budgeteer/actions/workflows/cicd.yml/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/66f6382b0c80a71ea41f/maintainability)](https://codeclimate.com/github/dfar-io/budgeteer/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7847dcb19dec4ac4bb36/maintainability)](https://codeclimate.com/github/dfar-io/budgeteer-ui/maintainability)
 
 # Budgeteer
 
