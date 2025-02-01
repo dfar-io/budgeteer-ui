@@ -24,6 +24,8 @@ export class BudgetPageComponent implements OnInit {
 
   differenceBackgroundColor = '';
   differenceFontColor = '';
+  
+  isSortedAlphabetically = false;
 
   constructor(private lineItemService: LineItemService) {}
 
@@ -66,7 +68,7 @@ export class BudgetPageComponent implements OnInit {
   addPlanned() {
     const newPlanned = this.createNewLineItem('date');
     this.planned.unshift(newPlanned);
-    this.planned = this.sortLineItems(this.planned, 'date');
+    this.planned = this.sortLineItems(this.planned, this.isSortedAlphabetically ? 'name' : 'date');
     this.lineItemService.savePlanned(this.planned);
     this.updateDifference();
   }
@@ -82,7 +84,7 @@ export class BudgetPageComponent implements OnInit {
   }
 
   savePlanned() {
-    this.planned = this.sortLineItems(this.planned, 'date');
+    this.planned = this.sortLineItems(this.planned, this.isSortedAlphabetically ? 'name' : 'date');
     this.lineItemService.saveLineItems('planned', this.planned);
     this.updateDifference();
   }
@@ -97,6 +99,11 @@ export class BudgetPageComponent implements OnInit {
 
   deletePlanned(id : number) {
     this.deleteLineItem(id, 'planned', this.planned);
+  }
+
+  toggleSort() {
+    this.isSortedAlphabetically = !this.isSortedAlphabetically;
+    this.savePlanned();
   }
 
   private createNewLineItem(options?: keyof LineItem) {
