@@ -11,10 +11,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule} from '@angular/material/button';
-import { AddEditDialogData } from './add-edit-dialog-data';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { LineItem } from '../line-item/line-item';
 
 @Component({
     selector: 'app-add-edit-dialog',
@@ -38,8 +38,8 @@ import { MatSelectModule } from '@angular/material/select';
 
 export class AddEditDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddEditDialogComponent>);
-  readonly data = inject<AddEditDialogData>(MAT_DIALOG_DATA);
+  readonly data = inject<LineItem>(MAT_DIALOG_DATA);
   readonly save = model(this.data);
 
-  availableDurations: string[] = ['days', 'months'];
+  availableDurations: string[] = ['months', 'days'];
 }

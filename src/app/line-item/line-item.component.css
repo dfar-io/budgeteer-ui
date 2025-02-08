@@ -5,6 +5,7 @@
 
 .line-item-amount {
     margin-left: auto;
+    text-align: right;
 }
 
 mat-icon {
