@@ -33,24 +33,8 @@ h2 {
     display: block;
 }
 
-.category-item {
-    display: flex;
-    align-items: center;
-
-}
-
-app-line-item {
-    margin-left: 0.5rem;
-    width: 100%;
-}
-
 .future {
     display: var(--future-display);
-}
-.overdue {
-    color: yellow;
-    font-weight: bold;
-    font-style: underline;
 }
 
 /* drag and drop */ 

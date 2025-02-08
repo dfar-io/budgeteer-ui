@@ -21,27 +21,26 @@
             </button>
         }
     </div>
-    <div cdkDropList class="category-list" [ngClass]="{ 'visible' : isVisible }" (cdkDropListDropped)="drop($event)">
+    <mat-list cdkDropList class="category-list" [ngClass]="{ 'visible' : isVisible }" (cdkDropListDropped)="drop($event)">
         @if (lineItems !== null && lineItems.length > 0) {
             @for (lineItem of lineItems; track lineItem.id) {
                 @if (usePaymentDate) {
-                    <div class="category-item {{ determineCssClassByDate(lineItem.date) }}">
-                        <div>{{ lineItem.date | date:'YYYY.MM.dd' }}</div>
+                    <mat-list-item class="category-item {{ determineCssClassByDate(lineItem.date) }}">
                         <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="onSave()" (delete)="onDelete(lineItem.id)"></app-line-item>
-                    </div>
+                    </mat-list-item>
                 }
                 @else {
-                    <div class="category-item" cdkDrag>
-                        <span cdkDragHandle>
+                    <mat-list-item class="category-item" cdkDrag>
+                        <span matListItemIcon cdkDragHandle>
                             <mat-icon>drag_handle</mat-icon>
                         </span>
                         <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="onSave()" (delete)="onDelete(lineItem.id)"></app-line-item>
-                    </div>
+                    </mat-list-item>
                 }
             }
         }
         @else {
             <p>{{ emptyMessage }}</p>
         }
-    </div>
+    </mat-list>
 </div>
