@@ -16,8 +16,16 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field><br />
     <mat-form-field>
-      <mat-label>Cycle In Days</mat-label>
-      <input matInput [(ngModel)]="data.cycleInDays" />
+      <mat-label>Cycle Value</mat-label>
+      <input matInput [(ngModel)]="data.cycleValue" />
+    </mat-form-field><br />
+    <mat-form-field>
+      <mat-label>Cycle Duration</mat-label>
+      <mat-select [(ngModel)]="data.cycleDuration" name="duration">
+        @for (duration of availableDurations; track duration) {
+          <mat-option [value]="duration">{{duration}}</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
   }
 </mat-dialog-content>
