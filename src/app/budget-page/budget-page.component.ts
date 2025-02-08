@@ -118,7 +118,7 @@ export class BudgetPageComponent implements OnInit {
     result.amount = amount;
     result.date = options == 'date' ?
       this.getTodayWithoutTime().toISOString() : undefined;
-    result.cycleInDays = options == 'date' ?
+    result.cycleValue = options == 'date' ?
       30 : undefined;
 
     return result;

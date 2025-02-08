@@ -41,7 +41,8 @@ export class LineItemComponent implements OnInit {
         name: this.lineItem.name,
         amount: this.lineItem.amount,
         date: this.lineItem.date,
-        cycleInDays: this.lineItem.cycleInDays
+        cycleValue: this.lineItem.cycleValue,
+        cycleDuration: this.lineItem.cycleDuration
       }
     });
     
@@ -58,9 +59,11 @@ export class LineItemComponent implements OnInit {
           result.date;
       }
 
-      if (result.cycleInDays) {
-        this.lineItem.cycleInDays = parseInt(result.cycleInDays);
+      if (result.cycleValue) {
+        this.lineItem.cycleValue = parseInt(result.cycleValue);
       }
+
+      this.lineItem.cycleDuration = result.cycleDuration;
       
       this.save.emit(this.lineItem);
     });
@@ -90,14 +93,20 @@ export class LineItemComponent implements OnInit {
       console.error("Cycle attempted with undefined date property in lineItem");
       return;
     }
-    if (this.lineItem.cycleInDays === undefined) {
-      console.error("Cycle attempted with undefined cycleInDays property in lineItem");
+    if (this.lineItem.cycleValue === undefined) {
+      console.error("Cycle attempted with undefined cycleValue property in lineItem");
       return;
     }
 
     const dateObject = new Date(this.lineItem.date);
-    const newDate = dateObject.getDate() + this.lineItem.cycleInDays;
-    dateObject.setDate(newDate);
+    if (this.lineItem.cycleDuration == 'days') {
+      const newDate = dateObject.getDate() + this.lineItem.cycleValue;
+      dateObject.setDate(newDate);
+    }
+    else {
+      dateObject.setMonth(dateObject.getMonth() + this.lineItem.cycleValue);
+    }
+    
     this.lineItem.date = dateObject.toISOString();
     this.save.emit(this.lineItem);
   }

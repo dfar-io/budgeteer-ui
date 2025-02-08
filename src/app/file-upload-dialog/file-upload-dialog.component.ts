@@ -1,7 +1,7 @@
 // https://blog.angular-university.io/angular-file-upload/
 
 import { Component } from '@angular/core';
-import { MatDialogActions, MatDialogClose, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MatDialogActions, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
@@ -17,8 +17,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogTitle,
     MatButton,
     MatDialogActions,
-    MatInputModule,
-    MatDialogClose
+    MatInputModule
   ],
   templateUrl: './file-upload-dialog.component.html',
   styleUrls: ['./file-upload-dialog.component.css']

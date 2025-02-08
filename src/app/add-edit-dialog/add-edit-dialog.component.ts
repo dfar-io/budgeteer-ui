@@ -14,6 +14,7 @@ import { MatButtonModule} from '@angular/material/button';
 import { AddEditDialogData } from './add-edit-dialog-data';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
     selector: 'app-add-edit-dialog',
@@ -26,7 +27,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
         MatDialogContent,
         MatDialogActions,
         MatDialogClose,
-        MatDatepickerModule
+        MatDatepickerModule,
+        MatSelectModule
     ],
     providers: [provideNativeDateAdapter()],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,4 +40,6 @@ export class AddEditDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddEditDialogComponent>);
   readonly data = inject<AddEditDialogData>(MAT_DIALOG_DATA);
   readonly save = model(this.data);
+
+  availableDurations: string[] = ['days', 'months'];
 }

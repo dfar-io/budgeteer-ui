@@ -3,12 +3,14 @@ export interface AddEditDialogData {
     name: string
     amount: number
     date?: string
-    cycleInDays?: number
+    cycleValue?: number
+    cycleDuration?: string
 }
 
 export interface AddEditDialogDataResult {
     name: string
     amount: string
     date?: Date | string
-    cycleInDays?: string
+    cycleValue?: string
+    cycleDuration?: string
 }
