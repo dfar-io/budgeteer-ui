@@ -11,3 +11,8 @@
 mat-icon {
     color: #efefef;
 }
+
+.overdue {
+    color: yellow;
+    font-weight: bold;
+}

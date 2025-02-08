@@ -3,7 +3,8 @@ import { LineItem } from '../line-item/line-item';
 import { LineItemComponent } from '../line-item/line-item.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list'
 import { Money } from 'ts-money';
 import {
   CdkDrag,
@@ -15,7 +16,7 @@ import {
 
 @Component({
     selector: 'app-category',
-    imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragHandle, DatePipe],
+    imports: [LineItemComponent, MatButtonModule, MatIconModule, CommonModule, CdkDropList, CdkDrag, CdkDragHandle, MatListModule],
     templateUrl: './category.component.html',
     styleUrl: './category.component.css'
 })
@@ -96,10 +97,7 @@ export class CategoryComponent implements OnInit {
     sevenDays.setDate(this.todaysDate.getDate() + 7);
     const isInFuture = new Date(date) >= sevenDays;
 
-    const currentDate = new Date();
-    const isOverdue = new Date(date) < currentDate;
-
-    return `${isInFuture ? 'future ' : ''} ${isOverdue ? 'overdue ' : ''}`;
+    return `${isInFuture ? 'future ' : ''}`;
   }
 
   toggleFuture() {

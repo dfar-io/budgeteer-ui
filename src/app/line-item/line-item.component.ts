@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { LineItem } from './line-item';
 import {
   MatDialog
@@ -14,7 +14,7 @@ import { AddEditDialogDataResult } from '../add-edit-dialog/add-edit-dialog-data
 
 @Component({
     selector: 'app-line-item',
-    imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule],
+    imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule, CommonModule],
     templateUrl: './line-item.component.html',
     styleUrl: './line-item.component.css',
     //for dialog
@@ -109,5 +109,12 @@ export class LineItemComponent implements OnInit {
     
     this.lineItem.date = dateObject.toISOString();
     this.save.emit(this.lineItem);
+  }
+
+  isOverdue(date: string | undefined) {
+    if (date === undefined) return false;
+
+    const currentDate = new Date();
+    return new Date(date) < currentDate;
   }
 }

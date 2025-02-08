@@ -1,4 +1,5 @@
-<div class="line-item">
+<div class="line-item" [class.overdue]="isOverdue(lineItem.date)">
+    <div>{{ lineItem.date | date:'YYYY.MM.dd' }}&nbsp;</div>
     <div class="line-item-name">{{ lineItem.name }}</div>
     <div class="line-item-amount">{{ lineItem.amount | currency }}</div>
     <div class="line-item-actions">
