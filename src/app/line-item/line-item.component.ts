@@ -4,13 +4,13 @@ import { LineItem } from './line-item';
 import {
   MatDialog
 } from '@angular/material/dialog';
-import { AddEditDialogComponent } from '../add-edit-dialog/add-edit-dialog.component';
+import { AddEditLineItemDialogComponent } from '../add-edit-line-item-dialog/add-edit-line-item-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Money } from 'ts-money';
-import { AddEditDialogDataResult } from '../add-edit-dialog/add-edit-dialog-data';
+import { AddEditLineItemDialogDataResult } from '../add-edit-line-item-dialog/add-edit-line-item-dialog-data';
 
 @Component({
     selector: 'app-line-item',
@@ -36,7 +36,7 @@ export class LineItemComponent implements OnInit {
   }
 
   editClick() {
-    const dialogRef = this.dialog.open(AddEditDialogComponent, {
+    const dialogRef = this.dialog.open(AddEditLineItemDialogComponent, {
       data: {
         name: this.lineItem.name,
         amount: this.lineItem.amount,
@@ -46,7 +46,7 @@ export class LineItemComponent implements OnInit {
       }
     });
     
-    dialogRef.afterClosed().subscribe((result: AddEditDialogDataResult) => {
+    dialogRef.afterClosed().subscribe((result: AddEditLineItemDialogDataResult) => {
       // closed without saving
       if (result === undefined) { return; }
 

@@ -32,12 +32,12 @@ import { LineItem } from '../line-item/line-item';
     ],
     providers: [provideNativeDateAdapter()],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './add-edit-dialog.component.html',
-    styleUrl: './add-edit-dialog.component.css'
+    templateUrl: './add-edit-line-item-dialog.component.html',
+    styleUrl: './add-edit-line-item-dialog.component.css'
 })
 
-export class AddEditDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<AddEditDialogComponent>);
+export class AddEditLineItemDialogComponent {
+  readonly dialogRef = inject(MatDialogRef<AddEditLineItemDialogComponent>);
   readonly data = inject<LineItem>(MAT_DIALOG_DATA);
   readonly save = model(this.data);
 

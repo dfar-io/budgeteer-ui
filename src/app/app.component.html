@@ -8,11 +8,17 @@
           <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+          <button [routerLink]="'/'" mat-menu-item>
+            <span>Budget</span>
+          </button>
+          <button [routerLink]="'/transactions'" mat-menu-item>
+            <span>Transactions</span>
+          </button>
           <button (click)="importJSON()" mat-menu-item>
-              <span>Import</span>
+            <span>Import</span>
           </button>
           <button (click)="exportJSON()" mat-menu-item>
-              <span>Export</span>
+            <span>Export</span>
           </button>
       </mat-menu>
       </mat-toolbar-row>

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Import Transactions</h2>
+
+<div mat-dialog-content>
+    <input type="file" class="file-input" (change)="onFileSelected($event)"  accept=".json" #fileUpload>
+    <div class="file-upload">
+        {{ fileName || "No file uploaded yet." }}
+
+        <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+    </div>
+</div>
+
+<mat-dialog-actions>
+    <button mat-button (click)="closeDialog()">Import</button>
+</mat-dialog-actions>

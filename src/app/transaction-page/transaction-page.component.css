@@ -1,0 +1,9 @@
+.account {
+    display: flex;
+    align-items: center;
+}
+
+.account-actions {
+    margin-left: auto;
+    text-align: right;
+}
