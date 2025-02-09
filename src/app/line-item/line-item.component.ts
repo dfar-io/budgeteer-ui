@@ -86,7 +86,7 @@ export class LineItemComponent implements OnInit {
     });
   }
 
-  applyClick() {
+  balanceClick() {
     let moneyCalc = Money.fromDecimal(this.lineItem.amount, 'USD');
     moneyCalc = moneyCalc.add(Money.fromDecimal(this.difference, 'USD'));
     this.lineItem.amount = moneyCalc.amount / 100;

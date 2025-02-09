@@ -16,9 +16,9 @@
         </button>
         <mat-menu #menu="matMenu">
             @if (difference !== undefined) {
-                <button mat-menu-item (click)="applyClick()" disabled="{{ difference === 0 }}">
-                    <mat-icon>sync</mat-icon>
-                    <span>Apply</span>
+                <button mat-menu-item (click)="balanceClick()" disabled="{{ difference === 0 }}">
+                    <mat-icon>balance</mat-icon>
+                    <span>Balance</span>
                 </button>
             }
             @if (lineItem.cycleValue !== undefined) {
