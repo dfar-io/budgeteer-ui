@@ -2,23 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { LineItem } from '../line-item/line-item';
 import { LineItemService } from '../line-item/line-item.service';
 import { Money } from 'ts-money';
-import { CategoryComponent } from '../category/category.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { LineItemComponent } from '../line-item/line-item.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-budget-page',
-    imports: [CommonModule, CategoryComponent, CurrencyPipe],
+    imports: [CommonModule, CurrencyPipe, MatIconModule, MatListModule, LineItemComponent, MatButtonModule],
     templateUrl: './budget-page.component.html',
     styleUrl: './budget-page.component.css'
 })
 export class BudgetPageComponent implements OnInit {
-  incomes: LineItem[] = [];
-  funds: LineItem[] = [];
-  planned: LineItem[] = [];
+  lineItems: LineItem[] = [];
 
-  incomeSum = 0;
-  fundsSum = 0;
-  plannedSum = 0;
+  lineItemSum = 0;
   difference = 0;
   todaysDate = new Date();
 
@@ -30,20 +29,14 @@ export class BudgetPageComponent implements OnInit {
   constructor(private lineItemService: LineItemService) {}
 
   ngOnInit() {
-    this.incomes = this.lineItemService.getIncomes();
-    this.funds = this.lineItemService.getFunds();
-    this.planned = this.lineItemService.getPlanned();
+    this.lineItems = this.lineItemService.getLineItems();
     this.updateDifference();
   }
 
   updateDifference() {
-    this.incomeSum = this.generateSum(this.incomes);
-    this.fundsSum = this.generateSum(this.funds);
-    this.plannedSum = this.generateSum(this.planned);
+    this.lineItemSum = this.generateSum(this.lineItems);
     let moneyCalc = new Money(0, 'USD');
-    moneyCalc = moneyCalc.add(Money.fromDecimal(this.incomeSum, 'USD'));
-    moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.fundsSum, 'USD'));
-    moneyCalc = moneyCalc.subtract(Money.fromDecimal(this.plannedSum, 'USD'));
+    moneyCalc = moneyCalc.add(Money.fromDecimal(this.lineItemSum, 'USD'));
     this.difference = moneyCalc.amount / 100;
 
     if (this.difference == 0) {
@@ -58,59 +51,17 @@ export class BudgetPageComponent implements OnInit {
     }
   }
 
-  addLineItem(lineItems: LineItem[], key: string) {
+  addLineItem() {
     const newLineItem = this.createNewLineItem();
-    lineItems.unshift(newLineItem);
-    this.lineItemService.saveLineItems(key, lineItems);
+    this.lineItems.unshift(newLineItem);
+    this.lineItemService.saveLineItems(this.lineItems);
     this.updateDifference();
-  }
-
-  addPlanned() {
-    const newPlanned = this.createNewLineItem('date');
-    this.planned.unshift(newPlanned);
-    this.planned = this.sortLineItems(this.planned, this.isSortedAlphabetically ? 'name' : 'date');
-    this.lineItemService.savePlanned(this.planned);
-    this.updateDifference();
-  }
-
-  saveIncomes() {
-    this.lineItemService.saveIncomes(this.incomes);
-    this.updateDifference();
-  }
-
-  saveFunds() {
-    this.lineItemService.saveFunds(this.funds);
-    this.updateDifference();
-  }
-
-  savePlanned() {
-    this.planned = this.sortLineItems(this.planned, this.isSortedAlphabetically ? 'name' : 'date');
-    this.lineItemService.saveLineItems('planned', this.planned);
-    this.updateDifference();
-  }
-
-  deleteIncome(id : number) {
-    this.deleteLineItem(id, 'incomes', this.incomes);
-  }
-
-  deleteFund(id : number) {
-    this.deleteLineItem(id, 'funds', this.funds);
-  }
-
-  deletePlanned(id : number) {
-    this.deleteLineItem(id, 'planned', this.planned);
-  }
-
-  toggleSort() {
-    this.isSortedAlphabetically = !this.isSortedAlphabetically;
-    this.savePlanned();
   }
 
   private createNewLineItem(options?: keyof LineItem) {
-    const randomDecimal = parseFloat((Math.random() * (10000 - 1) + 1).toFixed(2));
     const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
     const name = "New Line Item";
-    const amount = randomDecimal;
+    const amount = 0;
 
     const result = {} as LineItem;
     result.id = randomId;
@@ -124,11 +75,17 @@ export class BudgetPageComponent implements OnInit {
     return result;
   }
 
-  private deleteLineItem(id : number, key : string, array : LineItem[]) {
-    const toDelete = array.findIndex(i => i.id === id);
-    array.splice(toDelete, 1);
+  saveLineItems() {
+    this.lineItems = this.sortLineItems(this.lineItems, this.isSortedAlphabetically ? 'name' : 'date');
+    this.lineItemService.saveLineItems(this.lineItems);
+    this.updateDifference();
+  }
 
-    this.lineItemService.saveLineItems(key, array);
+  deleteLineItem(id : number) {
+    const toDelete = this.lineItems.findIndex(i => i.id === id);
+    this.lineItems.splice(toDelete, 1);
+
+    this.lineItemService.saveLineItems(this.lineItems);
     this.updateDifference();
   }
 

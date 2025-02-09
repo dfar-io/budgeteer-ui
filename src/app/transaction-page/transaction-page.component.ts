@@ -110,18 +110,11 @@ export class TransactionPageComponent implements OnInit {
   }
 
   getLineItem(arg0: number) {
-    // TODO: This makes a good case to merge into a lineItems data model
-    // which we can categorize since we're separating based on line items
-    // having dates
-    let lineItem = this.lineItemService.getFunds().find(li => li.id === arg0);
+    const lineItem = this.lineItemService.getLineItems().find(li => li.id === arg0);
     if (lineItem) {
       return lineItem.name;
     }
 
-    lineItem = this.lineItemService.getPlanned().find(li => li.id === arg0);
-    if (lineItem) {
-      return lineItem.name;
-    }
     return 'UNASSIGNED'
   }
 }

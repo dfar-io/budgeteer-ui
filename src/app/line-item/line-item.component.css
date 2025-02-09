@@ -16,3 +16,16 @@ mat-icon {
     color: yellow;
     font-weight: bold;
 }
+
+.remaining {
+    font-weight: bold;
+    color: rgb(85, 226, 85);
+}
+
+.neutral {
+    color: gray;
+}
+
+.negative {
+    color: red;
+}

@@ -11,10 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Money } from 'ts-money';
 import { AddEditLineItemDialogDataResult } from '../add-edit-line-item-dialog/add-edit-line-item-dialog-data';
+import { TransactionService } from '../transaction-page/transaction.service';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'app-line-item',
-    imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule, CommonModule],
+    imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule, CommonModule, MatDividerModule, MatListModule],
     templateUrl: './line-item.component.html',
     styleUrl: './line-item.component.css',
     //for dialog
@@ -26,6 +29,8 @@ export class LineItemComponent implements OnInit {
   @Input() usePaymentDate = false;
   @Output() save = new EventEmitter<LineItem>();
   @Output() delete = new EventEmitter<number>();
+
+  constructor(private transactionService: TransactionService) {}
 
   readonly dialog = inject(MatDialog);
 
@@ -116,5 +121,26 @@ export class LineItemComponent implements OnInit {
 
     const currentDate = new Date();
     return new Date(date) < currentDate;
+  }
+
+  getTransactionTotal(lineItemId: number): number {
+    const transactions = this.transactionService.getTransactions()
+                                                .filter(t => t.lineItemId === lineItemId);
+
+    if (transactions === undefined) { return 0; }
+
+    return transactions.reduce((sum, t) => sum += t.amount, 0);
+  }
+
+  getRemaining(lineItemId: number): number {
+    return this.lineItem.amount - this.getTransactionTotal(lineItemId);
+  }
+
+  isNeutral(id: number) {
+    return this.getRemaining(id) === 0;
+  }
+
+  isNegative(id: number) {
+    return this.getRemaining(id) < 0;
   }
 }

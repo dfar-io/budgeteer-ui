@@ -28,14 +28,10 @@ export class AppComponent {
   ) {}
 
   exportJSON() {
-    const incomes = this.lineItemService.getIncomes();
-    const funds = this.lineItemService.getFunds();
-    const planned = this.lineItemService.getPlanned();
+    const lineItems = this.lineItemService.getLineItems();
     const transactions = this.transactionService.getTransactions();
     const data = {
-      incomes: incomes,
-      funds: funds,
-      planned: planned,
+      lineItems: lineItems,
       transactions: transactions
     };
 
@@ -70,9 +66,7 @@ export class AppComponent {
         // TODO: Error handling for malformed JSON
         const parsedObject = JSON.parse(result);
 
-        this.lineItemService.saveIncomes(parsedObject.incomes);
-        this.lineItemService.saveFunds(parsedObject.funds);
-        this.lineItemService.savePlanned(parsedObject.planned);
+        this.lineItemService.saveLineItems(parsedObject.lineItems);
         this.transactionService.saveTransactions(parsedObject.transactions);
 
         // reload the current page to refresh budget component

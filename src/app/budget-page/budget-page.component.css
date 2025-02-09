@@ -7,3 +7,7 @@ div.difference {
     top: 0px;
     z-index: 100;
 }
+
+.line-item-list {
+    padding: 0 0.5rem;
+}
