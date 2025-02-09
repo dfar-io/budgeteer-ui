@@ -47,7 +47,7 @@ export class LineItemComponent implements OnInit {
         amount: this.lineItem.amount,
         date: this.lineItem.date,
         cycleValue: this.lineItem.cycleValue,
-        cycleDuration: this.lineItem.cycleDuration
+        cycleType: this.lineItem.cycleType
       }
     });
     
@@ -68,7 +68,7 @@ export class LineItemComponent implements OnInit {
         this.lineItem.cycleValue = parseInt(result.cycleValue);
       }
 
-      this.lineItem.cycleDuration = result.cycleDuration;
+      this.lineItem.cycleType = result.cycleType;
       
       this.save.emit(this.lineItem);
     });
@@ -104,12 +104,22 @@ export class LineItemComponent implements OnInit {
     }
 
     const dateObject = new Date(this.lineItem.date);
-    if (this.lineItem.cycleDuration == 'days') {
+    if (this.lineItem.cycleType === 'days') {
       const newDate = dateObject.getDate() + this.lineItem.cycleValue;
       dateObject.setDate(newDate);
     }
-    else {
+    else if (this.lineItem.cycleType === 'months') {
       dateObject.setMonth(dateObject.getMonth() + this.lineItem.cycleValue);
+    }
+    else if (this.lineItem.cycleType === 'years') {
+      dateObject.setMonth(dateObject.getMonth() + (this.lineItem.cycleValue * 12));
+    }
+    else if (this.lineItem.cycleType === 'weeks') {
+      const newDate = dateObject.getDate() + (this.lineItem.cycleValue * 7);
+      dateObject.setDate(newDate);
+    }
+    else {
+      throw new Error(`Encountered invalid cycle type ${this.lineItem.cycleType}`)
     }
     
     this.lineItem.date = dateObject.toISOString();
