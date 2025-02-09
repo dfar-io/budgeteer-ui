@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataFileUploadDialogComponent } from './data-file-upload-dialog.component';
+import { DataFileUploadDialogComponent } from './file-upload-dialog.component';
 
 describe('DataFileUploadDialogComponent', () => {
   let component: DataFileUploadDialogComponent;

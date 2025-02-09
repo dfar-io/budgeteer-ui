@@ -9,7 +9,7 @@ import { MatButton } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-data-file-upload-dialog',
+  selector: 'app-file-upload-dialog',
   imports: [
     CommonModule,
     MatIcon,
@@ -19,14 +19,14 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogActions,
     MatInputModule
   ],
-  templateUrl: './data-file-upload-dialog.component.html',
-  styleUrls: ['./data-file-upload-dialog.component.css']
+  templateUrl: './file-upload-dialog.component.html',
+  styleUrls: ['./file-upload-dialog.component.css']
 })
-export class DataFileUploadDialogComponent {
+export class FileUploadDialogComponent {
   fileName = '';
   fileContent: string | ArrayBuffer | null = null;
 
-  constructor(public dialogRef: MatDialogRef<DataFileUploadDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<FileUploadDialogComponent>) {}
 
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;

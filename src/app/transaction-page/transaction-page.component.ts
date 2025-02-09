@@ -6,12 +6,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
-import { TransactionFileUploadDialogComponent } from '../transaction-file-upload-dialog/transaction-file-upload-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { LineItemService } from '../line-item/line-item.service';
 import { AddEditTransactionDialogDataResult } from '../add-edit-transaction-dialog/add-edit-transaction-dialog-data';
 import { AddEditTransactionDialogComponent } from '../add-edit-transaction-dialog/add-edit-transaction-dialog.component';
+import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
 
 @Component({
   selector: 'app-transaction-page',
@@ -100,7 +100,7 @@ export class TransactionPageComponent implements OnInit {
   }
 
   onImport() {
-    const dialogRef = this.dialog.open(TransactionFileUploadDialogComponent);
+    const dialogRef = this.dialog.open(FileUploadDialogComponent);
     
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

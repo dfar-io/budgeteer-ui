@@ -8,8 +8,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { buildConstants } from '../environments/version';
 import { LineItemService } from './line-item/line-item.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DataFileUploadDialogComponent } from './data-file-upload-dialog/data-file-upload-dialog.component';
 import { TransactionService } from './transaction-page/transaction.service';
+import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
 
 @Component({
     selector: 'app-root',
@@ -63,7 +63,7 @@ export class AppComponent {
   }
 
   importJSON() {
-    const dialogRef = this.dialog.open(DataFileUploadDialogComponent);
+    const dialogRef = this.dialog.open(FileUploadDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
