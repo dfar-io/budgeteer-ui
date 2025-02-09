@@ -12,7 +12,7 @@ import { LineItemService } from '../line-item/line-item.service';
 import { AddEditTransactionDialogDataResult } from '../add-edit-transaction-dialog/add-edit-transaction-dialog-data';
 import { AddEditTransactionDialogComponent } from '../add-edit-transaction-dialog/add-edit-transaction-dialog.component';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
-import { CsvParser } from 'csv-parser';
+import Papa from 'papaparse';
 
 @Component({
   selector: 'app-transaction-page',
@@ -105,7 +105,26 @@ export class TransactionPageComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(results);
+        const parse = Papa.parse(result, {
+          header: true,
+          dynamicTyping: true
+        });
+        const csvResults = parse.data;
+
+        // TODO: How can we type this object?
+        /* eslint-disable */
+        const transactions = csvResults.map((line : any) => ({
+        /* eslint-enable */
+          id: Math.floor(Math.random() * (1000000 - 1 + 1)) + 1,
+          name: line.Description as string,
+          date: new Date(line.Date).toISOString(),
+          amount: this.cleanAmount(line.Amount),
+          lineItemId: 0
+        }));
+        this.transactions = [
+          ...this.transactions,
+          ...transactions
+        ]
       }
     });
   }
@@ -117,5 +136,16 @@ export class TransactionPageComponent implements OnInit {
     }
 
     return 'UNASSIGNED'
+  }
+
+  private cleanAmount(value: string): number {
+    let cleanedString = value.replace(/[^0-9.-]+/g, "");
+
+    if (cleanedString.startsWith("(") && cleanedString.endsWith(")")) {
+      cleanedString = cleanedString.slice(1, -1); // Remove parentheses
+      return -parseFloat(cleanedString); // Return negative value
+    }
+
+    return parseFloat(cleanedString);
   }
 }
