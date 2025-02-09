@@ -13,6 +13,6 @@ export class TransactionService {
   }
 
   saveTransactions(transactions : Transaction[]) {
-    localStorage.setItem(this.transactionsKey, JSON.stringify(transactions));
+    localStorage.setItem(this.transactionsKey, JSON.stringify(transactions) ?? []);
   }
 }

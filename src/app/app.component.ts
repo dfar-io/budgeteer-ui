@@ -9,6 +9,7 @@ import { buildConstants } from '../environments/version';
 import { LineItemService } from './line-item/line-item.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DataFileUploadDialogComponent } from './data-file-upload-dialog/data-file-upload-dialog.component';
+import { TransactionService } from './transaction-page/transaction.service';
 
 @Component({
     selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent {
   todaysDate = new Date();
 
   constructor(private lineItemService: LineItemService,
+              private transactionService: TransactionService,
               private dialog: MatDialog
   ) {}
 
@@ -29,10 +31,12 @@ export class AppComponent {
     const incomes = this.lineItemService.getIncomes();
     const funds = this.lineItemService.getFunds();
     const planned = this.lineItemService.getPlanned();
+    const transactions = this.transactionService.getTransactions();
     const data = {
       incomes: incomes,
       funds: funds,
-      planned: planned
+      planned: planned,
+      transactions: transactions
     };
 
     // Convert the object to a JSON string
@@ -69,6 +73,7 @@ export class AppComponent {
         this.lineItemService.saveIncomes(parsedObject.incomes);
         this.lineItemService.saveFunds(parsedObject.funds);
         this.lineItemService.savePlanned(parsedObject.planned);
+        this.transactionService.saveTransactions(parsedObject.transactions);
 
         // reload the current page to refresh budget component
         window.location.reload();
