@@ -9,5 +9,13 @@ div.difference {
 }
 
 .line-item-list {
-    padding: 0 0.5rem;
+    padding: 0 1rem;
+}
+
+.future {
+    display: var(--future-display);
+}
+
+app-line-item {
+    width: 100%;
 }

@@ -1,5 +1,6 @@
+<mat-divider></mat-divider>
 <div class="line-item">
-    <div>
+    <div class="line-item-desc">
         {{ lineItem.name }}
         <div class="secondary" [class.overdue]="isOverdue(lineItem.date)">{{ lineItem.date | date:'YYYY.MM.dd' }}</div>
         

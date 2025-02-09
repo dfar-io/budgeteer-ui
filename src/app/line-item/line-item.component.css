@@ -3,6 +3,12 @@
     align-items: center;
 }
 
+.line-item-desc {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .line-item-amount {
     margin-left: auto;
     text-align: right;

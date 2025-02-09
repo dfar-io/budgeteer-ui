@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { LineItem } from '../line-item/line-item';
 import { LineItemService } from '../line-item/line-item.service';
 import { Money } from 'ts-money';
@@ -23,10 +23,12 @@ export class BudgetPageComponent implements OnInit {
 
   differenceBackgroundColor = '';
   differenceFontColor = '';
-  
-  isSortedAlphabetically = false;
 
-  constructor(private lineItemService: LineItemService) {}
+  toggleFutureIcon = 'visibility_off';
+
+  constructor(private lineItemService: LineItemService,
+              private renderer: Renderer2
+  ) {}
 
   ngOnInit() {
     this.lineItems = this.lineItemService.getLineItems();
@@ -76,7 +78,7 @@ export class BudgetPageComponent implements OnInit {
   }
 
   saveLineItems() {
-    this.lineItems = this.sortLineItems(this.lineItems, this.isSortedAlphabetically ? 'name' : 'date');
+    this.lineItems = this.sortLineItems(this.lineItems, 'date');
     this.lineItemService.saveLineItems(this.lineItems);
     this.updateDifference();
   }
@@ -114,6 +116,25 @@ export class BudgetPageComponent implements OnInit {
       }
       return 0;
     });
+  }
+
+  determineCssClassByDate(date: string | undefined) : string {
+    if (date === undefined) return '';
+
+    const sevenDays = new Date();
+    sevenDays.setDate(this.todaysDate.getDate() + 7);
+    const isInFuture = new Date(date) >= sevenDays;
+
+    return `${isInFuture ? 'future ' : ''}`;
+  }
+
+  toggleFutureVisibility() {
+    const isHidden = this.toggleFutureIcon == 'visibility_off';
+    const items = document.querySelectorAll('.future');
+    items.forEach((item: Element) => {
+      this.renderer.setStyle(item, 'display', isHidden ? 'flex' : 'none');
+    });
+    this.toggleFutureIcon = isHidden ? 'visibility' : 'visibility_off';
   }
 
   private getTodayWithoutTime(): Date {
