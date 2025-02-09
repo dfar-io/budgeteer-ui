@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileUploadDialogComponent } from './file-upload-dialog.component';
+import { DataFileUploadDialogComponent } from './file-upload-dialog.component';
 
-describe('FileUploadDialogComponent', () => {
-  let component: FileUploadDialogComponent;
-  let fixture: ComponentFixture<FileUploadDialogComponent>;
+describe('DataFileUploadDialogComponent', () => {
+  let component: DataFileUploadDialogComponent;
+  let fixture: ComponentFixture<DataFileUploadDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FileUploadDialogComponent]
+      imports: [DataFileUploadDialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FileUploadDialogComponent);
+    fixture = TestBed.createComponent(DataFileUploadDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -107,10 +107,10 @@ export class BudgetPageComponent implements OnInit {
   }
 
   private createNewLineItem(options?: keyof LineItem) {
-    const randomDecimal = Math.random() * (10000 - 1) + 1;
+    const randomDecimal = parseFloat((Math.random() * (10000 - 1) + 1).toFixed(2));
     const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
     const name = "New Line Item";
-    const amount = parseFloat(randomDecimal.toFixed(2));
+    const amount = randomDecimal;
 
     const result = {} as LineItem;
     result.id = randomId;

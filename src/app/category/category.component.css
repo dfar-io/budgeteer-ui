@@ -11,22 +11,12 @@ h2 {
     align-items: center;
 }
 
-.category-actions {
-    display: flex;
-    flex-direction: row-reverse;
-}
-
 .category-list {
     display: none;
 }
 
 .sum {
     margin-left: auto;
-}
-
-.add, .toggle-future {
-    display: none;
-    margin-left: 1rem;
 }
 
 .visible {

@@ -1,0 +1,14 @@
+.transaction {
+    display: flex;
+    align-items: center;
+}
+
+.transaction-amount {
+    margin-left: auto;
+    text-align: right;
+}
+
+.secondary {
+    color: gray;
+    font-style: italic;
+}

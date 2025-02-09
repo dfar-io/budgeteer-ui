@@ -9,7 +9,7 @@
 //     cycleDuration?: string
 // }
 
-export interface AddEditDialogDataResult {
+export interface AddEditLineItemDialogDataResult {
     name: string
     amount: string
     date?: Date | string

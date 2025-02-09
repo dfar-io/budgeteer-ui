@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -8,11 +8,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { buildConstants } from '../environments/version';
 import { LineItemService } from './line-item/line-item.service';
 import { MatDialog } from '@angular/material/dialog';
+import { TransactionService } from './transaction-page/transaction.service';
 import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, MatToolbar, MatToolbarRow, MatIcon, MatIconButton, MatMenuModule],
+    imports: [CommonModule, RouterOutlet, MatToolbar, MatToolbarRow, MatIcon, MatIconButton, MatMenuModule, RouterLink],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
@@ -22,6 +23,7 @@ export class AppComponent {
   todaysDate = new Date();
 
   constructor(private lineItemService: LineItemService,
+              private transactionService: TransactionService,
               private dialog: MatDialog
   ) {}
 
@@ -29,10 +31,12 @@ export class AppComponent {
     const incomes = this.lineItemService.getIncomes();
     const funds = this.lineItemService.getFunds();
     const planned = this.lineItemService.getPlanned();
+    const transactions = this.transactionService.getTransactions();
     const data = {
       incomes: incomes,
       funds: funds,
-      planned: planned
+      planned: planned,
+      transactions: transactions
     };
 
     // Convert the object to a JSON string
@@ -69,6 +73,7 @@ export class AppComponent {
         this.lineItemService.saveIncomes(parsedObject.incomes);
         this.lineItemService.saveFunds(parsedObject.funds);
         this.lineItemService.savePlanned(parsedObject.planned);
+        this.transactionService.saveTransactions(parsedObject.transactions);
 
         // reload the current page to refresh budget component
         window.location.reload();

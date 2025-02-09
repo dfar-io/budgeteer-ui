@@ -14,6 +14,8 @@ import { MatButtonModule} from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { Transaction } from '../transaction-page/transaction';
+import { LineItemService } from '../line-item/line-item.service';
 import { LineItem } from '../line-item/line-item';
 
 @Component({
@@ -32,14 +34,19 @@ import { LineItem } from '../line-item/line-item';
     ],
     providers: [provideNativeDateAdapter()],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './add-edit-dialog.component.html',
-    styleUrl: './add-edit-dialog.component.css'
+    templateUrl: './add-edit-transaction-dialog.component.html',
+    styleUrl: './add-edit-transaction-dialog.component.css'
 })
 
-export class AddEditDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<AddEditDialogComponent>);
-  readonly data = inject<LineItem>(MAT_DIALOG_DATA);
+export class AddEditTransactionDialogComponent {
+  readonly dialogRef = inject(MatDialogRef<AddEditTransactionDialogComponent>);
+  readonly data = inject<Transaction>(MAT_DIALOG_DATA);
   readonly save = model(this.data);
 
-  availableDurations: string[] = ['months', 'days'];
+  constructor(private lineItemService: LineItemService) {}
+
+  lineItems: LineItem[] = [
+    ...this.lineItemService.getFunds(),
+    ...this.lineItemService.getPlanned()
+  ];
 }

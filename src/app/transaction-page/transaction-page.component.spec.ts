@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEditDialogComponent } from './add-edit-dialog.component';
+import { TransactionPageComponent } from './transaction-page.component';
 
-describe('AddEditDialogComponent', () => {
-  let component: AddEditDialogComponent;
-  let fixture: ComponentFixture<AddEditDialogComponent>;
+describe('AccountsPageComponent', () => {
+  let component: TransactionPageComponent;
+  let fixture: ComponentFixture<TransactionPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddEditDialogComponent]
+      imports: [TransactionPageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddEditDialogComponent);
+    fixture = TestBed.createComponent(TransactionPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
