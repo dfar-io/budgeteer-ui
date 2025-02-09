@@ -2,17 +2,12 @@
     {{ difference | currency }}
 </div>
 <div class="actions">
-    <button mat-mini-fab (click)="toggleFutureVisibility()">
-        <mat-icon>{{ toggleFutureIcon }}</mat-icon>
-    </button>
     <button mat-mini-fab (click)="addLineItem()">
         <mat-icon>add</mat-icon>
     </button>
 </div>
-<div class="line-item-list">
+<div class="list">
     @for (lineItem of lineItems; track lineItem.id) {
-        <div class="{{ determineCssClassByDate(lineItem.date) }}">
-            <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="saveLineItems()" (delete)="deleteLineItem(lineItem.id)"></app-line-item>
-        </div>
+        <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="saveLineItems()" (delete)="deleteLineItem(lineItem.id)"></app-line-item>
     }
 </div>

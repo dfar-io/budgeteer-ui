@@ -8,10 +8,6 @@ div.difference {
     z-index: 100;
 }
 
-.line-item-list {
-    padding: 0 1rem;
-}
-
 .future {
     display: var(--future-display);
 }

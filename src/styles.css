@@ -39,3 +39,7 @@ body {
 .mat-divider {
     border-top-color: lightgray !important;
 }
+
+.list {
+    padding: 0 1rem;
+}

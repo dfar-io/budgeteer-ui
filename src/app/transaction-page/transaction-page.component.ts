@@ -12,6 +12,7 @@ import { LineItemService } from '../line-item/line-item.service';
 import { AddEditTransactionDialogDataResult } from '../add-edit-transaction-dialog/add-edit-transaction-dialog-data';
 import { AddEditTransactionDialogComponent } from '../add-edit-transaction-dialog/add-edit-transaction-dialog.component';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
+import { CsvParser } from 'csv-parser';
 
 @Component({
   selector: 'app-transaction-page',
@@ -104,7 +105,7 @@ export class TransactionPageComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        throw new Error('Method not implemented.');
+        console.log(results);
       }
     });
   }

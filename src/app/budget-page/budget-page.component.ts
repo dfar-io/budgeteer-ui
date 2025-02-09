@@ -24,8 +24,6 @@ export class BudgetPageComponent implements OnInit {
   differenceBackgroundColor = '';
   differenceFontColor = '';
 
-  toggleFutureIcon = 'visibility_off';
-
   constructor(private lineItemService: LineItemService,
               private renderer: Renderer2
   ) {}
@@ -78,7 +76,7 @@ export class BudgetPageComponent implements OnInit {
   }
 
   saveLineItems() {
-    this.lineItems = this.sortLineItems(this.lineItems, 'date');
+    this.lineItems = this.sortLineItems(this.lineItems);
     this.lineItemService.saveLineItems(this.lineItems);
     this.updateDifference();
   }
@@ -99,19 +97,27 @@ export class BudgetPageComponent implements OnInit {
     return moneyCalc.amount / 100;
   }
 
-  private sortLineItems<LineItem>(array: LineItem[], property?: keyof LineItem): LineItem[] {
-    // Check if the property exists on the objects in the array
-    if (array.length === 0 || !property) {
-      return array;
-    }
-  
-    // Sort the array based on the property
-    return array.slice().sort((a, b) => {
-      // Handle sorting for properties that may be numbers or strings
-      if (a[property] < b[property]) {
+  private sortLineItems(array: LineItem[]): LineItem[] {
+    return array.sort((a: LineItem, b: LineItem) => {
+      const aHasDate = a.date !== undefined;
+      const bHasDate = b.date !== undefined;
+
+      // If 'a' doesn't have 'date', it should come first
+      if (!aHasDate && bHasDate) return -1;
+      if (aHasDate && !bHasDate) return 1;
+
+      // If both have or both don't have 'age', use the secondary property 'date'
+      const aSortValue = aHasDate ? a.date : a.name;
+      const bSortValue = bHasDate ? b.date : b.name;
+
+      if (aSortValue === undefined || bSortValue === undefined) {
+        throw new Error(`Encountered undefined names for line items ${aSortValue} and ${bSortValue}`);
+      }
+
+      if (aSortValue < bSortValue) {
         return -1;
       }
-      if (a[property] > b[property]) {
+      if (aSortValue > bSortValue) {
         return 1;
       }
       return 0;
@@ -126,15 +132,6 @@ export class BudgetPageComponent implements OnInit {
     const isInFuture = new Date(date) >= sevenDays;
 
     return `${isInFuture ? 'future ' : ''}`;
-  }
-
-  toggleFutureVisibility() {
-    const isHidden = this.toggleFutureIcon == 'visibility_off';
-    const items = document.querySelectorAll('.future');
-    items.forEach((item: Element) => {
-      this.renderer.setStyle(item, 'display', isHidden ? 'flex' : 'none');
-    });
-    this.toggleFutureIcon = isHidden ? 'visibility' : 'visibility_off';
   }
 
   private getTodayWithoutTime(): Date {

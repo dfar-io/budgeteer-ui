@@ -6,35 +6,34 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
-<mat-list>
+<div class="list">
     @for (transaction of transactions; track transaction.id) {
-        <mat-list-item>
-            <div class="transaction">
-                <div class="transaction-name">
-                    {{ transaction.name }}<br />
-                    <span class="secondary">{{ transaction.date | date:'YYYY.MM.dd' }}</span>
-                </div>
-                <div class="transaction-amount">
-                    {{ transaction.amount | currency }}<br />
-                    <span class="secondary">{{ getLineItem(transaction.lineItemId) }}</span>
-                </div>
-                <div class="transaction-actions">
-                    <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="editClick(transaction.id)">
-                            <mat-icon>edit</mat-icon>
-                            <span>Edit</span>
-                        </button>
-                        <button mat-menu-item (click)="deleteClick(transaction.id)">
-                            <mat-icon>delete</mat-icon>
-                            <span>Delete</span>
-                        </button>
-                    </mat-menu>
-                </div>
+        <mat-divider></mat-divider>
+        <div class="transaction">
+            <div class="transaction-name">
+                {{ transaction.name }}<br />
+                <span class="secondary">{{ transaction.date | date:'YYYY.MM.dd' }}</span>
             </div>
-        </mat-list-item>
+            <div class="transaction-amount">
+                {{ transaction.amount | currency }}<br />
+                <span class="secondary">{{ getLineItem(transaction.lineItemId) }}</span>
+            </div>
+            <div class="transaction-actions">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editClick(transaction.id)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteClick(transaction.id)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
     }
-</mat-list>
+</div>
    
