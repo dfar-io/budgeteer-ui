@@ -34,17 +34,13 @@ export class BudgetPageComponent implements OnInit {
   }
 
   updateDifference() {
-    let transactionsMoneyCalc = new Money(0, 'USD');
-    const transactions = this.transactionService.getTransactions();
-    transactions.forEach(t => {
-      transactionsMoneyCalc = transactionsMoneyCalc.add(Money.fromDecimal(t.amount, 'USD'));
-    });
-
+    
+    const transactionsTotal = this.transactionService.getAllTransactionsTotal();
     const lineItemSum = this.generateSum(this.lineItems);
     console.log(lineItemSum);
 
     let moneyCalc = new Money(0, 'USD');
-    moneyCalc = moneyCalc.add(Money.fromDecimal(transactionsMoneyCalc.amount / 100, 'USD'));
+    moneyCalc = moneyCalc.add(Money.fromDecimal(transactionsTotal, 'USD'));
     moneyCalc = moneyCalc.add(Money.fromDecimal(lineItemSum, 'USD'));
 
     this.difference = moneyCalc.amount / 100;
