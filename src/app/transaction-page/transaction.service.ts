@@ -14,13 +14,13 @@ export class TransactionService {
   }
 
   getAllTransactionsTotal() {
-    let transactionsMoneyCalc = new Money(0, 'USD');
+    let moneyCalc = new Money(0, 'USD');
     const transactions = this.getTransactions();
     transactions.forEach(t => {
-      transactionsMoneyCalc = transactionsMoneyCalc.add(Money.fromDecimal(t.amount, 'USD'));
+      moneyCalc = moneyCalc.add(Money.fromDecimal(t.amount, 'USD'));
     });
 
-    return transactionsMoneyCalc.amount / 100;
+    return moneyCalc.amount / 100;
   }
 
   saveTransactions(transactions : Transaction[]) {
