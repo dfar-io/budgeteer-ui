@@ -15,7 +15,8 @@
                 <span class="secondary">{{ transaction.date | date:'YYYY.MM.dd' }}</span>
             </div>
             <div class="transaction-amount">
-                {{ transaction.amount | currency }}<br />
+                <span [class.positive]="transaction.amount >= 0"
+                      [class.negative]="transaction.amount < 0">{{ transaction.amount | currency }}</span><br />
                 <span class="secondary">{{ getLineItem(transaction.lineItemId) }}</span>
             </div>
             <div class="transaction-actions">

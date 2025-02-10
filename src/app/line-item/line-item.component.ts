@@ -143,7 +143,8 @@ export class LineItemComponent implements OnInit {
   }
 
   getRemaining(lineItemId: number): number {
-    return this.lineItem.amount - this.getTransactionTotal(lineItemId);
+    
+    return this.getTransactionTotal(lineItemId) + this.lineItem.amount;
   }
 
   isNeutral(id: number) {

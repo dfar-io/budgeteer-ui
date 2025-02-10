@@ -125,6 +125,7 @@ export class TransactionPageComponent implements OnInit {
           ...this.transactions,
           ...transactions
         ]
+        this.transactionService.saveTransactions(this.transactions);
       }
     });
   }
@@ -139,13 +140,12 @@ export class TransactionPageComponent implements OnInit {
   }
 
   private cleanAmount(value: string): number {
-    let cleanedString = value.replace(/[^0-9.-]+/g, "");
+    const isParenthesis = value[0] === '(';
 
-    if (cleanedString.startsWith("(") && cleanedString.endsWith(")")) {
-      cleanedString = cleanedString.slice(1, -1); // Remove parentheses
-      return -parseFloat(cleanedString); // Return negative value
+    if (isParenthesis) {
+      return -1 * Number(value.replace(/[^0-9.-]+/g,""));
+    } else {
+      return Number(value.replace(/[^0-9.-]+/g,""));
     }
-
-    return parseFloat(cleanedString);
   }
 }

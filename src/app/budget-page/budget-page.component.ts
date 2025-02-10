@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { LineItemComponent } from '../line-item/line-item.component';
 import { MatButtonModule } from '@angular/material/button';
+import { TransactionService } from '../transaction-page/transaction.service';
 
 @Component({
     selector: 'app-budget-page',
@@ -16,8 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class BudgetPageComponent implements OnInit {
   lineItems: LineItem[] = [];
-
-  lineItemSum = 0;
   difference = 0;
   todaysDate = new Date();
 
@@ -25,6 +24,7 @@ export class BudgetPageComponent implements OnInit {
   differenceFontColor = '';
 
   constructor(private lineItemService: LineItemService,
+              private transactionService: TransactionService,
               private renderer: Renderer2
   ) {}
 
@@ -34,9 +34,19 @@ export class BudgetPageComponent implements OnInit {
   }
 
   updateDifference() {
-    this.lineItemSum = this.generateSum(this.lineItems);
+    let transactionsMoneyCalc = new Money(0, 'USD');
+    const transactions = this.transactionService.getTransactions();
+    transactions.forEach(t => {
+      transactionsMoneyCalc = transactionsMoneyCalc.add(Money.fromDecimal(t.amount, 'USD'));
+    });
+
+    const lineItemSum = this.generateSum(this.lineItems);
+    console.log(lineItemSum);
+
     let moneyCalc = new Money(0, 'USD');
-    moneyCalc = moneyCalc.add(Money.fromDecimal(this.lineItemSum, 'USD'));
+    moneyCalc = moneyCalc.add(Money.fromDecimal(transactionsMoneyCalc.amount / 100, 'USD'));
+    moneyCalc = moneyCalc.add(Money.fromDecimal(lineItemSum, 'USD'));
+
     this.difference = moneyCalc.amount / 100;
 
     if (this.difference == 0) {
@@ -92,7 +102,7 @@ export class BudgetPageComponent implements OnInit {
   private generateSum(lineItems: LineItem[]): number {
     let moneyCalc = new Money(0, 'USD');
     lineItems.forEach(li => {
-      moneyCalc = moneyCalc.add(Money.fromDecimal(li.amount, 'USD'));
+      moneyCalc = moneyCalc.subtract(Money.fromDecimal(li.amount, 'USD'));
     });
     return moneyCalc.amount / 100;
   }
