@@ -56,19 +56,4 @@ export class FileUploadDialogComponent {
 
     reader.readAsText(file);
   }
-
-  private readCsvFile(file: File): void {
-    this.fileName = file.name;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.fileContent = reader.result;
-    };
-
-    reader.onerror = (error) => {
-      console.error('Error reading file:', error);
-    };
-
-    reader.readAsText(file);
-  }
 }

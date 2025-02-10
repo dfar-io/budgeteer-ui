@@ -103,27 +103,32 @@ export class LineItemComponent implements OnInit {
       return;
     }
 
-    const dateObject = new Date(this.lineItem.date);
-    if (this.lineItem.cycleType === 'days') {
-      const newDate = dateObject.getDate() + this.lineItem.cycleValue;
-      dateObject.setDate(newDate);
-    }
-    else if (this.lineItem.cycleType === 'months') {
-      dateObject.setMonth(dateObject.getMonth() + this.lineItem.cycleValue);
-    }
-    else if (this.lineItem.cycleType === 'years') {
-      dateObject.setMonth(dateObject.getMonth() + (this.lineItem.cycleValue * 12));
-    }
-    else if (this.lineItem.cycleType === 'weeks') {
-      const newDate = dateObject.getDate() + (this.lineItem.cycleValue * 7);
-      dateObject.setDate(newDate);
-    }
-    else {
-      throw new Error(`Encountered invalid cycle type ${this.lineItem.cycleType}`)
-    }
-    
-    this.lineItem.date = dateObject.toISOString();
+    this.lineItem.date = this.cycleDate();
     this.save.emit(this.lineItem);
+  }
+
+  private cycleDate() : string {
+    if (this.lineItem.cycleValue === undefined || this.lineItem.cycleType)
+
+    const dateObject = new Date(dateString);
+    switch (this.lineItem.cycleType) {
+      case 'days':
+        dateObject.setDate(dateObject.getDate() + this.lineItem.cycleValue);
+        break;
+      case 'months':
+        dateObject.setMonth(dateObject.getMonth() + this.lineItem.cycleValue);
+        break;
+      case 'years':
+        dateObject.setMonth(dateObject.getMonth() + (this.lineItem.cycleValue * 12));
+        break;
+      case 'weeks':
+        dateObject.setDate(dateObject.getDate() + (this.lineItem.cycleValue * 7));
+        break;
+      default:
+        throw new Error(`Encountered invalid cycle type ${this.lineItem.cycleType}`);
+    }
+
+    return dateObject.toISOString();
   }
 
   isOverdue(date: string | undefined) {
