@@ -108,9 +108,11 @@ export class LineItemComponent implements OnInit {
   }
 
   private cycleDate() : string {
-    if (this.lineItem.cycleValue === undefined || this.lineItem.cycleType)
+    if (this.lineItem.cycleValue === undefined || this.lineItem.cycleType === undefined || this.lineItem.date === undefined) {
+      throw new Error("Attempted cycle with undefined value or type.");
+    }
 
-    const dateObject = new Date(dateString);
+    const dateObject = new Date(this.lineItem.date);
     switch (this.lineItem.cycleType) {
       case 'days':
         dateObject.setDate(dateObject.getDate() + this.lineItem.cycleValue);

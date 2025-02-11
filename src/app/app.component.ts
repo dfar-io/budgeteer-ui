@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { MatToolbar } from '@angular/material/toolbar';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -13,7 +13,7 @@ import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dial
 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, MatToolbar, MatToolbarRow, MatIcon, MatIconButton, MatMenuModule, RouterLink],
+    imports: [CommonModule, RouterOutlet, MatToolbar, MatIcon, MatIconButton, MatMenuModule, RouterLink],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
