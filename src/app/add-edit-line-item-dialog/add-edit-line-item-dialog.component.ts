@@ -41,5 +41,5 @@ export class AddEditLineItemDialogComponent {
   readonly data = inject<LineItem>(MAT_DIALOG_DATA);
   readonly save = model(this.data);
 
-  availableDurations: string[] = ['months', 'days'];
+  availableTypes: string[] = ['months', 'days', 'weeks', 'years'];
 }

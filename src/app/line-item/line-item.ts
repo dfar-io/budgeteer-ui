@@ -4,5 +4,5 @@ export interface LineItem {
     amount: number;
     date?: string;
     cycleValue?: number;
-    cycleDuration?: string;
+    cycleType?: string;
 }

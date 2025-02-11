@@ -12,6 +12,7 @@ import { LineItemService } from '../line-item/line-item.service';
 import { AddEditTransactionDialogDataResult } from '../add-edit-transaction-dialog/add-edit-transaction-dialog-data';
 import { AddEditTransactionDialogComponent } from '../add-edit-transaction-dialog/add-edit-transaction-dialog.component';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
+import Papa from 'papaparse';
 
 @Component({
   selector: 'app-transaction-page',
@@ -104,24 +105,47 @@ export class TransactionPageComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        throw new Error('Method not implemented.');
+        const parse = Papa.parse(result, {
+          header: true,
+          dynamicTyping: true
+        });
+        const csvResults = parse.data;
+
+        // TODO: How can we type this object?
+        /* eslint-disable */
+        const transactions = csvResults.map((line : any) => ({
+        /* eslint-enable */
+          id: Math.floor(Math.random() * (1000000 - 1 + 1)) + 1,
+          name: line.Description as string,
+          date: new Date(line.Date).toISOString(),
+          amount: this.cleanAmount(line.Amount),
+          lineItemId: 0
+        }));
+        this.transactions = [
+          ...this.transactions,
+          ...transactions
+        ]
+        this.transactionService.saveTransactions(this.transactions);
       }
     });
   }
 
   getLineItem(arg0: number) {
-    // TODO: This makes a good case to merge into a lineItems data model
-    // which we can categorize since we're separating based on line items
-    // having dates
-    let lineItem = this.lineItemService.getFunds().find(li => li.id === arg0);
+    const lineItem = this.lineItemService.getLineItems().find(li => li.id === arg0);
     if (lineItem) {
       return lineItem.name;
     }
 
-    lineItem = this.lineItemService.getPlanned().find(li => li.id === arg0);
-    if (lineItem) {
-      return lineItem.name;
-    }
     return 'UNASSIGNED'
+  }
+
+  private cleanAmount(value: string): number {
+    const isParenthesis = value[0] === '(';
+
+    if (isParenthesis) {
+      return -1 * Number(value.replace(/[^0-9.-]+/g,""));
+    } else {
+      return Number(value.replace(/[^0-9.-]+/g,""));
+    }
   }
 }

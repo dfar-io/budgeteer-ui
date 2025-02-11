@@ -45,8 +45,5 @@ export class AddEditTransactionDialogComponent {
 
   constructor(private lineItemService: LineItemService) {}
 
-  lineItems: LineItem[] = [
-    ...this.lineItemService.getFunds(),
-    ...this.lineItemService.getPlanned()
-  ];
+  lineItems: LineItem[] = this.lineItemService.getLineItems();
 }
