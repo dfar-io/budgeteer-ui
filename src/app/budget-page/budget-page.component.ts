@@ -37,7 +37,6 @@ export class BudgetPageComponent implements OnInit {
     
     const transactionsTotal = this.transactionService.getAllTransactionsTotal();
     const lineItemSum = this.generateSum(this.lineItems);
-    console.log(lineItemSum);
 
     let moneyCalc = new Money(0, 'USD');
     moneyCalc = moneyCalc.add(Money.fromDecimal(transactionsTotal, 'USD'));

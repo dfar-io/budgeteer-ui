@@ -51,9 +51,7 @@ export class TransactionPageComponent implements OnInit {
   }
 
   editClick(transactionId: number) {
-    console.log(this.transactions);
     const transaction = this.transactions.find(t => t.id === transactionId);
-    console.log(transaction);
     if (transaction === undefined) {
       throw new Error(`unable to find transaction with ID ${transactionId}`);
     }
