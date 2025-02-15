@@ -120,13 +120,14 @@ export class BudgetPageComponent implements OnInit {
         throw new Error(`Encountered undefined names for line items ${aSortValue} and ${bSortValue}`);
       }
 
+      let returnValue = 0;
       if (aSortValue < bSortValue) {
-        return -1;
+        returnValue = -1;
       }
       if (aSortValue > bSortValue) {
-        return 1;
+        returnValue = 1;
       }
-      return 0;
+      return returnValue;
     });
   }
 
