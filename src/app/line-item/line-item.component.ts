@@ -11,10 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Money } from 'ts-money';
 import { AddEditLineItemDialogDataResult } from '../add-edit-line-item-dialog/add-edit-line-item-dialog-data';
+import { TransactionService } from '../transaction-page/transaction.service';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'app-line-item',
-    imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule, CommonModule],
+    imports: [CurrencyPipe, MatButtonModule, MatIconModule, MatMenuModule, CommonModule, MatDividerModule, MatListModule],
     templateUrl: './line-item.component.html',
     styleUrl: './line-item.component.css',
     //for dialog
@@ -26,6 +29,8 @@ export class LineItemComponent implements OnInit {
   @Input() usePaymentDate = false;
   @Output() save = new EventEmitter<LineItem>();
   @Output() delete = new EventEmitter<number>();
+
+  constructor(private transactionService: TransactionService) {}
 
   readonly dialog = inject(MatDialog);
 
@@ -42,7 +47,7 @@ export class LineItemComponent implements OnInit {
         amount: this.lineItem.amount,
         date: this.lineItem.date,
         cycleValue: this.lineItem.cycleValue,
-        cycleDuration: this.lineItem.cycleDuration
+        cycleType: this.lineItem.cycleType
       }
     });
     
@@ -63,7 +68,7 @@ export class LineItemComponent implements OnInit {
         this.lineItem.cycleValue = parseInt(result.cycleValue);
       }
 
-      this.lineItem.cycleDuration = result.cycleDuration;
+      this.lineItem.cycleType = result.cycleType;
       
       this.save.emit(this.lineItem);
     });
@@ -81,7 +86,7 @@ export class LineItemComponent implements OnInit {
     });
   }
 
-  applyClick() {
+  balanceClick() {
     let moneyCalc = Money.fromDecimal(this.lineItem.amount, 'USD');
     moneyCalc = moneyCalc.add(Money.fromDecimal(this.difference, 'USD'));
     this.lineItem.amount = moneyCalc.amount / 100;
@@ -98,17 +103,34 @@ export class LineItemComponent implements OnInit {
       return;
     }
 
-    const dateObject = new Date(this.lineItem.date);
-    if (this.lineItem.cycleDuration == 'days') {
-      const newDate = dateObject.getDate() + this.lineItem.cycleValue;
-      dateObject.setDate(newDate);
-    }
-    else {
-      dateObject.setMonth(dateObject.getMonth() + this.lineItem.cycleValue);
-    }
-    
-    this.lineItem.date = dateObject.toISOString();
+    this.lineItem.date = this.cycleDate();
     this.save.emit(this.lineItem);
+  }
+
+  private cycleDate() : string {
+    if (this.lineItem.cycleValue === undefined || this.lineItem.cycleType === undefined || this.lineItem.date === undefined) {
+      throw new Error("Attempted cycle with undefined value or type.");
+    }
+
+    const dateObject = new Date(this.lineItem.date);
+    switch (this.lineItem.cycleType) {
+      case 'days':
+        dateObject.setDate(dateObject.getDate() + this.lineItem.cycleValue);
+        break;
+      case 'months':
+        dateObject.setMonth(dateObject.getMonth() + this.lineItem.cycleValue);
+        break;
+      case 'years':
+        dateObject.setMonth(dateObject.getMonth() + (this.lineItem.cycleValue * 12));
+        break;
+      case 'weeks':
+        dateObject.setDate(dateObject.getDate() + (this.lineItem.cycleValue * 7));
+        break;
+      default:
+        throw new Error(`Encountered invalid cycle type ${this.lineItem.cycleType}`);
+    }
+
+    return dateObject.toISOString();
   }
 
   isOverdue(date: string | undefined) {
@@ -116,5 +138,27 @@ export class LineItemComponent implements OnInit {
 
     const currentDate = new Date();
     return new Date(date) < currentDate;
+  }
+
+  getTransactionTotal(lineItemId: number): number {
+    const transactions = this.transactionService.getTransactions()
+                                                .filter(t => t.lineItemId === lineItemId);
+
+    if (transactions === undefined) { return 0; }
+
+    return transactions.reduce((sum, t) => sum += t.amount, 0);
+  }
+
+  getRemaining(lineItemId: number): number {
+    
+    return this.getTransactionTotal(lineItemId) + this.lineItem.amount;
+  }
+
+  isNeutral(id: number) {
+    return this.getRemaining(id) === 0;
+  }
+
+  isNegative(id: number) {
+    return this.getRemaining(id) < 0;
   }
 }

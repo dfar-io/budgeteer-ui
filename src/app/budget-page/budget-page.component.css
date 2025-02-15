@@ -7,3 +7,11 @@ div.difference {
     top: 0px;
     z-index: 100;
 }
+
+.future {
+    display: var(--future-display);
+}
+
+app-line-item {
+    width: 100%;
+}

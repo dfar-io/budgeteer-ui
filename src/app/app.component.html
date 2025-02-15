@@ -1,12 +1,35 @@
 <main class="main">
   <div class="content">
     <mat-toolbar>
+      <button mat-icon-button class="menu" [matMenuTriggerFor]="menu" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="title">Budgeteer</span>
+      <span class="spacer"></span>
+      
+      <mat-menu #menu="matMenu">
+        <button [routerLink]="'/'" mat-menu-item>
+          <span>Budget</span>
+        </button>
+        <button [routerLink]="'/transactions'" mat-menu-item>
+          <span>Transactions</span>
+        </button>
+        <button (click)="importJSON()" mat-menu-item>
+          <span>Import</span>
+        </button>
+        <button (click)="exportJSON()" mat-menu-item>
+          <span>Export</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>    
+    <!-- <mat-toolbar>
       <mat-toolbar-row>
-        <span class="title">Budgeteer</span>
-        <span class="spacer"></span>
         <button mat-icon-button class="menu" [matMenuTriggerFor]="menu" aria-label="Menu">
           <mat-icon>menu</mat-icon>
         </button>
+        <span class="title">Budgeteer</span>
+        <span class="spacer"></span>
+        
         <mat-menu #menu="matMenu">
           <button [routerLink]="'/'" mat-menu-item>
             <span>Budget</span>
@@ -20,9 +43,9 @@
           <button (click)="exportJSON()" mat-menu-item>
             <span>Export</span>
           </button>
-      </mat-menu>
+        </mat-menu>
       </mat-toolbar-row>
-    </mat-toolbar>
+    </mat-toolbar> -->
     <router-outlet></router-outlet>
     <div class="version">
       <a href="{{ url }}">{{ version }}</a>

@@ -22,14 +22,24 @@ body {
 }
 
 .actions {
-    display: none;
+    display:flex;
     flex-direction: row-reverse;
-}
-
-.actions.actions-visible {
-    display: flex;
+    margin: 1rem;
 }
 
 .actions button {
     margin-left: 1rem;
+}
+
+.secondary {
+    color: gray;
+    font-size: 0.8em;
+}
+
+.mat-divider {
+    border-top-color: lightgray !important;
+}
+
+.list {
+    padding: 0 1rem;
 }

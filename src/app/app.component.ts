@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { MatToolbar } from '@angular/material/toolbar';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -13,7 +13,7 @@ import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dial
 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, MatToolbar, MatToolbarRow, MatIcon, MatIconButton, MatMenuModule, RouterLink],
+    imports: [CommonModule, RouterOutlet, MatToolbar, MatIcon, MatIconButton, MatMenuModule, RouterLink],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
@@ -28,14 +28,10 @@ export class AppComponent {
   ) {}
 
   exportJSON() {
-    const incomes = this.lineItemService.getIncomes();
-    const funds = this.lineItemService.getFunds();
-    const planned = this.lineItemService.getPlanned();
+    const lineItems = this.lineItemService.getLineItems();
     const transactions = this.transactionService.getTransactions();
     const data = {
-      incomes: incomes,
-      funds: funds,
-      planned: planned,
+      lineItems: lineItems,
       transactions: transactions
     };
 
@@ -70,9 +66,7 @@ export class AppComponent {
         // TODO: Error handling for malformed JSON
         const parsedObject = JSON.parse(result);
 
-        this.lineItemService.saveIncomes(parsedObject.incomes);
-        this.lineItemService.saveFunds(parsedObject.funds);
-        this.lineItemService.savePlanned(parsedObject.planned);
+        this.lineItemService.saveLineItems(parsedObject.lineItems);
         this.transactionService.saveTransactions(parsedObject.transactions);
 
         // reload the current page to refresh budget component

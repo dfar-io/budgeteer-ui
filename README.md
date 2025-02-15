@@ -10,21 +10,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 1. Create Codespace.
 2. `F5` to run locally.
 
-## Run CodeClimate
-
-First, install:
-
-```
-curl -L https://github.com/codeclimate/codeclimate/archive/master.tar.gz | tar xvz
-cd codeclimate-* && sudo make install && cd ..
-```
-
-Then to run:
-
-```
-codeclimate analyze
-```
-
 ## Update Packages
 
 1. Run `ng update`, determine outdated packages.

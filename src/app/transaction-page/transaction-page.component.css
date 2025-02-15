@@ -3,12 +3,21 @@
     align-items: center;
 }
 
+.transaction-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .transaction-amount {
     margin-left: auto;
     text-align: right;
 }
 
-.secondary {
-    color: gray;
-    font-style: italic;
+.negative {
+    color: indianred;
+}
+
+.positive {
+    color: lightgreen;
 }
