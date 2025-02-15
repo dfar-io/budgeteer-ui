@@ -108,11 +108,11 @@ export class BudgetPageComponent implements OnInit {
       const aHasDate = a.date !== undefined;
       const bHasDate = b.date !== undefined;
 
-      // If 'a' doesn't have 'date', it should come first
+      // If item doesn't have 'date', it should come first
       if (!aHasDate && bHasDate) return -1;
       if (aHasDate && !bHasDate) return 1;
 
-      // If both have or both don't have 'age', use the secondary property 'date'
+      // use name if date doesn't exist
       const aSortValue = aHasDate ? a.date : a.name;
       const bSortValue = bHasDate ? b.date : b.name;
 

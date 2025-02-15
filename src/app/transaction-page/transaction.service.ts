@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Transaction } from './transaction';
 import { Money } from 'ts-money';
+import { DataService } from '../data.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionService {
+export class TransactionService extends DataService {
   readonly transactionsKey = 'transactions';
 
-  getTransactions(): Transaction[] {
-    const transactions = localStorage.getItem(this.transactionsKey);
-    return transactions ? JSON.parse(transactions) : [];
+  getTransactions() : Transaction[] {
+    return this.getData(this.transactionsKey);
   }
 
   getAllTransactionsTotal() {
