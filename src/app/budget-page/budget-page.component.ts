@@ -96,9 +96,9 @@ export class BudgetPageComponent implements OnInit {
 
   private generateSum(lineItems: LineItem[]): number {
     let moneyCalc = new Money(0, 'USD');
-    lineItems.forEach(li => {
+    for (const li of lineItems) {
       moneyCalc = moneyCalc.subtract(Money.fromDecimal(li.amount, 'USD'));
-    });
+    }
     return moneyCalc.amount / 100;
   }
 

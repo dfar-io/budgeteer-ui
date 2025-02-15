@@ -128,8 +128,12 @@ export class TransactionPageComponent implements OnInit {
     });
   }
 
-  getLineItem(arg0: number) {
-    const lineItem = this.lineItemService.getLineItems().find(li => li.id === arg0);
+  getLineItem(lineItemId: number) {
+    if (lineItemId == -1) {
+      return 'Income'
+    }
+
+    const lineItem = this.lineItemService.getLineItems().find(li => li.id === lineItemId);
     if (lineItem) {
       return lineItem.name;
     }

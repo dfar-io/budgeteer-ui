@@ -45,5 +45,8 @@ export class AddEditTransactionDialogComponent {
 
   constructor(private lineItemService: LineItemService) {}
 
-  lineItems: LineItem[] = this.lineItemService.getLineItems();
+  lineItems: LineItem[] = [
+    { id: -1, name: 'Income', amount: 0 },
+    ...this.lineItemService.getLineItems()
+  ];
 }
