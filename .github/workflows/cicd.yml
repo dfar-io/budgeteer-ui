@@ -9,6 +9,10 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+  REGION: us-east4
+  GAR_LOCATION: us-east4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/repo
+
 jobs:
   cicd:
     # required for google-github-actions/auth
@@ -18,19 +22,20 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
-    # - if: github.event_name == 'pull_request'
-    #   run: docker build .
+    - run: docker build . -t ${{ env.GAR_LOCATION }}
     - uses: 'google-github-actions/auth@v2'
       #if: github.ref == 'refs/heads/main'
       with:
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
         service_account: ${{ secrets.SERVICE_ACCOUNT }}
     # https://github.com/google-github-actions/deploy-cloudrun
+    - run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+    - run: docker push ${{ env.GAR_LOCATION }}
     - uses: google-github-actions/deploy-cloudrun@v2
       #if: github.ref == 'refs/heads/main'
       with:
         service: ui
         project_id: ${{ secrets.PROJECT_ID }}
         image: 'gcr.io/cloudrun/hello'
-        region: us-east4
+        region: ${{ env.REGION }}
 
