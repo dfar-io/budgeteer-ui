@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
+    - #if: github.ref != 'refs/heads/main'
+      run: docker build .
     - uses: 'google-github-actions/auth@v2'
       #if: github.ref == 'refs/heads/main'
       with:
