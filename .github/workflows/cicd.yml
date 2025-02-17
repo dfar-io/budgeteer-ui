@@ -31,16 +31,25 @@ jobs:
     - name: "Build UI"
       run: npm run build
     - name: "Authenticate to GCP for UI Deployment"
+      id: auth
       uses: 'google-github-actions/auth@v2'
       if: github.ref == 'refs/heads/main'
       with:
-        project_id: 'dfar55'
+        token_format: access_token
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-    - name: "Deploy UI to Cloud Storage"
-      uses: 'google-github-actions/upload-cloud-storage@v2'
-      if: github.ref == 'refs/heads/main'
+        service_account: 'github@budgeteer-j33o0.iam.gserviceaccount.com'
+    - name: Docker Auth
+      uses: docker/login-action@v3
       with:
-        path: 'dist/budgeteer/browser'
-        destination: 'b.dfar.io'
-        parent: false
-        process_gcloudignore: false
+        registry: us-east4-docker.pkg.dev
+        username: oauth2accesstoken
+        password: ${{ steps.auth.outputs.access_token }}
+
+    # - name: "Deploy UI to Cloud Storage"
+    #   uses: 'google-github-actions/upload-cloud-storage@v2'
+    #   if: github.ref == 'refs/heads/main'
+    #   with:
+    #     path: 'dist/budgeteer/browser'
+    #     destination: 'b.dfar.io'
+    #     parent: false
+    #     process_gcloudignore: false
