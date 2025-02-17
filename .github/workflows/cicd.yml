@@ -30,7 +30,6 @@ jobs:
       #if: github.ref == 'refs/heads/main'
       with:
         service: ui
-        # https://cloud.google.com/run/docs/deploying-source-code
-        # source: .
         project_id: ${{ secrets.PROJECT_ID }}
+        image: 'gcr.io/cloudrun/hello'
 
