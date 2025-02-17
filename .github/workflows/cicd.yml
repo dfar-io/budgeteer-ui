@@ -17,33 +17,30 @@ jobs:
       id-token: 'write'
     runs-on: ubuntu-24.04
     steps:
-    - name: "Checkout"
-      uses: actions/checkout@v4
-    - name: Configure Node.js
-      uses: actions/setup-node@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: 20.14.0
         cache: 'npm'
-    - name: "Install UI dependencies"
-      run: npm ci
-    - name: "Lint UI"
-      run: npm run lint
-    - name: "Build UI"
-      run: npm run build
-    - name: "Authenticate to GCP"
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run build
+    - uses: 'google-github-actions/auth@v2'
       id: auth
-      uses: 'google-github-actions/auth@v2'
       #if: github.ref == 'refs/heads/main'
       with:
         token_format: access_token
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
         service_account: ${{ secrets.SERVICE_ACCOUNT }}
-    - name: Docker Auth
-      uses: docker/login-action@v3
+    # - uses: docker/login-action@v3
+    #   with:
+    #     registry: us-east4-docker.pkg.dev
+    #     username: oauth2accesstoken
+    #     password: ${{ steps.auth.outputs.access_token }}
+    - uses: 'google-github-actions/deploy-cloudrun@v2'
       with:
-        registry: us-east4-docker.pkg.dev
-        username: oauth2accesstoken
-        password: ${{ steps.auth.outputs.access_token }}
+        service: 'ui'
+        source: '.'
 
     # - name: "Deploy UI to Cloud Storage"
     #   uses: 'google-github-actions/upload-cloud-storage@v2'
