@@ -23,6 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: docker build . -t ${{ env.GAR_LOCATION }}
+    # run below only on pushes to main
     - uses: 'google-github-actions/auth@v2'
       #if: github.ref == 'refs/heads/main'
       with:
@@ -36,6 +37,6 @@ jobs:
       with:
         service: ui
         project_id: ${{ secrets.PROJECT_ID }}
-        image: 'gcr.io/cloudrun/hello'
+        image: ${{ env.GAR_LOCATION }}
         region: ${{ env.REGION }}
 
