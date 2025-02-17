@@ -11,7 +11,7 @@ on:
 
 env:
   REGION: us-east4
-  GAR_LOCATION: us-east4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/repo
+  GAR_LOCATION: us-east4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/repo/budgeteer
 
 jobs:
   cicd:
