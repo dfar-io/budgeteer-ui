@@ -32,4 +32,3 @@ jobs:
         service: ui
         project_id: ${{ secrets.PROJECT_ID }}
         image: 'gcr.io/cloudrun/hello'
-
