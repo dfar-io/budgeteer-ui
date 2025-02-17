@@ -1,5 +1,5 @@
-# https://github.com/google-github-actions/upload-cloud-storage
 # https://github.com/google-github-actions/auth?tab=readme-ov-file#preferred-direct-workload-identity-federation
+# https://docs.docker.com/build/ci/github-actions/share-image-jobs/
 name: CICD
 
 on:
@@ -14,18 +14,37 @@ env:
   GAR_LOCATION: us-east4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/repo/budgeteer
 
 jobs:
-  cicd:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: docker/setup-buildx-action@v3
+    - uses: docker/build-push-action@v6
+      with:
+        tags: ${{ env.GAR_LOCATION }}
+        outputs: type=docker,dest=${{ runner.temp }}/budgeteer.tar
+    - uses: actions/upload-artifact@v4
+      with:
+        name: myimage
+        path: ${{ runner.temp }}/budgeteer.tar
+    # run below only on pushes to main
+  deploy:
     # required for google-github-actions/auth
     permissions:
       contents: 'read'
       id-token: 'write'
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
-    - run: docker build . -t ${{ env.GAR_LOCATION }}
-    # run below only on pushes to main
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: budgeteer
+        path: ${{ runner.temp }}
+    - name: Load image
+      run: |
+        docker load --input ${{ runner.temp }}/budgeteer.tar
+        docker image ls -a
     - uses: 'google-github-actions/auth@v2'
-      #if: github.ref == 'refs/heads/main'
       with:
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
         service_account: ${{ secrets.SERVICE_ACCOUNT }}
@@ -33,7 +52,6 @@ jobs:
     - run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
     - run: docker push ${{ env.GAR_LOCATION }}
     - uses: google-github-actions/deploy-cloudrun@v2
-      #if: github.ref == 'refs/heads/main'
       with:
         service: ui
         project_id: ${{ secrets.PROJECT_ID }}
