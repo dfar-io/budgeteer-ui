@@ -18,13 +18,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
-    - if: github.event_name == 'pull_request'
-      run: docker build .
+    # - if: github.event_name == 'pull_request'
+    #   run: docker build .
     - uses: 'google-github-actions/auth@v2'
       #if: github.ref == 'refs/heads/main'
       with:
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-        #service_account: ${{ secrets.SERVICE_ACCOUNT }}
+        service_account: ${{ secrets.SERVICE_ACCOUNT }}
     # https://github.com/google-github-actions/deploy-cloudrun
     - uses: google-github-actions/deploy-cloudrun@v2
       #if: github.ref == 'refs/heads/main'
