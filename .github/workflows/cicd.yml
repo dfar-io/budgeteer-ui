@@ -18,37 +18,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
-    # does all of this go away?
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20.14.0
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run lint
-    - run: npm run build
-
     - uses: 'google-github-actions/auth@v2'
-      id: auth
       #if: github.ref == 'refs/heads/main'
       with:
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-        #service_account: ${{ secrets.SERVICE_ACCOUNT }}
-    # - uses: docker/login-action@v3
-    #   with:
-    #     registry: us-east4-docker.pkg.dev
-    #     username: oauth2accesstoken
-    #     password: ${{ steps.auth.outputs.access_token }}
     - uses: google-github-actions/deploy-cloudrun@v2
+      #if: github.ref == 'refs/heads/main'
       with:
         service: ui
         source: .
-        project_id: budgeteer-jswu3
-
-    # - name: "Deploy UI to Cloud Storage"
-    #   uses: 'google-github-actions/upload-cloud-storage@v2'
-    #   if: github.ref == 'refs/heads/main'
-    #   with:
-    #     path: 'dist/budgeteer/browser'
-    #     destination: 'b.dfar.io'
-    #     parent: false
-    #     process_gcloudignore: false
+        project_id: ${{ secrets.PROJECT_ID }}
