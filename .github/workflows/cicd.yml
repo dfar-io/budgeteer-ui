@@ -27,7 +27,6 @@ jobs:
       with:
         name: myimage
         path: ${{ runner.temp }}/budgeteer.tar
-    # run below only on pushes to main
   deploy:
     # required for google-github-actions/auth
     permissions:
