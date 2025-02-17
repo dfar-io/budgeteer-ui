@@ -42,7 +42,7 @@ jobs:
       with:
         service: ui
         source: .
-        project: budgeteer-jswu3
+        project_id: budgeteer-jswu3
 
     # - name: "Deploy UI to Cloud Storage"
     #   uses: 'google-github-actions/upload-cloud-storage@v2'
