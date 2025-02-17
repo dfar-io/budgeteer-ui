@@ -33,7 +33,7 @@ jobs:
     - name: "Authenticate to GCP for UI Deployment"
       id: auth
       uses: 'google-github-actions/auth@v2'
-      if: github.ref == 'refs/heads/main'
+      #if: github.ref == 'refs/heads/main'
       with:
         token_format: access_token
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
