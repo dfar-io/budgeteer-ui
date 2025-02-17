@@ -33,5 +33,3 @@ jobs:
         # https://cloud.google.com/run/docs/deploying-source-code
         source: .
         project_id: ${{ secrets.PROJECT_ID }}
-
-        
