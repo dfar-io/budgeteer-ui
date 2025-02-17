@@ -29,9 +29,8 @@ jobs:
       id: auth
       #if: github.ref == 'refs/heads/main'
       with:
-        token_format: access_token
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-        service_account: ${{ secrets.SERVICE_ACCOUNT }}
+        #service_account: ${{ secrets.SERVICE_ACCOUNT }}
     # - uses: docker/login-action@v3
     #   with:
     #     registry: us-east4-docker.pkg.dev
