@@ -26,7 +26,7 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm run build
-    
+
     - uses: 'google-github-actions/auth@v2'
       id: auth
       #if: github.ref == 'refs/heads/main'
@@ -38,10 +38,11 @@ jobs:
     #     registry: us-east4-docker.pkg.dev
     #     username: oauth2accesstoken
     #     password: ${{ steps.auth.outputs.access_token }}
-    - uses: 'google-github-actions/deploy-cloudrun@v2'
+    - uses: google-github-actions/deploy-cloudrun@v2
       with:
-        service: 'ui'
-        source: '.'
+        service: ui
+        source: .
+        project: budgeteer-jswu3
 
     # - name: "Deploy UI to Cloud Storage"
     #   uses: 'google-github-actions/upload-cloud-storage@v2'
