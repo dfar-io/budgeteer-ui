@@ -56,4 +56,3 @@ jobs:
         project_id: ${{ secrets.PROJECT_ID }}
         image: ${{ env.GAR_LOCATION }}
         region: ${{ env.REGION }}
-
