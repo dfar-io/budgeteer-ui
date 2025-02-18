@@ -24,6 +24,7 @@ jobs:
         tags: ${{ env.GAR_LOCATION }}
         outputs: type=docker,dest=${{ runner.temp }}/image.tar
     - uses: actions/upload-artifact@v4
+      if: github.ref == 'refs/heads/main'
       with:
         name: image
         path: ${{ runner.temp }}/image.tar
