@@ -3,6 +3,6 @@
 node_modules/
 .gitignore
 
-
 # allow for getting hash
+# not sure if this is working
 !.git/
