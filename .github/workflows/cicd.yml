@@ -24,7 +24,7 @@ jobs:
         tags: ${{ env.GAR_LOCATION }}
         outputs: type=docker,dest=${{ runner.temp }}/image.tar
     - uses: actions/upload-artifact@v4
-      if: github.ref == 'refs/heads/main'
+      #if: github.ref == 'refs/heads/main'
       with:
         name: image
         path: ${{ runner.temp }}/image.tar
@@ -35,7 +35,7 @@ jobs:
       id-token: 'write'
     runs-on: ubuntu-24.04
     needs: build
-    if: github.ref == 'refs/heads/main'
+    #if: github.ref == 'refs/heads/main'
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v4
