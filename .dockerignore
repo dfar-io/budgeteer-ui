@@ -1,0 +1,4 @@
+node_modules/
+
+# allow for getting hash
+!.git/
