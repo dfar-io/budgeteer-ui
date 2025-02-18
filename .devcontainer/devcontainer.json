@@ -9,7 +9,7 @@
 		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {}
 	},
 
-	"postCreateCommand" : ". ./.devcontainer/postCreateCommand.sh",
+	"postCreateCommand" : ". ./.devcontainer/postCreate.sh",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -20,8 +20,6 @@
 	// Configure tool-specific properties.
 	"customizations": {
 		"extensions": [
-			"ms-dotnettools.csharp",
-			"ms-dotnettools.csdevkit",
 			"angular.ng-template"
 		]
 	}
