@@ -1,0 +1,7 @@
+.github/
+.vscode/
+node_modules/
+.gitignore
+
+# allow for getting hash
+!.git/

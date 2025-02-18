@@ -1,5 +1,5 @@
-# https://github.com/google-github-actions/upload-cloud-storage
 # https://github.com/google-github-actions/auth?tab=readme-ov-file#preferred-direct-workload-identity-federation
+# https://docs.docker.com/build/ci/github-actions/share-image-jobs/
 name: CICD
 
 on:
@@ -9,38 +9,50 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+  REGION: us-east4
+  GAR_LOCATION: us-east4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/repo/budgeteer
+
 jobs:
-  cicd:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: docker/setup-buildx-action@v3
+    - run: docker buildx build . -t ${{ env.GAR_LOCATION }} --output type=docker,dest=${{ runner.temp }}/image.tar
+    - uses: actions/upload-artifact@v4
+      if: github.ref == 'refs/heads/main'
+      with:
+        name: image
+        path: ${{ runner.temp }}/image.tar
+  deploy:
     # required for google-github-actions/auth
     permissions:
       contents: 'read'
       id-token: 'write'
     runs-on: ubuntu-24.04
+    needs: build
+    if: github.ref == 'refs/heads/main'
     steps:
-    - name: "Checkout"
-      uses: actions/checkout@v4
-    - name: Configure Node.js
-      uses: actions/setup-node@v4
+    - name: Download artifact
+      uses: actions/download-artifact@v4
       with:
-        node-version: 20.14.0
-        cache: 'npm'
-    - name: "Install UI dependencies"
-      run: npm ci
-    - name: "Lint UI"
-      run: npm run lint
-    - name: "Build UI"
-      run: npm run build
-    - name: "Authenticate to GCP for UI Deployment"
-      uses: 'google-github-actions/auth@v2'
-      if: github.ref == 'refs/heads/main'
+        name: image
+        path: ${{ runner.temp }}
+    - name: Load image
+      run: |
+        docker load --input ${{ runner.temp }}/image.tar
+        docker image ls -a
+    - uses: 'google-github-actions/auth@v2'
       with:
-        project_id: 'dfar55'
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-    - name: "Deploy UI to Cloud Storage"
-      uses: 'google-github-actions/upload-cloud-storage@v2'
-      if: github.ref == 'refs/heads/main'
+        service_account: ${{ secrets.SERVICE_ACCOUNT }}
+    # https://github.com/google-github-actions/deploy-cloudrun
+    - run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+    - run: docker push ${{ env.GAR_LOCATION }}
+    - uses: google-github-actions/deploy-cloudrun@v2
       with:
-        path: 'dist/budgeteer/browser'
-        destination: 'b.dfar.io'
-        parent: false
-        process_gcloudignore: false
+        service: ui
+        project_id: ${{ secrets.PROJECT_ID }}
+        image: ${{ env.GAR_LOCATION }}
+        region: ${{ env.REGION }}
