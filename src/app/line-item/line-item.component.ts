@@ -9,7 +9,6 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { Money } from 'ts-money';
 import { AddEditLineItemDialogDataResult } from '../add-edit-line-item-dialog/add-edit-line-item-dialog-data';
 import { TransactionService } from '../transaction-page/transaction.service';
 import { MatDividerModule } from '@angular/material/divider';

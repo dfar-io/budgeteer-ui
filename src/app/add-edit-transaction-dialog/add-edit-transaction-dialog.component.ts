@@ -16,7 +16,6 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { Transaction } from '../transaction-page/transaction';
 import { LineItemService } from '../line-item/line-item.service';
-import { LineItem } from '../line-item/line-item';
 
 @Component({
     selector: 'app-add-edit-dialog',
