@@ -153,11 +153,11 @@ export class LineItemComponent implements OnInit {
     return this.getTransactionTotal(lineItem) + this.lineItem.assigned;
   }
 
-  isNeutral(id: number) {
-    return this.getRemaining(id) === 0;
+  isNeutral(lineItem: string) {
+    return this.getRemaining(lineItem) === 0;
   }
 
-  isNegative(id: number) {
-    return this.getRemaining(id) < 0;
+  isNegative(lineItem: string) {
+    return this.getRemaining(lineItem) < 0;
   }
 }

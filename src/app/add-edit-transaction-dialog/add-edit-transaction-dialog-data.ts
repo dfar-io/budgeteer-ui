@@ -2,5 +2,5 @@ export interface AddEditTransactionDialogDataResult {
     name: string;
     amount: string;
     date: Date | string;
-    lineItem: number;
+    lineItem: string;
 }

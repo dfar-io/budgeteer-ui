@@ -3,5 +3,5 @@ export interface Transaction {
     amount: number;
     date: string;
     lineItem: string;
-    account: string;
+    account?: string;
 }

@@ -7,8 +7,8 @@
     </div>
     <div class="line-item-amount">
         <div class="remaining"
-            [class.neutral]="isNeutral(lineItem.id)"
-            [class.negative]="isNegative(lineItem.id)">{{ getRemaining(lineItem.id) | currency }}</div>
+            [class.neutral]="isNeutral(lineItem)"
+            [class.negative]="isNegative(lineItem)">{{ getRemaining(lineItem) | currency }}</div>
         <div class="secondary">{{ lineItem.assigned | currency }}</div>
     </div>
     <div class="line-item-actions">

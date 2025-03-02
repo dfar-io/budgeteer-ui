@@ -50,10 +50,10 @@ export class TransactionPageComponent implements OnInit {
     this.transactionService.saveTransactions(this.transactions);
   }
 
-  editClick(transactionId: number) {
-    const transaction = this.transactions.find(t => t.id === transactionId);
+  editClick(transactionName: string) {
+    const transaction = this.transactions.find(t => t.name === transactionName);
     if (transaction === undefined) {
-      throw new Error(`unable to find transaction with ID ${transactionId}`);
+      throw new Error(`unable to find transaction with name ${transactionName}`);
     }
 
     const dialogRef = this.dialog.open(AddEditTransactionDialogComponent, {
