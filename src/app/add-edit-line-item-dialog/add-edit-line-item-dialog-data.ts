@@ -11,7 +11,7 @@
 
 export interface AddEditLineItemDialogDataResult {
     name: string
-    amount: string
+    assigned: string
     date?: Date | string
     cycleValue?: string
     cycleType?: string

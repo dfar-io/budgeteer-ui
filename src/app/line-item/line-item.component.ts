@@ -9,7 +9,6 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { Money } from 'ts-money';
 import { AddEditLineItemDialogDataResult } from '../add-edit-line-item-dialog/add-edit-line-item-dialog-data';
 import { TransactionService } from '../transaction-page/transaction.service';
 import { MatDividerModule } from '@angular/material/divider';
@@ -28,7 +27,7 @@ export class LineItemComponent implements OnInit {
   @Input() difference!: number;
   @Input() usePaymentDate = false;
   @Output() save = new EventEmitter<LineItem>();
-  @Output() delete = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<LineItem>();
 
   constructor(private transactionService: TransactionService) {}
 
@@ -44,7 +43,7 @@ export class LineItemComponent implements OnInit {
     const dialogRef = this.dialog.open(AddEditLineItemDialogComponent, {
       data: {
         name: this.lineItem.name,
-        amount: this.lineItem.amount,
+        assigned: this.lineItem.assigned,
         date: this.lineItem.date,
         cycleValue: this.lineItem.cycleValue,
         cycleType: this.lineItem.cycleType
@@ -56,7 +55,7 @@ export class LineItemComponent implements OnInit {
       if (result === undefined) { return; }
 
       this.lineItem.name = result.name;
-      this.lineItem.amount = parseFloat(result.amount);
+      this.lineItem.assigned = parseFloat(result.assigned);
 
       if (result.date) {
         this.lineItem.date = result.date instanceof Date ?
@@ -81,16 +80,9 @@ export class LineItemComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.delete.emit(this.lineItem.id);
+        this.delete.emit(this.lineItem);
       }
     });
-  }
-
-  balanceClick() {
-    let moneyCalc = Money.fromDecimal(this.lineItem.amount, 'USD');
-    moneyCalc = moneyCalc.add(Money.fromDecimal(this.difference, 'USD'));
-    this.lineItem.amount = moneyCalc.amount / 100;
-    this.save.emit(this.lineItem);
   }
 
   cycleClick() {
@@ -140,25 +132,24 @@ export class LineItemComponent implements OnInit {
     return new Date(date) < currentDate;
   }
 
-  getTransactionTotal(lineItemId: number): number {
+  getTransactionTotal(lineItem: LineItem): number {
     const transactions = this.transactionService.getTransactions()
-                                                .filter(t => t.lineItemId === lineItemId);
+                                                .filter(t => t.lineItemName === lineItem.name);
 
     if (transactions === undefined) { return 0; }
 
     return transactions.reduce((sum, t) => sum += t.amount, 0);
   }
 
-  getRemaining(lineItemId: number): number {
-    
-    return this.getTransactionTotal(lineItemId) + this.lineItem.amount;
+  getRemaining(lineItem: LineItem): number {
+    return this.getTransactionTotal(lineItem) + this.lineItem.assigned;
   }
 
-  isNeutral(id: number) {
-    return this.getRemaining(id) === 0;
+  isNeutral(lineItem: LineItem) {
+    return this.getRemaining(lineItem) === 0;
   }
 
-  isNegative(id: number) {
-    return this.getRemaining(id) < 0;
+  isNegative(lineItem: LineItem) {
+    return this.getRemaining(lineItem) < 0;
   }
 }

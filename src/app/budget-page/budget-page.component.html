@@ -5,9 +5,12 @@
     <button mat-mini-fab (click)="addLineItem()">
         <mat-icon>add</mat-icon>
     </button>
+    <button mat-mini-fab (click)="cycleMonth()">
+        <mat-icon>currency_exchange</mat-icon>
+    </button>
 </div>
 <div class="list">
-    @for (lineItem of lineItems; track lineItem.id) {
-        <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="saveLineItems()" (delete)="deleteLineItem(lineItem.id)"></app-line-item>
+    @for (lineItem of lineItems; track lineItem) {
+        <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="saveLineItems()" (delete)="deleteLineItem(lineItem)"></app-line-item>
     }
 </div>

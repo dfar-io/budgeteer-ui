@@ -16,9 +16,9 @@
   </mat-form-field><br />
   <mat-form-field>
     <mat-label>Line Item</mat-label>
-    <mat-select [(ngModel)]="data.lineItemId" name="lineItemId">
-      @for (lineItem of lineItems; track lineItem) {
-        <mat-option [value]="lineItem.id">{{ lineItem.name }}</mat-option>
+    <mat-select [(ngModel)]="data.lineItemName" name="lineItem">
+      @for (lineItem of lineItemNames; track lineItem) {
+        <mat-option [value]="lineItem">{{ lineItem }}</mat-option>
       }
     </mat-select>
   </mat-form-field>

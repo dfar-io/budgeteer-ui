@@ -7,21 +7,15 @@
     </div>
     <div class="line-item-amount">
         <div class="remaining"
-            [class.neutral]="isNeutral(lineItem.id)"
-            [class.negative]="isNegative(lineItem.id)">{{ getRemaining(lineItem.id) | currency }}</div>
-        <div class="secondary">{{ lineItem.amount | currency }}</div>
+            [class.neutral]="isNeutral(lineItem)"
+            [class.negative]="isNegative(lineItem)">{{ getRemaining(lineItem) | currency }}</div>
+        <div class="secondary">{{ lineItem.assigned | currency }}</div>
     </div>
     <div class="line-item-actions">
         <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            @if (difference !== undefined) {
-                <button mat-menu-item (click)="balanceClick()" disabled="{{ difference === 0 }}">
-                    <mat-icon>balance</mat-icon>
-                    <span>Balance</span>
-                </button>
-            }
             @if (lineItem.cycleValue !== undefined) {
                 <button mat-menu-item (click)="cycleClick()">
                     <mat-icon>sync</mat-icon>

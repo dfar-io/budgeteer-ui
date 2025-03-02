@@ -8,7 +8,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { LineItemService } from '../line-item/line-item.service';
 import { AddEditTransactionDialogDataResult } from '../add-edit-transaction-dialog/add-edit-transaction-dialog-data';
 import { AddEditTransactionDialogComponent } from '../add-edit-transaction-dialog/add-edit-transaction-dialog.component';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
@@ -24,7 +23,6 @@ export class TransactionPageComponent implements OnInit {
   transactions: Transaction[] = [];
 
   constructor(private transactionService: TransactionService,
-              private lineItemService: LineItemService,
               private dialog: MatDialog
   ) {}
 
@@ -33,7 +31,6 @@ export class TransactionPageComponent implements OnInit {
   }
 
   onAdd() {
-    const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
     const randomDecimal = parseFloat((Math.random() * (10000 - 1) + 1).toFixed(2));
     const result = {} as Transaction;
     const todayNoTime = new Date(
@@ -41,7 +38,6 @@ export class TransactionPageComponent implements OnInit {
       new Date().getMonth(),
       new Date().getDate()).toISOString()
 
-    result.id = randomId;
     result.name = 'new transaction';
     result.amount = randomDecimal;
     result.date = todayNoTime;
@@ -50,12 +46,7 @@ export class TransactionPageComponent implements OnInit {
     this.transactionService.saveTransactions(this.transactions);
   }
 
-  editClick(transactionId: number) {
-    const transaction = this.transactions.find(t => t.id === transactionId);
-    if (transaction === undefined) {
-      throw new Error(`unable to find transaction with ID ${transactionId}`);
-    }
-
+  editClick(transaction: Transaction) {
     const dialogRef = this.dialog.open(AddEditTransactionDialogComponent, {
       data: {
         name: transaction.name,
@@ -73,25 +64,20 @@ export class TransactionPageComponent implements OnInit {
       transaction.date = result.date instanceof Date ?
         result.date.toISOString() :
         result.date;
-      transaction.lineItemId = result.lineItemId;
+      transaction.lineItemName = result.lineItemName;
 
       this.transactionService.saveTransactions(this.transactions);
     });
   }
 
-  deleteClick(transactionId: number) {
-    const transaction = this.transactions.find(t => t.id === transactionId);
-    if (transaction === undefined) {
-      throw new Error(`unable to find transaction with ID ${transactionId}`);
-    }
-
+  deleteClick(transaction: Transaction) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {name: transaction.name},
     });
         
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        const toDelete = this.transactions.findIndex(i => i.id === transactionId);
+        const toDelete = this.transactions.findIndex(i => i.name === transaction.name);
         this.transactions.splice(toDelete, 1);
         this.transactionService.saveTransactions(this.transactions);
       }
@@ -113,11 +99,10 @@ export class TransactionPageComponent implements OnInit {
         /* eslint-disable */
         const transactions = csvResults.map((line : any) => ({
         /* eslint-enable */
-          id: Math.floor(Math.random() * (1000000 - 1 + 1)) + 1,
           name: line.Description as string,
           date: new Date(line.Date).toISOString(),
           amount: this.cleanAmount(line.Amount),
-          lineItemId: 0
+          lineItemName: ''
         }));
         this.transactions = [
           ...this.transactions,
@@ -126,19 +111,6 @@ export class TransactionPageComponent implements OnInit {
         this.transactionService.saveTransactions(this.transactions);
       }
     });
-  }
-
-  getLineItem(lineItemId: number) {
-    if (lineItemId == -1) {
-      return 'Income'
-    }
-
-    const lineItem = this.lineItemService.getLineItems().find(li => li.id === lineItemId);
-    if (lineItem) {
-      return lineItem.name;
-    }
-
-    return 'UNASSIGNED'
   }
 
   private cleanAmount(value: string): number {

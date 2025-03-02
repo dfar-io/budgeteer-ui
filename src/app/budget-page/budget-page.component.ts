@@ -63,15 +63,17 @@ export class BudgetPageComponent implements OnInit {
     this.updateDifference();
   }
 
+  cycleMonth() {
+    throw new Error('Method not implemented.');
+  }
+
   private createNewLineItem(options?: keyof LineItem) {
-    const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
     const name = "New Line Item";
-    const amount = 0;
+    const assigned = 0;
 
     const result = {} as LineItem;
-    result.id = randomId;
     result.name = name;
-    result.amount = amount;
+    result.assigned = assigned;
     result.date = options == 'date' ?
       this.getTodayWithoutTime().toISOString() : undefined;
     result.cycleValue = options == 'date' ?
@@ -86,8 +88,8 @@ export class BudgetPageComponent implements OnInit {
     this.updateDifference();
   }
 
-  deleteLineItem(id : number) {
-    const toDelete = this.lineItems.findIndex(i => i.id === id);
+  deleteLineItem(lineItem : LineItem) {
+    const toDelete = this.lineItems.findIndex(i => i.name === lineItem.name);
     this.lineItems.splice(toDelete, 1);
 
     this.lineItemService.saveLineItems(this.lineItems);
@@ -97,7 +99,7 @@ export class BudgetPageComponent implements OnInit {
   private generateSum(lineItems: LineItem[]): number {
     let moneyCalc = new Money(0, 'USD');
     for (const li of lineItems) {
-      moneyCalc = moneyCalc.subtract(Money.fromDecimal(li.amount, 'USD'));
+      moneyCalc = moneyCalc.subtract(Money.fromDecimal(li.assigned, 'USD'));
     }
     return moneyCalc.amount / 100;
   }

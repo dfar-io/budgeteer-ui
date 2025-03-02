@@ -16,7 +16,6 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { Transaction } from '../transaction-page/transaction';
 import { LineItemService } from '../line-item/line-item.service';
-import { LineItem } from '../line-item/line-item';
 
 @Component({
     selector: 'app-add-edit-dialog',
@@ -45,8 +44,8 @@ export class AddEditTransactionDialogComponent {
 
   constructor(private lineItemService: LineItemService) {}
 
-  lineItems: LineItem[] = [
-    { id: -1, name: 'Income', amount: 0 },
-    ...this.lineItemService.getLineItems()
+  lineItemNames: string[] = [
+    'Income',
+    ...this.lineItemService.getLineItems().map(li => li.name)
   ];
 }
