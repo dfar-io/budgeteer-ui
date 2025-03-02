@@ -79,10 +79,10 @@ export class TransactionPageComponent implements OnInit {
     });
   }
 
-  deleteClick(transactionId: number) {
-    const transaction = this.transactions.find(t => t.id === transactionId);
+  deleteClick(name: string) {
+    const transaction = this.transactions.find(t => t.name === name);
     if (transaction === undefined) {
-      throw new Error(`unable to find transaction with ID ${transactionId}`);
+      throw new Error(`unable to find transaction with name ${name}`);
     }
 
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
@@ -91,7 +91,7 @@ export class TransactionPageComponent implements OnInit {
         
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        const toDelete = this.transactions.findIndex(i => i.id === transactionId);
+        const toDelete = this.transactions.findIndex(i => i.name === name);
         this.transactions.splice(toDelete, 1);
         this.transactionService.saveTransactions(this.transactions);
       }
