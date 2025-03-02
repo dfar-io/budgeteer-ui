@@ -86,13 +86,6 @@ export class LineItemComponent implements OnInit {
     });
   }
 
-  balanceClick() {
-    let moneyCalc = Money.fromDecimal(this.lineItem.assigned, 'USD');
-    moneyCalc = moneyCalc.add(Money.fromDecimal(this.difference, 'USD'));
-    this.lineItem.assigned = moneyCalc.amount / 100;
-    this.save.emit(this.lineItem);
-  }
-
   cycleClick() {
     if (this.lineItem.date === undefined) {
       console.error("Cycle attempted with undefined date property in lineItem");
@@ -142,7 +135,7 @@ export class LineItemComponent implements OnInit {
 
   getTransactionTotal(lineItem: LineItem): number {
     const transactions = this.transactionService.getTransactions()
-                                                .filter(t => t.lineItem === lineItem.name);
+                                                .filter(t => t.lineItemName === lineItem.name);
 
     if (transactions === undefined) { return 0; }
 

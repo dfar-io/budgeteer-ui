@@ -64,7 +64,7 @@ export class TransactionPageComponent implements OnInit {
       transaction.date = result.date instanceof Date ?
         result.date.toISOString() :
         result.date;
-      transaction.lineItem = result.lineItem;
+      transaction.lineItemName = result.lineItemName;
 
       this.transactionService.saveTransactions(this.transactions);
     });
@@ -102,7 +102,7 @@ export class TransactionPageComponent implements OnInit {
           name: line.Description as string,
           date: new Date(line.Date).toISOString(),
           amount: this.cleanAmount(line.Amount),
-          lineItem: ''
+          lineItemName: ''
         }));
         this.transactions = [
           ...this.transactions,
