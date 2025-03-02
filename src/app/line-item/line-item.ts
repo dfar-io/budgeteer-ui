@@ -1,5 +1,4 @@
 export interface LineItem {
-    id: number;
     name: string;
     assigned: number;
     date?: string;

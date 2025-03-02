@@ -33,7 +33,6 @@ export class TransactionPageComponent implements OnInit {
   }
 
   onAdd() {
-    const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
     const randomDecimal = parseFloat((Math.random() * (10000 - 1) + 1).toFixed(2));
     const result = {} as Transaction;
     const todayNoTime = new Date(
@@ -41,7 +40,6 @@ export class TransactionPageComponent implements OnInit {
       new Date().getMonth(),
       new Date().getDate()).toISOString()
 
-    result.id = randomId;
     result.name = 'new transaction';
     result.amount = randomDecimal;
     result.date = todayNoTime;

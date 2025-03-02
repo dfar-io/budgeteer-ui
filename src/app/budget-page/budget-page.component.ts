@@ -68,12 +68,10 @@ export class BudgetPageComponent implements OnInit {
   }
 
   private createNewLineItem(options?: keyof LineItem) {
-    const randomId = Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
     const name = "New Line Item";
     const assigned = 0;
 
     const result = {} as LineItem;
-    result.id = randomId;
     result.name = name;
     result.assigned = assigned;
     result.date = options == 'date' ?
