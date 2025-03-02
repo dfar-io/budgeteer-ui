@@ -8,7 +8,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { LineItemService } from '../line-item/line-item.service';
 import { AddEditTransactionDialogDataResult } from '../add-edit-transaction-dialog/add-edit-transaction-dialog-data';
 import { AddEditTransactionDialogComponent } from '../add-edit-transaction-dialog/add-edit-transaction-dialog.component';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
@@ -24,7 +23,6 @@ export class TransactionPageComponent implements OnInit {
   transactions: Transaction[] = [];
 
   constructor(private transactionService: TransactionService,
-              private lineItemService: LineItemService,
               private dialog: MatDialog
   ) {}
 

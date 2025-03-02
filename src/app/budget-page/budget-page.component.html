@@ -10,7 +10,7 @@
     </button>
 </div>
 <div class="list">
-    @for (lineItem of lineItems; track lineItem.id) {
-        <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="saveLineItems()" (delete)="deleteLineItem(lineItem.id)"></app-line-item>
+    @for (lineItem of lineItems; track lineItem) {
+        <app-line-item [lineItem]="lineItem" [difference]="difference" (save)="saveLineItems()" (delete)="deleteLineItem(lineItem)"></app-line-item>
     }
 </div>

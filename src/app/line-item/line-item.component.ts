@@ -140,24 +140,24 @@ export class LineItemComponent implements OnInit {
     return new Date(date) < currentDate;
   }
 
-  getTransactionTotal(lineItem: string): number {
+  getTransactionTotal(lineItem: LineItem): number {
     const transactions = this.transactionService.getTransactions()
-                                                .filter(t => t.lineItem === lineItem);
+                                                .filter(t => t.lineItem === lineItem.name);
 
     if (transactions === undefined) { return 0; }
 
     return transactions.reduce((sum, t) => sum += t.amount, 0);
   }
 
-  getRemaining(lineItem: string): number {
+  getRemaining(lineItem: LineItem): number {
     return this.getTransactionTotal(lineItem) + this.lineItem.assigned;
   }
 
-  isNeutral(lineItem: string) {
+  isNeutral(lineItem: LineItem) {
     return this.getRemaining(lineItem) === 0;
   }
 
-  isNegative(lineItem: string) {
+  isNegative(lineItem: LineItem) {
     return this.getRemaining(lineItem) < 0;
   }
 }

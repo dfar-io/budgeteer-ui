@@ -88,8 +88,8 @@ export class BudgetPageComponent implements OnInit {
     this.updateDifference();
   }
 
-  deleteLineItem(name : string) {
-    const toDelete = this.lineItems.findIndex(i => i.name === name);
+  deleteLineItem(lineItem : LineItem) {
+    const toDelete = this.lineItems.findIndex(i => i.name === lineItem.name);
     this.lineItems.splice(toDelete, 1);
 
     this.lineItemService.saveLineItems(this.lineItems);
