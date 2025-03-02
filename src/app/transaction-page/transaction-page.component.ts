@@ -48,12 +48,7 @@ export class TransactionPageComponent implements OnInit {
     this.transactionService.saveTransactions(this.transactions);
   }
 
-  editClick(transactionName: string) {
-    const transaction = this.transactions.find(t => t.name === transactionName);
-    if (transaction === undefined) {
-      throw new Error(`unable to find transaction with name ${transactionName}`);
-    }
-
+  editClick(transaction: Transaction) {
     const dialogRef = this.dialog.open(AddEditTransactionDialogComponent, {
       data: {
         name: transaction.name,
@@ -77,19 +72,14 @@ export class TransactionPageComponent implements OnInit {
     });
   }
 
-  deleteClick(name: string) {
-    const transaction = this.transactions.find(t => t.name === name);
-    if (transaction === undefined) {
-      throw new Error(`unable to find transaction with name ${name}`);
-    }
-
+  deleteClick(transaction: Transaction) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {name: transaction.name},
     });
         
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        const toDelete = this.transactions.findIndex(i => i.name === name);
+        const toDelete = this.transactions.findIndex(i => i.name === transaction.name);
         this.transactions.splice(toDelete, 1);
         this.transactionService.saveTransactions(this.transactions);
       }

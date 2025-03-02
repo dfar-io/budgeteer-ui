@@ -28,7 +28,7 @@ export class LineItemComponent implements OnInit {
   @Input() difference!: number;
   @Input() usePaymentDate = false;
   @Output() save = new EventEmitter<LineItem>();
-  @Output() delete = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<LineItem>();
 
   constructor(private transactionService: TransactionService) {}
 
@@ -81,7 +81,7 @@ export class LineItemComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.delete.emit(this.lineItem.id);
+        this.delete.emit(this.lineItem);
       }
     });
   }
