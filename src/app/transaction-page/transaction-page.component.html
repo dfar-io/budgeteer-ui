@@ -17,7 +17,7 @@
             <div class="transaction-amount">
                 <span [class.positive]="transaction.amount >= 0"
                       [class.negative]="transaction.amount < 0">{{ transaction.amount | currency }}</span><br />
-                <span class="secondary">{{ getLineItem(transaction.lineItemId) }}</span>
+                <span class="secondary">{{ transaction.lineItem }}</span>
             </div>
             <div class="transaction-actions">
                 <button mat-icon-button [matMenuTriggerFor]="menu">

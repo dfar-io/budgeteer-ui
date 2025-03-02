@@ -9,7 +9,7 @@
         <div class="remaining"
             [class.neutral]="isNeutral(lineItem.id)"
             [class.negative]="isNegative(lineItem.id)">{{ getRemaining(lineItem.id) | currency }}</div>
-        <div class="secondary">{{ lineItem.amount | currency }}</div>
+        <div class="secondary">{{ lineItem.assigned | currency }}</div>
     </div>
     <div class="line-item-actions">
         <button mat-icon-button [matMenuTriggerFor]="menu">

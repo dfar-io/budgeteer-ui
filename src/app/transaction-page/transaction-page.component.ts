@@ -73,7 +73,7 @@ export class TransactionPageComponent implements OnInit {
       transaction.date = result.date instanceof Date ?
         result.date.toISOString() :
         result.date;
-      transaction.lineItemId = result.lineItemId;
+      transaction.lineItem = result.lineItem;
 
       this.transactionService.saveTransactions(this.transactions);
     });
@@ -113,11 +113,10 @@ export class TransactionPageComponent implements OnInit {
         /* eslint-disable */
         const transactions = csvResults.map((line : any) => ({
         /* eslint-enable */
-          id: Math.floor(Math.random() * (1000000 - 1 + 1)) + 1,
           name: line.Description as string,
           date: new Date(line.Date).toISOString(),
           amount: this.cleanAmount(line.Amount),
-          lineItemId: 0
+          lineItem: ''
         }));
         this.transactions = [
           ...this.transactions,
@@ -126,19 +125,6 @@ export class TransactionPageComponent implements OnInit {
         this.transactionService.saveTransactions(this.transactions);
       }
     });
-  }
-
-  getLineItem(lineItemId: number) {
-    if (lineItemId == -1) {
-      return 'Income'
-    }
-
-    const lineItem = this.lineItemService.getLineItems().find(li => li.id === lineItemId);
-    if (lineItem) {
-      return lineItem.name;
-    }
-
-    return 'UNASSIGNED'
   }
 
   private cleanAmount(value: string): number {

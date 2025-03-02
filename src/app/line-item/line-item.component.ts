@@ -44,7 +44,7 @@ export class LineItemComponent implements OnInit {
     const dialogRef = this.dialog.open(AddEditLineItemDialogComponent, {
       data: {
         name: this.lineItem.name,
-        amount: this.lineItem.amount,
+        assigned: this.lineItem.assigned,
         date: this.lineItem.date,
         cycleValue: this.lineItem.cycleValue,
         cycleType: this.lineItem.cycleType
@@ -56,7 +56,7 @@ export class LineItemComponent implements OnInit {
       if (result === undefined) { return; }
 
       this.lineItem.name = result.name;
-      this.lineItem.amount = parseFloat(result.amount);
+      this.lineItem.assigned = parseFloat(result.assigned);
 
       if (result.date) {
         this.lineItem.date = result.date instanceof Date ?
@@ -87,9 +87,9 @@ export class LineItemComponent implements OnInit {
   }
 
   balanceClick() {
-    let moneyCalc = Money.fromDecimal(this.lineItem.amount, 'USD');
+    let moneyCalc = Money.fromDecimal(this.lineItem.assigned, 'USD');
     moneyCalc = moneyCalc.add(Money.fromDecimal(this.difference, 'USD'));
-    this.lineItem.amount = moneyCalc.amount / 100;
+    this.lineItem.assigned = moneyCalc.amount / 100;
     this.save.emit(this.lineItem);
   }
 
@@ -140,18 +140,17 @@ export class LineItemComponent implements OnInit {
     return new Date(date) < currentDate;
   }
 
-  getTransactionTotal(lineItemId: number): number {
+  getTransactionTotal(lineItem: string): number {
     const transactions = this.transactionService.getTransactions()
-                                                .filter(t => t.lineItemId === lineItemId);
+                                                .filter(t => t.lineItem === lineItem);
 
     if (transactions === undefined) { return 0; }
 
     return transactions.reduce((sum, t) => sum += t.amount, 0);
   }
 
-  getRemaining(lineItemId: number): number {
-    
-    return this.getTransactionTotal(lineItemId) + this.lineItem.amount;
+  getRemaining(lineItem: string): number {
+    return this.getTransactionTotal(lineItem) + this.lineItem.assigned;
   }
 
   isNeutral(id: number) {

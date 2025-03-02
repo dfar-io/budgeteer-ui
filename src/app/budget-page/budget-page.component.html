@@ -5,6 +5,9 @@
     <button mat-mini-fab (click)="addLineItem()">
         <mat-icon>add</mat-icon>
     </button>
+    <button mat-mini-fab (click)="cycleMonth()">
+        <mat-icon>currency_exchange</mat-icon>
+    </button>
 </div>
 <div class="list">
     @for (lineItem of lineItems; track lineItem.id) {

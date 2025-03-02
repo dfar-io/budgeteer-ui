@@ -1,7 +1,7 @@
 export interface Transaction {
-    id: number;
-    date: string;
     name: string;
     amount: number;
-    lineItemId: number;
+    date: string;
+    lineItem: string;
+    account: string;
 }
