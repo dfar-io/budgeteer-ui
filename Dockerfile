@@ -7,7 +7,7 @@ RUN npm run build
 
 FROM node:22
 WORKDIR /app
-COPY --from=build /dist/budgeteer .
+COPY --from=build /app/dist/budgeteer .
 RUN npm install express@4.21.2 -g
 EXPOSE 80
 
