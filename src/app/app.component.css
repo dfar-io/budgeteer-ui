@@ -49,4 +49,5 @@ div.version a {
 
 mat-toolbar {
   background-color: #4C4E52;
+  justify-content: space-between;
 }

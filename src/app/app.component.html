@@ -1,12 +1,12 @@
 <main class="main">
   <div class="content">
     <mat-toolbar>
-      <button mat-icon-button class="menu" [matMenuTriggerFor]="menu" aria-label="Menu">
-        <mat-icon>menu</mat-icon>
-      </button>
       <span class="title">Budgeteer</span>
       <span class="spacer"></span>
       
+      <button mat-icon-button class="menu" [matMenuTriggerFor]="menu" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
       <mat-menu #menu="matMenu">
         <button [routerLink]="'/'" mat-menu-item>
           <span>Budget</span>
