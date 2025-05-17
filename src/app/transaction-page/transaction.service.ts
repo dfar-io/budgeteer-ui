@@ -23,6 +23,19 @@ export class TransactionService extends DataService {
     return moneyCalc.amount / 100;
   }
 
+  getPreviousMonthsIncomeTotal() {
+    const currentMonth = new Date().getMonth();
+    let moneyCalc = new Money(0, 'USD');
+    const transactions = this.getTransactions().filter(t => t.lineItemName == "Income" &&
+                                                            new Date(t.date).getMonth() != currentMonth);
+    transactions.forEach(t => {
+      console.log(t.amount);
+      moneyCalc = moneyCalc.add(Money.fromDecimal(t.amount, 'USD'));
+    });
+
+    return moneyCalc.amount / 100;
+  }
+
   saveTransactions(transactions : Transaction[]) {
     localStorage.setItem(this.transactionsKey, JSON.stringify(transactions) ?? []);
   }
