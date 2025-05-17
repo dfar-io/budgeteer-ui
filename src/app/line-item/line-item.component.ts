@@ -13,6 +13,7 @@ import { AddEditLineItemDialogDataResult } from '../add-edit-line-item-dialog/ad
 import { TransactionService } from '../transaction-page/transaction.service';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { Money } from 'ts-money';
 
 @Component({
     selector: 'app-line-item',
@@ -83,6 +84,16 @@ export class LineItemComponent implements OnInit {
         this.delete.emit(this.lineItem);
       }
     });
+  }
+
+  balanceClick() {
+    console.log(this.difference);
+
+    let moneyCalc = Money.fromDecimal(this.lineItem.assigned, 'USD');
+    moneyCalc = moneyCalc.add(Money.fromDecimal(this.difference, 'USD'));
+
+    this.lineItem.assigned = moneyCalc.amount / 100;
+    this.save.emit(this.lineItem);
   }
 
   cycleClick() {

@@ -24,23 +24,21 @@ export class BudgetPageComponent implements OnInit {
   differenceFontColor = '';
 
   constructor(private lineItemService: LineItemService,
-              private transactionService: TransactionService,
-              private renderer: Renderer2
+              private transactionService: TransactionService
   ) {}
 
   ngOnInit() {
     this.lineItems = this.lineItemService.getLineItems();
-    this.updateDifference();
+    this.updateCurrentMonthDifference();
   }
 
-  updateDifference() {
-    
-    const transactionsTotal = this.transactionService.getAllTransactionsTotal();
+  updateCurrentMonthDifference() {
+    const previousMonthsIncomeTotal = this.transactionService.getPreviousMonthsIncomeTotal();
     const lineItemSum = this.generateSum(this.lineItems);
 
     let moneyCalc = new Money(0, 'USD');
-    moneyCalc = moneyCalc.add(Money.fromDecimal(transactionsTotal, 'USD'));
-    moneyCalc = moneyCalc.add(Money.fromDecimal(lineItemSum, 'USD'));
+    moneyCalc = moneyCalc.add(Money.fromDecimal(previousMonthsIncomeTotal, 'USD'));
+    moneyCalc = moneyCalc.subtract(Money.fromDecimal(lineItemSum, 'USD'));
 
     this.difference = moneyCalc.amount / 100;
 
@@ -60,32 +58,13 @@ export class BudgetPageComponent implements OnInit {
     const newLineItem = this.createNewLineItem();
     this.lineItems.unshift(newLineItem);
     this.lineItemService.saveLineItems(this.lineItems);
-    this.updateDifference();
-  }
-
-  cycleMonth() {
-    throw new Error('Method not implemented.');
-  }
-
-  private createNewLineItem(options?: keyof LineItem) {
-    const name = "New Line Item";
-    const assigned = 0;
-
-    const result = {} as LineItem;
-    result.name = name;
-    result.assigned = assigned;
-    result.date = options == 'date' ?
-      this.getTodayWithoutTime().toISOString() : undefined;
-    result.cycleValue = options == 'date' ?
-      30 : undefined;
-
-    return result;
+    this.updateCurrentMonthDifference();
   }
 
   saveLineItems() {
     this.lineItems = this.sortLineItems(this.lineItems);
     this.lineItemService.saveLineItems(this.lineItems);
-    this.updateDifference();
+    this.updateCurrentMonthDifference();
   }
 
   deleteLineItem(lineItem : LineItem) {
@@ -93,13 +72,29 @@ export class BudgetPageComponent implements OnInit {
     this.lineItems.splice(toDelete, 1);
 
     this.lineItemService.saveLineItems(this.lineItems);
-    this.updateDifference();
+    this.updateCurrentMonthDifference();
+  }
+
+  determineCssClassByDate(date: string | undefined) : string {
+    if (date === undefined) return '';
+
+    const sevenDays = new Date();
+    sevenDays.setDate(this.todaysDate.getDate() + 7);
+    const isInFuture = new Date(date) >= sevenDays;
+
+    return `${isInFuture ? 'future ' : ''}`;
+  }
+
+  displayCurrentMonthYear() : string {
+    const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
+    const month = formatter.format(this.todaysDate);
+    return month + this.todaysDate.getFullYear().toString();
   }
 
   private generateSum(lineItems: LineItem[]): number {
     let moneyCalc = new Money(0, 'USD');
     for (const li of lineItems) {
-      moneyCalc = moneyCalc.subtract(Money.fromDecimal(li.assigned, 'USD'));
+      moneyCalc = moneyCalc.add(Money.fromDecimal(li.assigned, 'USD'));
     }
     return moneyCalc.amount / 100;
   }
@@ -132,14 +127,19 @@ export class BudgetPageComponent implements OnInit {
     });
   }
 
-  determineCssClassByDate(date: string | undefined) : string {
-    if (date === undefined) return '';
+  private createNewLineItem(options?: keyof LineItem) {
+    const name = "New Line Item";
+    const assigned = 0;
 
-    const sevenDays = new Date();
-    sevenDays.setDate(this.todaysDate.getDate() + 7);
-    const isInFuture = new Date(date) >= sevenDays;
+    const result = {} as LineItem;
+    result.name = name;
+    result.assigned = assigned;
+    result.date = options == 'date' ?
+      this.getTodayWithoutTime().toISOString() : undefined;
+    result.cycleValue = options == 'date' ?
+      30 : undefined;
 
-    return `${isInFuture ? 'future ' : ''}`;
+    return result;
   }
 
   private getTodayWithoutTime(): Date {

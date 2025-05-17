@@ -1,12 +1,10 @@
-<div class="difference" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
-    {{ difference | currency }}
+<div class="month-difference-bar" [ngStyle]="{ 'background-color': differenceBackgroundColor, 'color': differenceFontColor }">
+    <div class="active-month">{{ displayCurrentMonthYear() }}</div>
+    <div class="difference">{{ difference | currency }}</div>
 </div>
 <div class="actions">
     <button mat-mini-fab (click)="addLineItem()">
         <mat-icon>add</mat-icon>
-    </button>
-    <button mat-mini-fab (click)="cycleMonth()">
-        <mat-icon>currency_exchange</mat-icon>
     </button>
 </div>
 <div class="list">

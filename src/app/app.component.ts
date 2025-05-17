@@ -20,7 +20,6 @@ import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dial
 export class AppComponent {
   version = buildConstants.VERSION;
   url = buildConstants.URL;
-  todaysDate = new Date();
 
   constructor(private lineItemService: LineItemService,
               private transactionService: TransactionService,
