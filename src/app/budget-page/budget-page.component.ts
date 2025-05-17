@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LineItem } from '../line-item/line-item';
 import { LineItemService } from '../line-item/line-item.service';
 import { Money } from 'ts-money';
