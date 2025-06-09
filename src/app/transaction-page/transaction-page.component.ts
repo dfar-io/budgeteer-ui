@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Transaction } from './transaction';
 import { TransactionService } from './transaction.service';
 import { MatListModule } from '@angular/material/list';
@@ -20,11 +20,10 @@ import Papa from 'papaparse';
   styleUrl: './transaction-page.component.css'
 })
 export class TransactionPageComponent implements OnInit {
-  transactions: Transaction[] = [];
+  private transactionService = inject(TransactionService);
+  private dialog = inject(MatDialog);
 
-  constructor(private transactionService: TransactionService,
-              private dialog: MatDialog
-  ) {}
+  transactions: Transaction[] = [];
 
   ngOnInit() {
     this.transactions = this.transactionService.getTransactions();

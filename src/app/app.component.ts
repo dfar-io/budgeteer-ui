@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -18,13 +18,12 @@ import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dial
     styleUrl: './app.component.css'
 })
 export class AppComponent {
+  private lineItemService = inject(LineItemService);
+  private transactionService = inject(TransactionService);
+  private dialog = inject(MatDialog);
+
   version = buildConstants.VERSION;
   url = buildConstants.URL;
-
-  constructor(private lineItemService: LineItemService,
-              private transactionService: TransactionService,
-              private dialog: MatDialog
-  ) {}
 
   exportJSON() {
     const lineItems = this.lineItemService.getLineItems();

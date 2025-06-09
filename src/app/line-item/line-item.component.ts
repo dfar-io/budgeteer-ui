@@ -24,13 +24,13 @@ import { Money } from 'ts-money';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LineItemComponent implements OnInit {
+  private transactionService = inject(TransactionService);
+
   @Input() lineItem! : LineItem;
   @Input() difference!: number;
   @Input() usePaymentDate = false;
   @Output() save = new EventEmitter<LineItem>();
   @Output() delete = new EventEmitter<LineItem>();
-
-  constructor(private transactionService: TransactionService) {}
 
   readonly dialog = inject(MatDialog);
 
