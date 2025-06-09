@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { LineItem } from '../line-item/line-item';
 import { LineItemService } from '../line-item/line-item.service';
 import { Money } from 'ts-money';
@@ -16,16 +16,15 @@ import { TransactionService } from '../transaction-page/transaction.service';
     styleUrl: './budget-page.component.css'
 })
 export class BudgetPageComponent implements OnInit {
+  private lineItemService = inject(LineItemService);
+  private transactionService = inject(TransactionService);
+
   lineItems: LineItem[] = [];
   difference = 0;
   todaysDate = new Date();
 
   differenceBackgroundColor = '';
   differenceFontColor = '';
-
-  constructor(private lineItemService: LineItemService,
-              private transactionService: TransactionService
-  ) {}
 
   ngOnInit() {
     this.lineItems = this.lineItemService.getLineItems();

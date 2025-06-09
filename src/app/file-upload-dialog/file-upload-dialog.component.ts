@@ -1,6 +1,6 @@
 // https://blog.angular-university.io/angular-file-upload/
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogActions, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,10 +23,10 @@ import { MatInputModule } from '@angular/material/input';
   styleUrls: ['./file-upload-dialog.component.css']
 })
 export class FileUploadDialogComponent {
+  dialogRef = inject<MatDialogRef<FileUploadDialogComponent>>(MatDialogRef);
+
   fileName = '';
   fileContent: string | ArrayBuffer | null = null;
-
-  constructor(public dialogRef: MatDialogRef<FileUploadDialogComponent>) {}
 
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;

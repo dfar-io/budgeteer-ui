@@ -38,11 +38,11 @@ import { LineItemService } from '../line-item/line-item.service';
 })
 
 export class AddEditTransactionDialogComponent {
+  private lineItemService = inject(LineItemService);
+
   readonly dialogRef = inject(MatDialogRef<AddEditTransactionDialogComponent>);
   readonly data = inject<Transaction>(MAT_DIALOG_DATA);
   readonly save = model(this.data);
-
-  constructor(private lineItemService: LineItemService) {}
 
   lineItemNames: string[] = [
     'Income',
