@@ -12,16 +12,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^20.0.4",
-    "@angular/cdk": "^20.0.3",
-    "@angular/common": "^20.0.4",
-    "@angular/compiler": "^20.0.4",
-    "@angular/core": "^20.0.4",
-    "@angular/forms": "^20.0.4",
-    "@angular/material": "^20.0.3",
-    "@angular/platform-browser": "^20.0.4",
-    "@angular/platform-browser-dynamic": "^20.0.4",
-    "@angular/router": "^20.0.4",
+    "@angular/animations": "^20.0.5",
+    "@angular/cdk": "^20.0.4",
+    "@angular/common": "^20.0.5",
+    "@angular/compiler": "^20.0.5",
+    "@angular/core": "^20.0.5",
+    "@angular/forms": "^20.0.5",
+    "@angular/material": "^20.0.4",
+    "@angular/platform-browser": "^20.0.5",
+    "@angular/platform-browser-dynamic": "^20.0.5",
+    "@angular/router": "^20.0.5",
     "papaparse": "^5.5.3",
     "rxjs": "~7.8.2",
     "ts-money": "^0.4.8",
@@ -29,13 +29,13 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^20.0.3",
-    "@angular/cli": "^20.0.3",
-    "@angular/compiler-cli": "^20.0.4",
+    "@angular-devkit/build-angular": "^20.0.4",
+    "@angular/cli": "^20.0.4",
+    "@angular/compiler-cli": "^20.0.5",
     "@types/jasmine": "~5.1.8",
     "@types/papaparse": "^5.3.16",
     "angular-eslint": "20.1.1",
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.0",
     "jasmine-core": "~5.8.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
@@ -43,6 +43,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.8.3",
-    "typescript-eslint": "8.34.1"
+    "typescript-eslint": "8.35.0"
   }
 }
